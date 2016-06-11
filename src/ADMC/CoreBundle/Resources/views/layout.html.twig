@@ -1,0 +1,16 @@
+
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+    
+    Accueil - {{ parent() }}
+    
+{% endblock %}
+
+{% block body %}
+    <h1>Accueil</h1>
+    <hr>
+    {% block ADMCCore_body %}
+    {% endblock %}
+    
+{% endblock %}
