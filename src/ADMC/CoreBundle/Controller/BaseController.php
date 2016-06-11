@@ -16,7 +16,7 @@ class BaseController extends Controller
     
     public function menuAction(){
         
-        
+        //test
         $items = array(
             array('link' => '#', 'name' => 'menu1'),
             array('link' =>'#', 'name' => 'menu2'),
