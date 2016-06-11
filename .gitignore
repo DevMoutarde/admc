@@ -1,0 +1,11 @@
+/app/cache/*
+/app/logs/*
+!app/cache/.gitkeep
+!app/logs/.gitkeep
+
+
+# Email spool folder
+/app/spool/*
+
+/web/bundles/
+/web/uploads/
