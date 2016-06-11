@@ -3,3 +3,11 @@
 !app/cache/.gitkeep
 !app/logs/.gitkeep
 nbproject/
+
+
+
+# Email spool folder
+/app/spool/*
+
+/web/bundles/
+/web/uploads/
