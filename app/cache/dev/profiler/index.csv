@@ -33,3 +33,5 @@ a7b7f3,127.0.0.1,GET,http://localhost/Application/admc/web/app_dev.php/_fragment
 fc4a34,::1,GET,http://localhost/Application/admc/web/app_dev.php/,1465580126,,200
 f6a4ed,127.0.0.1,GET,http://localhost/Application/admc/web/app_dev.php/_fragment?_path=_format%3Dhtml%26_locale%3Den%26_controller%3DADMCCoreBundle%253ABase%253Amenu,1465580128,8032ef,200
 8032ef,::1,GET,http://localhost/Application/admc/web/app_dev.php/,1465580128,,200
+d4a3e9,127.0.0.1,GET,http://localhost/Application/admc/web/app_dev.php/_fragment?_path=_format%3Dhtml%26_locale%3Den%26_controller%3DADMCCoreBundle%253ABase%253Amenu,1465596287,c75bad,200
+c75bad,::1,GET,http://localhost/Application/admc/web/app_dev.php/,1465596287,,200

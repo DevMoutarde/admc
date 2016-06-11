@@ -62,3 +62,6 @@
 [2016-06-10 19:35:28] request.INFO: Matched route "admc_core_homepage". {"route_parameters":{"_controller":"ADMC\\CoreBundle\\Controller\\BaseController::indexAction","_route":"admc_core_homepage"},"request_uri":"http://localhost/Application/admc/web/app_dev.php/"} []
 [2016-06-10 19:35:28] security.INFO: Populated the TokenStorage with an anonymous Token. [] []
 [2016-06-10 19:35:28] request.INFO: Matched route "_wdt". {"route_parameters":{"_controller":"web_profiler.controller.profiler:toolbarAction","token":"8032ef","_route":"_wdt"},"request_uri":"http://localhost/Application/admc/web/app_dev.php/_wdt/8032ef"} []
+[2016-06-10 22:04:46] request.INFO: Matched route "admc_core_homepage". {"route_parameters":{"_controller":"ADMC\\CoreBundle\\Controller\\BaseController::indexAction","_route":"admc_core_homepage"},"request_uri":"http://localhost/Application/admc/web/app_dev.php/"} []
+[2016-06-10 22:04:47] security.INFO: Populated the TokenStorage with an anonymous Token. [] []
+[2016-06-10 22:04:47] request.INFO: Matched route "_wdt". {"route_parameters":{"_controller":"web_profiler.controller.profiler:toolbarAction","token":"c75bad","_route":"_wdt"},"request_uri":"http://localhost/Application/admc/web/app_dev.php/_wdt/c75bad"} []
