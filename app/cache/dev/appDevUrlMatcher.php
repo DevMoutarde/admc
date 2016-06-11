@@ -105,6 +105,15 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
+        // admcdsi_homepage
+        if (rtrim($pathinfo, '/') === '/dsi') {
+            if (substr($pathinfo, -1) !== '/') {
+                return $this->redirect($pathinfo.'/', 'admcdsi_homepage');
+            }
+
+            return array (  '_controller' => 'ADMC\\DSIBundle\\Controller\\DsiController::indexAction',  '_route' => 'admcdsi_homepage',);
+        }
+
         // admc_core_homepage
         if (rtrim($pathinfo, '/') === '') {
             if (substr($pathinfo, -1) !== '/') {

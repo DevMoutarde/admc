@@ -1,6 +1,6 @@
 admcdsi:
     resource: "@ADMCDSIBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /dsi
 
 admc_core:
     resource: "@ADMCCoreBundle/Resources/config/routing.yml"

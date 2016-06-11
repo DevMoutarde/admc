@@ -17,6 +17,7 @@
       <parameter key="SensioFrameworkExtraBundle">Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle</parameter>
       <parameter key="AppBundle">AppBundle\AppBundle</parameter>
       <parameter key="ADMCCoreBundle">ADMC\CoreBundle\ADMCCoreBundle</parameter>
+      <parameter key="ADMCDSIBundle">ADMC\DSIBundle\ADMCDSIBundle</parameter>
       <parameter key="DebugBundle">Symfony\Bundle\DebugBundle\DebugBundle</parameter>
       <parameter key="WebProfilerBundle">Symfony\Bundle\WebProfilerBundle\WebProfilerBundle</parameter>
       <parameter key="SensioDistributionBundle">Sensio\Bundle\DistributionBundle\SensioDistributionBundle</parameter>
@@ -1772,7 +1773,7 @@
       <argument type="collection">
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>575bcfa68fdd21.88236724</argument>
+            <argument>575bd552df39e6.83903905</argument>
           </service>
         </argument>
       </argument>
@@ -1901,7 +1902,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.token_storage"/>
-            <argument>575bcfa68fdd21.88236724</argument>
+            <argument>575bd552df39e6.83903905</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -2696,6 +2697,10 @@
       <call method="addPath">
         <argument>C:\xampp\htdocs\admc\src\ADMC\CoreBundle/Resources/views</argument>
         <argument>ADMCCore</argument>
+      </call>
+      <call method="addPath">
+        <argument>C:\xampp\htdocs\admc\src\ADMC\DSIBundle/Resources/views</argument>
+        <argument>ADMCDSI</argument>
       </call>
       <call method="addPath">
         <argument>C:\xampp\htdocs\admc\vendor\symfony\symfony\src\Symfony\Bundle\DebugBundle/Resources/views</argument>
