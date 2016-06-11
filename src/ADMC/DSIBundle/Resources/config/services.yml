@@ -1,0 +1,4 @@
+services:
+#    admcdsi.example:
+#        class: ADMC\DSIBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]

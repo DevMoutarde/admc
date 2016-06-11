@@ -1,0 +1,3 @@
+admcdsi_homepage:
+    path:     /
+    defaults: { _controller: ADMCDSIBundle:Default:index }
