@@ -9,8 +9,8 @@
         <title> {% block title %} ADMC {% endblock %}</title>
         
         {% block stylesheets %}
-            
-           <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+            <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+            <link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
         {% endblock %}
         
         
@@ -24,6 +24,9 @@
                 <h1>ADMC Platform</h1>
                 <p>
                     Portail d'entreprise
+                    {% if app.user is not null %}  
+                       Bonjour {{ app.user.username }} 
+                    {% endif %}
                 </p>
                 {{ render(controller("ADMCCoreBundle:Base:menu")) }}
                 {{ render(controller("ADMCDSIBundle:Dsi:menu")) }}
@@ -44,11 +47,14 @@
             <hr>
             
             <footer>
-                <p>Projet développé par Mr Vougny, Mr Sales, Mr Nardizzi, Mr Fourcault. DATE: {{ 'now'|date('Y') }}</p>
+                <p>Projet développé par Mr Vougny, Mr Salles, Mr Nardizzi, Mr Fourcault. DATE: {{ 'now'|date('Y') }}</p>
             </footer>
         </div>
             
-        {% block javascript %}
+        {% block javascripts %}
+            <script src="//code.jquery.com/jquery-2.1.1.js"></script>
+            <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        
         {% endblock %}
         
         

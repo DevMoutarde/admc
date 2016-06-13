@@ -1,0 +1,22 @@
+{{ '{% extends "' ~ layout ~ '" %}' }}
+{% if theme %}
+
+{{ "{% form_theme form '"~ theme ~"' %}" }}
+{% endif %}
+
+{{ '{% block title %}' ~ "{{ '%entity% creation'|trans({'%entity%': '"~ entity ~"'}, 'admin') }} - {{ parent() }}" ~ '{% endblock %}' }}
+
+{{ '{% block ' ~ bodyBlock ~ ' %}' }}
+    <h1>{{ "{{ '%entity% creation'|trans({'%entity%': '"~ entity ~"'}, 'admin') }}" }}</h1>
+
+    {{ "{{ form_start(form, {action: path('"~ route_name_prefix ~"_create')}) }}" }}
+        {{ "{{ form_widget(form) }}" }}
+        <p>
+            <button class="btn btn-primary" type="submit">{{ "{{ 'Create'|trans({}, 'admin') }}" }}</button>
+        </p>
+    {{ "{{ form_end(form) }}" }}
+
+    {% set hide_edit, hide_delete = true, true %}
+    {% include 'crud/views/others/record_actions.html.twig.twig' %}
+
+{{ '{% endblock %}' }}

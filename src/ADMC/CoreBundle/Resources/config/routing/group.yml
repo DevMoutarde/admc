@@ -1,0 +1,31 @@
+admin_groups:
+    pattern:  /
+    defaults: { _controller: "ADMCCoreBundle:Group:index" }
+
+
+admin_groups_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ADMCCoreBundle:Group:show" }
+
+admin_groups_new:
+    pattern:  /new
+    defaults: { _controller: "ADMCCoreBundle:Group:new" }
+
+admin_groups_create:
+    pattern:  /create
+    defaults: { _controller: "ADMCCoreBundle:Group:create" }
+    requirements: { _method: post }
+
+admin_groups_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ADMCCoreBundle:Group:edit" }
+
+admin_groups_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ADMCCoreBundle:Group:update" }
+    requirements: { _method: post|put }
+
+admin_groups_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ADMCCoreBundle:Group:delete" }
+    requirements: { _method: post|delete }

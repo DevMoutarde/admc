@@ -1,3 +1,10 @@
+admc_core_admin_groups:
+    resource: "@ADMCCoreBundle/Resources/config/routing/group.yml"
+    prefix:   /admin/groups
+
+
 admc_core_homepage:
     path:     /
     defaults: { _controller: ADMCCoreBundle:Base:index }
+
+

@@ -365,8 +365,11 @@ UPGRADE FROM 2.x to 3.0
    </service>
    ```
 
- *  The `ChoiceToBooleanArrayTransformer`, `ChoicesToBooleanArrayTransformer`,
-    `FixRadioInputListener`, and `FixCheckboxInputListener` classes were removed.
+ * The `max_length` option was removed. Use the `attr` option instead by setting it to
+   an `array` with a `maxlength` key.
+
+ * The `ChoiceToBooleanArrayTransformer`, `ChoicesToBooleanArrayTransformer`,
+   `FixRadioInputListener`, and `FixCheckboxInputListener` classes were removed.
 
  * The `choice_list` option of `ChoiceType` was removed.
 
@@ -1037,6 +1040,39 @@ UPGRADE FROM 2.x to 3.0
    }
    ```
 
+ * The `AbstractVoter::isGranted()` method has been replaced by `Voter::voteOnAttribute()`.
+
+   Before:
+
+   ```php
+   class MyVoter extends AbstractVoter
+   {
+       protected function isGranted($attribute, $object, $user = null)
+       {
+           return 'EDIT' === $attribute && $user === $object->getAuthor();
+       }
+
+       // ...
+   }
+   ```
+
+   After:
+
+   ```php
+   class MyVoter extends Voter
+   {
+       protected function voteOnAttribute($attribute, $object, TokenInterface $token)
+       {
+           return 'EDIT' === $attribute && $token->getUser() === $object->getAuthor();
+       }
+
+       // ...
+   }
+   ```
+
+ * The `supportsAttribute()` and `supportsClass()` methods of the `AuthenticatedVoter`, `ExpressionVoter`,
+   and `RoleVoter` classes have been removed.
+
  * The `intention` option was renamed to `csrf_token_id` for all the authentication listeners.
 
  * The `csrf_provider` option was renamed to `csrf_token_generator` for all the authentication listeners.
@@ -1604,8 +1640,7 @@ UPGRADE FROM 2.x to 3.0
 
 ### WebProfiler
 
- * The `profiler:import` and `profiler:export` commands have been deprecated and
-   will be removed in 3.0.
+ * The `profiler:import` and `profiler:export` commands have been removed.
 
  * All the profiler storages different than `FileProfilerStorage` have been
    removed. The removed classes are:
