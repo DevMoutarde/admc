@@ -8,6 +8,8 @@ class BaseController extends Controller
 {
     public function indexAction(){
         
+        
+        
         return $this->render('ADMCCoreBundle:Base:index.html.twig');
     }
     

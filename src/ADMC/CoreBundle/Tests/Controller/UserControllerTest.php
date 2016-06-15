@@ -84,36 +84,4 @@ class UserControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
         $this->assertCount(0, $crawler->filter('table.records_list tbody tr'));
     }
-
-    /**
-     * @depends testCreate
-     */
-    public function testFilter()
-    {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/admin/users/');
-        $form = $crawler->filter('div#filter form button[type="submit"]')->form(array(
-            'user_filter[loginCount]' => 42,
-            'user_filter[firstLogin]' => new \DateTime(),
-            // ... maybe use just one field here ...
-        ));
-        $client->submit($form);
-        $crawler = $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
-        $crawler = $client->click($crawler->filter('div#filter a')->link());
-        $crawler = $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
-    }    /**
-     * @depends testCreate
-     */
-    public function testSort()
-    {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/admin/users/');
-        $this->assertCount(1, $crawler->filter('table.records_list th')->eq(0)->filter('a i.fa-sort'));
-        $crawler = $client->click($crawler->filter('table.records_list th a')->link());
-        $crawler = $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertCount(1, $crawler->filter('table.records_list th a i.fa-sort-up'));
-    }
 }

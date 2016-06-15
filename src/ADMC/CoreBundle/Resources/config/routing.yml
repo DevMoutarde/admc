@@ -1,6 +1,11 @@
 admc_core_admin_groups:
     resource: "@ADMCCoreBundle/Resources/config/routing/group.yml"
     prefix:   /admin/groups
+    
+    
+admc_core_admin_users:
+    resource: "@ADMCCoreBundle/Resources/config/routing/user.yml"
+    prefix:   /admin/users
 
 
 admc_core_homepage:

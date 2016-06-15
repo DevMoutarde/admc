@@ -27,8 +27,10 @@ class LoginListener implements EventSubscriberInterface {
  
     protected function updateUser($user) {
          
-        if (!$user->getLoginCount())
+        if (!$user->getLoginCount()){
             $user->setFirstLogin(new \DateTime());
+        }
+            
          
         $user->setLoginCount((int) $user->getLoginCount() + 1);
          

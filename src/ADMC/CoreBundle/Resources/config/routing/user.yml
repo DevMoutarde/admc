@@ -1,0 +1,31 @@
+admin_users:
+    pattern:  /
+    defaults: { _controller: "ADMCCoreBundle:User:index" }
+
+
+admin_users_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ADMCCoreBundle:User:show" }
+
+admin_users_new:
+    pattern:  /new
+    defaults: { _controller: "ADMCCoreBundle:User:new" }
+
+admin_users_create:
+    pattern:  /create
+    defaults: { _controller: "ADMCCoreBundle:User:create" }
+    requirements: { _method: post }
+
+admin_users_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ADMCCoreBundle:User:edit" }
+
+admin_users_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ADMCCoreBundle:User:update" }
+    requirements: { _method: post|put }
+
+admin_users_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ADMCCoreBundle:User:delete" }
+    requirements: { _method: post|delete }

@@ -1,0 +1,45 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %}{{ '%entity% list'|trans({'%entity%': 'User'}, 'admin') }} - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <h1>{{ '%entity% list'|trans({'%entity%': 'User'}, 'admin') }}</h1>
+    <table class="table table-striped table-hover table-bordered records_list">
+        <thead>
+            <tr>
+                <th scope="col">Logincount</th>
+                <th scope="col">Firstlogin</th>
+                <th scope="col">Id</th>
+                <th scope="col">{{ 'Actions'|trans({}, 'admin') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in entities %}
+                <tr>
+                    <td><a href="{{ path('admin_users_show', {id: user.id}) }}">{{ user.loginCount }}</a></td>
+                    <td>{% if user.firstLogin %}{{ user.firstLogin|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>{{ user.id }}</td>
+                    <td>
+                        <div class="btn-group">
+                            <a class="btn btn-default btn-sm" href="{{ path('admin_users_show', {id: user.id}) }}">
+                                <i class="fa fa-file-o"></i> {{ 'show'|trans({}, 'admin') }}
+                            </a>
+                            <a class="btn btn-default btn-sm" href="{{ path('admin_users_edit', {id: user.id}) }}">
+                                <i class="fa fa-edit"></i> {{ 'edit'|trans({}, 'admin') }}
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <ul class="new_entry list-unstyled">
+        <li>
+            <a class="btn btn-info" href="{{ path('admin_users_new') }}">
+                <i class="fa fa-plus"></i> {{ 'Create a new entry'|trans({}, 'admin') }}
+            </a>
+        </li>
+    </ul>
+    
+{% endblock %}
