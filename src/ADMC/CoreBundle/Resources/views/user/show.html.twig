@@ -8,7 +8,15 @@
     <table class="table table-hover record_properties">
         <tbody>
             <tr>
-                <th scope="row">Logincount</th>
+                <th scope="row">Nom</th>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Nombre connexions</th>
                 <td>{{ user.loginCount }}</td>
             </tr>
             <tr>

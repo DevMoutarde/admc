@@ -64,9 +64,12 @@ class UserController extends Controller
         $user = new User();
         $form = $this->createForm(new UserType(), $user);
         if ($form->handleRequest($request)->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+            $user->setEnabled(true);
+            $userManager = $this->get('fos_user.user_manager');
+            $userManager->updateUser($user);
+            //$em = $this->getDoctrine()->getManager();
+            //$em->persist($user);
+            //$em->flush();
 
             return $this->redirect($this->generateUrl('admin_users_show', array('id' => $user->getId())));
         }
