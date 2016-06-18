@@ -4,9 +4,25 @@ parameters:
 #    parameter_name: value
 
 services:
+       
     login_listener:
         class: 'ADMC\CoreBundle\Listener\LoginListener'
         arguments: ['@fos_user.user_manager']
         tags:
             - { name: 'kernel.event_listener', event: 'security.interactive_login' }
             - { name: 'kernel.listener', event: 'fos_user.security.implicit_login' }
+
+    my_password_encoder:
+         class: 'ADMC\CoreBundle\LdapServices\MyPasswordEncoder'
+         
+    ldap_connect:
+         class: 'ADMC\CoreBundle\LdapServices\ADMCConnector'
+         
+    ldap_list_all_users:
+         class: 'ADMC\CoreBundle\LdapServices\ADMCSearchAllUsers' 
+         arguments: ['@ldap_connect']
+         
+
+    ldap_update_database:
+         class: 'ADMC\CoreBundle\LdapServices\ADMCMajBdd' 
+         arguments: ['@ldap_connect', '@doctrine.orm.entity_manager', '@ldap_list_all_users']

@@ -91,7 +91,7 @@ knp_paginator:
         
 #fr3d_ldap:
 #    driver:
-#       host:     192.168.1.67
+#       host:     192.168.1.240
 #       port:     389
 #       bindRequiresDn:      true
 #       baseDn:  cn=gabin,ou=Users,dc=test,dc=com
@@ -100,8 +100,8 @@ knp_paginator:
 #        baseDn: dc=test,dc=com
 #        filter: (&(objectClass=person))
 #        attributes:
-#           - { ldap_attr: cn,  user_method: setName }
-#           - { ldap_attr: userPrincipalName, user_method: setEmail }
+#            - { ldap_attr: uid,  user_method: setUsername }
+#            - { ldap_attr: mail, user_method: setEmail }
 #    service:
 #        #fr3d_ldap.user_hydrator.default
 #        #ldap_manager:  app.ldap.ldap_manager
@@ -122,3 +122,34 @@ knp_paginator:
 #           - { ldap_attr: mail, user_method: setEmail }
   #  service:
     #    ldap_manager:  app.ldap.ldap_manager
+    
+    
+    
+    
+fr3d_ldap:
+    driver:
+        host:                192.168.1.240
+        port:                389    # Optional
+        username:            gabin    # Optional
+        password:            Donjon2016    # Optional
+        bindRequiresDn:      true   # Optional
+        baseDn:               dc=admc, dc=com   # Optional
+#       accountFilterFormat: (&(uid=%s)) # Optional. sprintf format %s will be the username
+#       optReferrals:        false  # Optional
+#       useSsl:              true   # Enable SSL negotiation. Optional
+#       useStartTls:         true   # Enable TLS negotiation. Optional
+#       accountCanonicalForm: 3 # ACCTNAME_FORM_BACKSLASH this is only needed if your users have to login with something like HOST\User
+#       accountDomainName: HOST
+#       accountDomainNameShort: HOST # if you use the Backslash form set both to Hostname than the Username will be converted to HOST\User
+    user:
+        baseDn: ou=users, dc=admc, dc=com
+        filter: (&(ObjectClass=Person))
+        usernameAttribute: cn # Optional
+        attributes:          # Specify ldap attributes mapping [ldap attribute, user object method]
+           - { ldap_attr: givenName,   user_method: setName }     # Optional
+
+           - { ldap_attr: mail,  user_method: setEmail }         # Optional
+#   service:
+#       user_hydrator: fr3d_ldap.user_hydrator.default # Overrides default user hydrator
+#       ldap_manager: fr3d_ldap.ldap_manager.default   # Overrides default ldap manager
+#       ldap_driver: fr3d_ldap.ldap_driver.zend        # Overrides default ldap driver

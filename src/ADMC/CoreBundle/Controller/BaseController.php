@@ -9,7 +9,26 @@ class BaseController extends Controller
     public function indexAction(){
         
         
-        
+       
+       $listUsers = $this->container->get('ldap_list_all_users');
+       $updateBdd = $this->container->get('ldap_update_database');
+       $listUsers->searchUser();
+       
+       $updateBdd->updateBdd();
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
         return $this->render('ADMCCoreBundle:Base:index.html.twig');
     }
     
