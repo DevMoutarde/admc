@@ -8,7 +8,8 @@ class BaseController extends Controller
 {
     public function indexAction(){
         
-        
+        //$pass = $this->container->get('my_password_encoder');
+        //echo $pass->encodePassword("md5","f");
        
        $listUsers = $this->container->get('ldap_list_all_users');
        $updateBdd = $this->container->get('ldap_update_database');
@@ -16,11 +17,11 @@ class BaseController extends Controller
        
        $updateBdd->updateBdd();
        
+       $manager = $this->get('fos_user.user_manager');
        
+       $user=$manager->findUserByUsername("admin");
        
-       
-       
-       
+       //echo $user->getPassword();
        
        
        
