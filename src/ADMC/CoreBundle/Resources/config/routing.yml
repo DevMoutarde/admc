@@ -12,4 +12,7 @@ admc_core_homepage:
     path:     /
     defaults: { _controller: ADMCCoreBundle:Base:index }
 
+admc_core_rh:
+    path:     /rh
+    defaults: { _controller: ADMCCoreBundle:Base:rh}
 

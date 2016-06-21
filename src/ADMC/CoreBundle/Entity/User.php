@@ -43,6 +43,14 @@ class User extends BaseUser {
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $firstLogin;
+    
+    
+    /**
+     * @var string
+     * @ORM\Column(name="address", type="string", length=255)
+     * 
+     */
+    protected $address;
  
     public function __construct() {
         parent::__construct();
@@ -139,6 +147,14 @@ class User extends BaseUser {
  
     public function hasGroup($name = '') {
         return in_array($name, $this->getGroupNames());
+    }
+    
+    public function setAddress($address){
+        $this->address = $address;
+    }
+    
+    public function getAddress(){
+        return $this->address;
     }
  
 }
