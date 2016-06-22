@@ -10,12 +10,12 @@ class DsiController extends Controller
         return $this->render('ADMCDSIBundle:Dsi:index.html.twig');
     }
     public function menuAction(){
+        $subtitle="Menu DSI";
         $list=array(
-            array('link'=>'#', 'name'=>'Requete'), 
+            array('link'=>'#', 'name'=>'Liste des demandes en cours'), 
             array('link'=>'#', 'name'=>'Commentaire')
         );
-        return $this->render('ADMCDSIBundle:Dsi:menu.html.twig', array(
-            'menu'=>$list
+        return $this->render('ADMCDSIBundle:Dsi:menu.html.twig', array('subtitle'=>$subtitle,'menu'=>$list
         ));
     }
 }
