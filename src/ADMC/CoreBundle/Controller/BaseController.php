@@ -3,6 +3,7 @@
 namespace ADMC\CoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use FOS\UserBundle\Doctrine\UserManager;
 
 class BaseController extends Controller
 {
@@ -15,6 +16,16 @@ class BaseController extends Controller
        $updateBdd = $this->container->get('ldap_update_database');
        //$utilisateurs = $listUsers->searchUser();
        
+//       $em = $this->getDoctrine()->getManager();
+//       $repo = $em->getRepository('ADMCCoreBundle:Group');
+//       $group = $repo->find(7);
+//       
+//       $entityManager = $this->container->get('fos_user.user_manager');
+//       $user = $entityManager->findUserByUsername('jmiller');
+//       
+//       $user->addGroup($group);
+//       $entityManager->updateUser($user);
+//       
        
        
        

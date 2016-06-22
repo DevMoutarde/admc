@@ -25,20 +25,18 @@ class ADMCMajBdd {
     
     public function updateBdd(){
         
-        $user = "usertest";
-        
-       $result =  $this->userManager->findUserByUsername($user);
+       
         
        $users = $this->users->searchUser();
         foreach ($users as $user){
             $result =  $this->userManager->findUserByUsername($user['logon']);
             var_dump($user);
-            $this->listGroup($user);
             
+            $this->groupChecker($user);
             
             
             if ($result === null){
-                echo "utilisateur non connu";
+                //if user unknown
                 $userCreate = $this->userManager->createUser();
                 $userCreate->setUsername($user['logon']);
                 $userCreate->setUsernameCanonical($user['logon']);
@@ -52,44 +50,40 @@ class ADMCMajBdd {
                 
 
                 $this->userManager->updateUser($userCreate);
-        
+                
             
             //if user is known  
             }else{
                 echo "<br>utilisateur connu ";
                 //add roles
                 $this->addRole($result, $user);
+                $this->removeRole($result, $user);
                 //update the password in DB if not similar
                 $this->checkPassword($result->getPassword(), $user['password'], $result);
                 //manage group, if exists - update, if not - create one 
-                $this->groupChecker($result, $user);
+                
                 
                 $this->userManager->updateUser($result);
-                //add user in group
-                var_dump($user);
-                if(isset($user['memberof'])){
-                    foreach ($user['memberof'] as $groupName){
-                        if(!$this->startsWith($groupName, 'ROLE')){
 
-                          //$group =  $this->groupManager->findGroupByName($groupName);
-                          if(!$result->hasGroup($groupName)){
-                              echo "<br> l'utilisateur ".$result->getUsername()." n'est pas dans le groupe ".$groupName;
-                              $group = $this->groupManager->findGroupByName($groupName);
-                              $group->addUser($result);
-                          }
-
-                        }
-                    }
-                }
-                
-                
-                
-                
-                
-                
+                  
             }
         }
        
+        
+    }
+    
+    public function removeRole(\ADMC\CoreBundle\Entity\User $userBdd, $userLdap){
+        
+       $userBdd->getRoles();
+       foreach ($userBdd->getRoles() as $roleBdd){
+           if(isset($userLdap['memberof'])){
+               
+                if(!in_array($roleBdd, $userLdap['memberof'])){
+                    $userBdd->removeRole($roleBdd);
+                }
+               
+           }
+       }
         
     }
     
@@ -116,7 +110,7 @@ class ADMCMajBdd {
         }
     }
 
-    public function groupChecker($user=null, $data=null){
+    public function groupChecker($data=null){
        
         if(isset($data['memberof'])){
             //if start with ROLE
@@ -135,11 +129,6 @@ class ADMCMajBdd {
                    }
             }
         }
-        
-        
-        $groupe =  $this->groupManager->createGroup("essai");
-       $groupe->addRole('ROLE_DSI');
-       var_dump($groupe);
         
     }
     
