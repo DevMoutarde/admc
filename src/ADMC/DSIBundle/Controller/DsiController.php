@@ -11,6 +11,7 @@ class DsiController extends Controller
         return $this->render('ADMCDSIBundle:Dsi:index.html.twig');
     }
     public function menuAction(){
+<<<<<<< HEAD
         /*test user*/
         $id_user = 1;
         $repository = $this->getDoctrine()
@@ -32,7 +33,9 @@ class DsiController extends Controller
         }
         echo $group;
         /*test liste*/
+=======
         $subtitle="Menu DSI";
+>>>>>>> 8b06a2fd7873b5d52114bbfbfa2cc414536b09e5
         $list=array(
             array('link'=>'#', 'name'=>'Liste des demandes en cours'), 
             array('link'=>'#', 'name'=>'Gestion des comptes e-mail'),

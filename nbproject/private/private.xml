@@ -20,9 +20,5 @@
             <file>file:/C:/wamp64/www/admc/src/ADMC/CoreBundle/Entity/User.php</file>
             <file>file:/C:/wamp64/www/admc/src/ADMC/CoreBundle/Resources/views/user/show.html.twig</file>
         </group>
-        <group>
-            <file>file:/C:/xampp/htdocs/admc2206/admc/src/ADMC/DSIBundle/Controller/DsiController.php</file>
-            <file>file:/C:/xampp/htdocs/admc2206/admc/src/ADMC/DSIBundle/Resources/views/Dsi/menu.html.twig</file>
-        </group>
     </open-files>
 </project-private>
