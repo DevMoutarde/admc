@@ -18,4 +18,24 @@
  * <http://www.doctrine-project.org>.
  */
 
-require_once __DIR__ . "/../vendor/autoload.php";
+namespace Doctrine\Test\DataFixtures\Sorter;
+
+use Doctrine\Common\DataFixtures\Sorter\Vertex;
+
+/**
+ * @author Marco Pivetta <ocramius@gmail.com>
+ *
+ * @covers \Doctrine\Common\DataFixtures\Sorter\Vertex
+ */
+class VertexTest extends \PHPUnit_Framework_TestCase
+{
+    public function testNode()
+    {
+        $value = new \stdClass();
+        $node  = new Vertex($value);
+
+        self::assertSame($value, $node->value);
+        self::assertSame(Vertex::NOT_VISITED, $node->state);
+        self::assertSame([], $node->dependencyList);
+    }
+}
