@@ -43,6 +43,28 @@ class User extends BaseUser {
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $firstLogin;
+    
+    
+    /**
+     * @var string
+     * @ORM\Column(name="address", type="string", length=255, nullable=true)
+     * 
+     */
+    protected $address;
+    
+    /**
+     * @var integer
+     * @ORM\Column(name="postalcode", type="integer", length=5, nullable=true)
+     * 
+     */
+    protected $postalcode;
+    
+    /**
+     * @var string
+     * @ORM\Column(name="town", type="string", length=255, nullable=true)
+     * 
+     */
+    protected $town;
  
     public function __construct() {
         parent::__construct();
@@ -139,6 +161,33 @@ class User extends BaseUser {
  
     public function hasGroup($name = '') {
         return in_array($name, $this->getGroupNames());
+    }
+    
+    public function setAddress($address){
+        $this->address = $address;
+        return $this;
+    }
+    
+    public function getAddress(){
+        return $this->address;
+    }
+    
+    public function setPostalCode($code){
+        $this->postalcode = $code;
+        return $this;
+    }
+    
+    public function getPostalCode(){
+        return $this->postalcode;
+    }
+    
+    public function setTown($town){
+        $this->town = $town;
+        return $this;
+    }
+    
+    public function getTown(){
+        return $this->town;
     }
  
 }

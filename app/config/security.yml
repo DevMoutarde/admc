@@ -2,51 +2,25 @@
 # http://symfony.com/doc/current/book/security.html
 security:
     encoders:
-        FOS\UserBundle\Model\UserInterface: bcrypt
+        #FOS\UserBundle\Model\UserInterface: bcrypt
+        #FOS\UserBundle\Model\UserInterface: sha512
+        #FOS\UserBundle\Model\UserInterface: { id: my_password_encoder }
+        Symfony\Component\Security\Core\User\User: md5
+        ADMC\CoreBundle\Entity\User: plaintext
  
     role_hierarchy:
+        ROLE_HUMAN_RESSOURCES:  ROLE_RH
         ROLE_ADMIN:       ROLE_USER
         ROLE_SUPER_ADMIN: ROLE_ADMIN
 
 
 
-    providers:
-        chain_provider:
-            chain:
-                providers: fos_userbundle
-        fos_userbundle:
-            id: fos_user.user_provider.username
- 
-    firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-        main:
-            pattern: ^/
-            form_login:
-                provider: fos_userbundle
-                csrf_provider: security.csrf.token_manager # Use form.csrf_provider instead for Symfony <2.4
-                remember_me: true
-                default_target_path: /
-            logout:       true
-            anonymous:    true
-            remember_me:
-                key:      %secret%
-                lifetime: 604800 # durée de connexion d'une semaine
-                path:     /
-                domain:   ~ # Defaults to the current domain from $_SERVER
-                
-#                secure:   true
-    #            httponly: true
-                
 #    providers:
 #        chain_provider:
 #            chain:
-#                providers: [fos_userbundle, fr3d_ldapbundle]
-#        fr3d_ldapbundle:
-#            id: fr3d_ldap.security.user.provider
+#                providers: fos_userbundle
 #        fos_userbundle:
-#            id: fos_user.user_provider.username_email
+#            id: fos_user.user_provider.username
 # 
 #    firewalls:
 #        dev:
@@ -54,7 +28,6 @@ security:
 #            security: false
 #        main:
 #            pattern: ^/
-#            fr3d_ldap:  ~
 #            form_login:
 #                provider: fos_userbundle
 #                csrf_provider: security.csrf.token_manager # Use form.csrf_provider instead for Symfony <2.4
@@ -71,9 +44,42 @@ security:
 #                secure:   true
     #            httponly: true
                 
+    providers:
+        chain_provider:
+            chain:
+                providers: [fos_userbundle, fr3d_ldapbundle]
+        fr3d_ldapbundle:
+            id: fr3d_ldap.security.user.provider
+        fos_userbundle:
+            id: fos_user.user_provider.username
+ 
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            pattern: ^/
+            fr3d_ldap:  ~
+            form_login:
+                provider: fos_userbundle
+                csrf_provider: security.csrf.token_manager # Use form.csrf_provider instead for Symfony <2.4
+                remember_me: true
+                default_target_path: /
+            logout:       true
+            anonymous:    true
+            remember_me:
+                key:      %secret%
+                lifetime: 604800 # durée de connexion d'une semaine
+                path:     /
+                domain:   ~ # Defaults to the current domain from $_SERVER
+                
+#                secure:   true
+    #            httponly: true
+                
  
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/rh, role: ROLE_RH }

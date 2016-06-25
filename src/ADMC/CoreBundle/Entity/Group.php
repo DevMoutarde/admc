@@ -47,7 +47,7 @@ class Group extends BaseGroup {
      *
      * @return Group
      */
-    public function addUser(\ADMC\CoreBundle\Entity\FosUser $user)
+    public function addUser(\ADMC\CoreBundle\Entity\User $user)
     {
         $this->user[] = $user;
 
@@ -59,7 +59,7 @@ class Group extends BaseGroup {
      *
      * @param \ADMC\CoreBundle\Entity\FosUser $user
      */
-    public function removeUser(\ADMC\CoreBundle\Entity\FosUser $user)
+    public function removeUser(\ADMC\CoreBundle\Entity\User $user)
     {
         $this->user->removeElement($user);
     }
