@@ -41,7 +41,7 @@ class Request
     /**
      * @var RoleRequest
      * 
-     * @ORM\ManyToOne(targetEntity="ADMC\CoreBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="ADMC\CoreBundle\Entity\RoleRequest")
      * @ORM\JoinColumn(nullable=false)
      */
     private $roleRequest;
