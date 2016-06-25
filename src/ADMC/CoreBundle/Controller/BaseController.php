@@ -12,9 +12,9 @@ class BaseController extends Controller
         //$pass = $this->container->get('my_password_encoder');
         //echo $pass->encodePassword("Donjon2016","fkjh");
        
-       //$listUsers = $this->container->get('ldap_list_all_users');
+       $listUsers = $this->container->get('ldap_list_all_users');
        $updateBdd = $this->container->get('ldap_update_database');
-       //$utilisateurs = $listUsers->searchUser();
+       $utilisateurs = $listUsers->searchUser();
        
 //       $em = $this->getDoctrine()->getManager();
 //       $repo = $em->getRepository('ADMCCoreBundle:Group');

@@ -13,7 +13,7 @@ class ADMCConnector{
     }
     
     public function connector(){
-        $server = "192.168.1.240";
+        $server = "ntak-data.synology.me";
         $ad = ldap_connect($server, 389) or die ("pas de connexion possibles");
         $this->connect= $ad;
         
