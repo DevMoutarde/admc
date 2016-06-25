@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e495d3f36d712a454a8b78c43b1d0227",
-    "content-hash": "95cf713ca19b47490b0397901bf12ea9",
+    "hash": "34f8323400def6908e68570a42d2b515",
+    "content-hash": "8b137b3f246f55d427b187633d83407b",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -892,38 +892,34 @@
         },
         {
             "name": "fr3d/ldap-bundle",
-            "version": "v3.0.0",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Maks3w/FR3DLdapBundle.git",
-                "reference": "5a8927c11af45fa06331b97221c6da1a4a237475"
+                "reference": "59d002df39bdb75fe6e5d12a4d61904d30e84711"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Maks3w/FR3DLdapBundle/zipball/5a8927c11af45fa06331b97221c6da1a4a237475",
-                "reference": "5a8927c11af45fa06331b97221c6da1a4a237475",
+                "url": "https://api.github.com/repos/Maks3w/FR3DLdapBundle/zipball/59d002df39bdb75fe6e5d12a4d61904d30e84711",
+                "reference": "59d002df39bdb75fe6e5d12a4d61904d30e84711",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5",
-                "psr/log": "~1.0",
-                "symfony/config": "2.3 - 3",
-                "symfony/dependency-injection": "2.3 - 3",
-                "symfony/polyfill-php56": "^1.1",
-                "symfony/security": "2.3 - 3",
-                "symfony/security-bundle": "2.3 - 3",
-                "zendframework/zend-ldap": "2.5 - 3"
+                "ext-ldap": "*",
+                "php": ">=5.3.2",
+                "symfony/config": "~2.1",
+                "symfony/dependency-injection": "~2.1",
+                "symfony/security": "~2.1",
+                "symfony/security-bundle": "~2.1",
+                "zendframework/zend-ldap": "~2"
             },
             "require-dev": {
-                "fabpot/php-cs-fixer": "1.11.*",
-                "fr3d/psr3-message-assertions": "0.1.*",
-                "friendsofsymfony/user-bundle": "~1.3",
-                "maks3w/phpunit-methods-trait": "^4.6",
-                "phpunit/phpunit": "^4.6",
-                "symfony/validator": "2.3 - 3"
+                "fabpot/php-cs-fixer": "*",
+                "phpunit/phpunit": "~4",
+                "symfony/validator": "~2.1"
             },
             "suggest": {
-                "friendsofsymfony/user-bundle": "Integrate authentication and management for DB users, useful for unmanned LDAP servers",
+                "friendsofsymfony/user-bundle": "Integrate authentication and management for DB users, useful for unmanaged LDAP servers",
                 "symfony/validator": "Allow pre-validate for existing users before register new ones"
             },
             "type": "symfony-bundle",
@@ -947,7 +943,7 @@
                 "Authentication",
                 "ldap"
             ],
-            "time": "2016-02-12 17:45:14"
+            "time": "2015-04-29 08:53:27"
         },
         {
             "name": "friendsofsymfony/user-bundle",
@@ -1622,16 +1618,16 @@
         },
         {
             "name": "sensio/distribution-bundle",
-            "version": "v5.0.6",
+            "version": "v5.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "ffe306d09c1f2bad721237f63b2169d1b78253d0"
+                "reference": "a9c4723cbdbc6cf7fbfdfde3c639cb1943f0293a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/ffe306d09c1f2bad721237f63b2169d1b78253d0",
-                "reference": "ffe306d09c1f2bad721237f63b2169d1b78253d0",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/a9c4723cbdbc6cf7fbfdfde3c639cb1943f0293a",
+                "reference": "a9c4723cbdbc6cf7fbfdfde3c639cb1943f0293a",
                 "shasum": ""
             },
             "require": {
@@ -1670,7 +1666,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2016-04-25 20:50:31"
+            "time": "2016-06-23 16:11:33"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -2877,7 +2873,8 @@
         "pugx/generator-bundle": 20,
         "knplabs/knp-paginator-bundle": 20,
         "lexik/form-filter-bundle": 20,
-        "willdurand/faker-bundle": 20
+        "willdurand/faker-bundle": 20,
+        "fr3d/ldap-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
