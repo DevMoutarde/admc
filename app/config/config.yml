@@ -91,7 +91,7 @@ knp_paginator:
         
 fr3d_ldap:
     driver:
-       host:     ntak-data.synology.me
+       host:     192.168.1.240
        username: jmiller@admc.com
        password: Password123
        accountDomainName: admc.com

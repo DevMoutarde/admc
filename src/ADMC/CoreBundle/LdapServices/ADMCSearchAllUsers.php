@@ -45,9 +45,7 @@ class ADMCSearchAllUsers{
                        //var_dump($entries[$x]['memberof']);
                        for($y=0; $y< $entries[$x]['memberof']['count']; $y++){
                            
-                           if($this->startsWith($this->getBetween($entries[$x]['memberof'][$y], "=", ","), "ROLE")){
-                               echo "role trouvé";
-                           }
+                           
                            $ad_users[strtoupper(trim($entries[$x]['samaccountname'][0]))]['memberof'][$y] = $this->getBetween($entries[$x]['memberof'][$y], "=", ",");
                        }
                        

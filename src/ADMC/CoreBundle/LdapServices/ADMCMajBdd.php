@@ -65,7 +65,7 @@ class ADMCMajBdd {
             
             //if user is known  
             }else{
-                echo "<br>utilisateur connu <br>";
+                
                 //add roles
                 $this->addRole($result, $user);
                 $this->removeRole($result, $user);

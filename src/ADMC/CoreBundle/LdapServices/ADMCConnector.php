@@ -13,10 +13,9 @@ class ADMCConnector{
     }
     
     public function connector(){
-        $server = "ntak-data.synology.me";
+        $server = "192.168.1.240";
         $ad = ldap_connect($server, 389) or die ("pas de connexion possibles");
         $this->connect= $ad;
-        
         $baseDn = "CN=jmiller,CN=Users,DC=admc,DC=com";
          $user = 'Administrateur';
          $password='Donjon2016';
@@ -28,9 +27,7 @@ class ADMCConnector{
          ldap_set_option($ad, LDAP_OPT_REFERRALS, 0);
          $r=ldap_bind($ad, "{$user}@{$domain}", $password) or die('Bind ad impossible.');
          
-         if ($r){
-             echo "connexion LDAP établie";
-         }
+        
          
 //         $sr=ldap_search($ad,$baseDn, "sn=*"); 
 //         echo "le resultat de la recherche est: ".$sr."<br>";
