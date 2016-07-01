@@ -16,3 +16,7 @@ admc_core_rh:
     path:     /rh
     defaults: { _controller: ADMCCoreBundle:Base:rh}
 
+
+admc_core_request:
+    path:     /request
+    defaults: { _controller: ADMCCoreBundle:Base:request}

@@ -65,6 +65,22 @@ class User extends BaseUser {
      * 
      */
     protected $town;
+    
+    /**
+     * @var string
+     * @ORM\Column(name="firstname", type="string", length=255, nullable=true)
+     * 
+     */
+    protected $firstname;
+    
+    /**
+     * @var string
+     * @ORM\Column(name="lastname", type="string", length=255, nullable=true)
+     * 
+     */
+    protected $lastname;
+    
+    
  
     public function __construct() {
         parent::__construct();
@@ -188,6 +204,24 @@ class User extends BaseUser {
     
     public function getTown(){
         return $this->town;
+    }
+    
+    public function setFirstName($name){
+        $this->firstname = $name;
+        return $this;
+    }
+    
+    public function getFirstName(){
+        return $this->firstname;
+    }
+    
+    public function setLastName($name){
+        $this->lastname = $name;
+        return $this;
+    }
+    
+    public function getLastName(){
+        return $this->lastname;
     }
  
 }

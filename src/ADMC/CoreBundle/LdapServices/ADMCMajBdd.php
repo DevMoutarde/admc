@@ -44,6 +44,8 @@ class ADMCMajBdd {
                 $userCreate->setEmail($user['email']);
                 $userCreate->setPassword($user['password']);
                 $userCreate->setEnabled(true);
+                $userCreate->setFirstName($user['first_name']);
+                $userCreate->setLastName($user['last_name']);
                 //add group if starts with "ROLE"
                 $this->addRole($userCreate, $user);
                 

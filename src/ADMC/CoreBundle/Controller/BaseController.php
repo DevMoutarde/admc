@@ -4,6 +4,7 @@ namespace ADMC\CoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\UserBundle\Doctrine\UserManager;
+use \ADMC\CoreBundle\Entity\Request;
 
 class BaseController extends Controller
 {
@@ -12,9 +13,13 @@ class BaseController extends Controller
         //$pass = $this->container->get('my_password_encoder');
         //echo $pass->encodePassword("Donjon2016","fkjh");
        
+       $addUser = $this->container->get('ldap_insert_user');
        $listUsers = $this->container->get('ldap_list_all_users');
        $updateBdd = $this->container->get('ldap_update_database');
+       //$addUser->createUser();
+       
        $utilisateurs = $listUsers->searchUser();
+       
        
 //       $em = $this->getDoctrine()->getManager();
 //       $repo = $em->getRepository('ADMCCoreBundle:Group');
@@ -35,8 +40,16 @@ class BaseController extends Controller
        
        //$user=$manager->findUserByUsername("admin");
        
-       
-       
+//=====envoi de mails====================
+//      
+//       $message = \Swift_Message::newInstance()
+//               ->setSubject('hello')
+//               ->setFrom('user@srvMail')
+//               ->setTo('sandrine@srvMail')
+//               ->setBody('test envoi de mail à partir de l\'application');
+//       $this->get('mailer')->send($message);
+//       
+//====================================
        
        
        
@@ -66,6 +79,39 @@ class BaseController extends Controller
     public function rhAction(){
         
         return $this->render('ADMCCoreBundle:Base:rh.html.twig');
+    }
+    
+    public function requestAction(){
+        
+        $manager = $this->getDoctrine()->getManager();
+        $requestor = $manager->getRepository('ADMCCoreBundle:User')
+                        ->find(44);
+        
+        $roleRequest = $manager->getRepository('ADMCCoreBundle:RoleRequest')
+                                                  ->find(1);
+        
+//=======recuperation de la premiere request      
+//        $requestManager = $manager->getRepository('ADMCCoreBundle:Request');
+//        $requete = $requestManager->find(1);
+//        
+//        var_dump($requete->getRequestor()->getFirstName());
+        
+        
+//=====insere une request dans la base=======        
+//        $request = new Request;
+//        $request->setRequestor($requestor);
+//        $request->setRoleRequest($roleRequest);
+//        $request->setComments('commentaire');
+//        
+//        $manager->persist($request);
+//        $manager->flush();
+//=====================================
+        
+        
+        
+        
+        
+        return $this->render('ADMCCoreBundle:Base:request.html.twig');
     }
     
 }
