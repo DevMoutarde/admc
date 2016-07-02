@@ -18,12 +18,18 @@
               
               {% for request in requetes %}
                   
+              
                 <tr>
-                  <td>{{ request.roleRequest.roleName }}</td>
-                  <td>{{ request.requestor.lastName }}</td>
-                  <td>{{ request.status }}</td>
-                  <td>{{ request.date| date("m/d/Y") }}</td>
+                  <td data-toggle="modal" data-target="#myModal">
+                      {{ request.roleRequest.roleName }}</td>
+                  <td data-toggle="modal" data-target="#myModal">
+                      {{ request.requestor.lastName }}</td>
+                  <td data-toggle="modal" data-target="#myModal">
+                      {{ request.status }}</td>
+                  <td data-toggle="modal" data-target="#myModal">
+                      {{ request.date| date("m/d/Y") }}</td>
                 </tr>
+              
             
             {% endfor %}
             

@@ -85,20 +85,29 @@ class BaseController extends Controller
     
     public function requestAction(){
         
-        $manager = $this->getDoctrine()->getManager();
-        
-        $requestor = $manager->getRepository('ADMCCoreBundle:User')
-                        ->findAll();
-        
+//        $manager = $this->getDoctrine()->getManager();
+//        
+//        $requestor = $manager->getRepository('ADMCCoreBundle:User')
+//                        ->find(44);
+//        
 //        $roleRequest = $manager->getRepository('ADMCCoreBundle:RoleRequest')
-//                                                  ->findAll();
+//                                                  ->find(1);
         
 //=======recuperation de la premiere request      
 
-        $requestManager = $manager->getRepository('ADMCCoreBundle:Request');
-        $requete = $requestManager->find(1);
+//        $requestManager = $manager->getRepository('ADMCCoreBundle:Request');
+//        $requete = $requestManager->find();
         
       //  var_dump($requete);
+        
+        
+        // FONCTIONNEL trouver un groupe==============
+        $em = $this->getDoctrine()->getManager();
+       $repo = $em->getRepository('ADMCCoreBundle:Group');
+       $group = $repo->find(7);
+       var_dump($group);
+        
+       
 
         
         
