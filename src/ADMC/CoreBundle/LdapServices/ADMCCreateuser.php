@@ -52,7 +52,7 @@ class ADMCCreateuser{
     public function createUserByObject(\FOS\UserBundle\Model\User $user){
         
         
-        $dn = "CN=".$user->getUsername().",CN=Users;dc=admc,dc=com"; 
+        $dn = "CN=".$user->getFirstName().",CN=Users;dc=admc,dc=com"; 
         $adduserAD["cn"][0] = $user->getUsername(); 
         $adduserAD["samaccountname"][0] =  $user->getUsername(); 
         $adduserAD["objectclass"][0] = "top"; 
@@ -61,7 +61,7 @@ class ADMCCreateuser{
         $adduserAD["objectclass"][3] = "user"; 
         $adduserAD["displayname"][0] = $user->getFirstName()." ".$user->getLastName() ; 
         $adduserAD["name"][0] = $user->getLastName(); 
-        $adduserAD["givenname"][0] = $user->getFirstName(); 
+        $adduserAD["givenname"][0] = "gui"; 
         $adduserAD["sn"][0] = $this->getFirstName(); 
         $adduserAD["company"][0] ="lbnl"; 
         $adduserAD["description"][0] = "Employé de lbnl"; 

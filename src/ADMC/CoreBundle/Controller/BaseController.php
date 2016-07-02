@@ -18,7 +18,7 @@ class BaseController extends Controller
        $updateBdd = $this->container->get('ldap_update_database');
        //$addUser->createUser();
        
-       //$utilisateurs = $listUsers->searchUser();
+       $utilisateurs = $listUsers->searchUser();
        
        
 //       $em = $this->getDoctrine()->getManager();
@@ -34,7 +34,8 @@ class BaseController extends Controller
        
        
        
-       //$updateBdd->updateBdd();
+
+       $updateBdd->updateBdd();
 
        //$manager = $this->get('fos_user.user_manager');
        
@@ -81,29 +82,31 @@ class BaseController extends Controller
         return $this->render('ADMCCoreBundle:Base:rh.html.twig');
     }
     
-    
-    
     public function requestAction(){
         
         $manager = $this->getDoctrine()->getManager();
         $requestor = $manager->getRepository('ADMCCoreBundle:User')
-                        ->find(43);
+                        ->find(44);
         
         $roleRequest = $manager->getRepository('ADMCCoreBundle:RoleRequest')
                                                   ->find(1);
         
 //=======recuperation de la premiere request      
+
         $requestManager = $manager->getRepository('ADMCCoreBundle:Request');
         $requete = $requestManager->find(1);
         
         var_dump($requete);
+
         
         
 //=====insere une request dans la base=======        
 //        $request = new Request;
 //        $request->setRequestor($requestor);
 //        $request->setRoleRequest($roleRequest);
+
 //        $request->setComments('un commentaire');
+
 //        $manager->persist($request);
 //        $manager->flush();
 //=====================================
@@ -113,38 +116,6 @@ class BaseController extends Controller
         
         
         return $this->render('ADMCCoreBundle:Base:request.html.twig');
-    }
-    
-    public function createuserAction(){
-        
-        
-        $userManager =  $this->get('fos_user.user_manager');
-        
-        $userFound = $userManager->findUserByUsername("ccervos");
-          
-        if ($userFound === null){
-            $user = $userManager->createUser();
-        
-        $user->setUsername("ccervos");
-        $user->setUsernameCanonical("ccervos");
-        $user->setEmail("ced@admc.com");
-        $user->setPassword("pass");
-        $user->setEnabled(true);
-        $user->setFirstName("cedric");
-        $user->setLastName("cervos");
-        $user->setAddress("2 rue truc");
-        $user->setTown("Toulouse");
-        $user->setPostalCode(31400);
-        $user->setPassword("pass");
-        $user->setEnabled(False);
-        $userManager->updateUser($user);
-        }
-        
-        
-        
-        
-        
-        return $this->render('ADMCCoreBundle:Base:index.html.twig');
     }
     
 }
