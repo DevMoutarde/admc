@@ -4,6 +4,7 @@ namespace ADMC\CoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\UserBundle\Doctrine\UserManager;
+use FOS\UserBundle\Doctrine\GroupManager;
 use \ADMC\CoreBundle\Entity\Request;
 
 class BaseController extends Controller
@@ -85,11 +86,12 @@ class BaseController extends Controller
     public function requestAction(){
         
         $manager = $this->getDoctrine()->getManager();
-        $requestor = $manager->getRepository('ADMCCoreBundle:User')
-                        ->find(44);
         
-        $roleRequest = $manager->getRepository('ADMCCoreBundle:RoleRequest')
-                                                  ->find(1);
+        $requestor = $manager->getRepository('ADMCCoreBundle:User')
+                        ->findAll();
+        
+//        $roleRequest = $manager->getRepository('ADMCCoreBundle:RoleRequest')
+//                                                  ->findAll();
         
 //=======recuperation de la premiere request      
 
