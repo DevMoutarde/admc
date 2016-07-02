@@ -43,7 +43,7 @@ class Request
      * @ORM\OneToOne(targetEntity="ADMC\CoreBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $userToCreate;
+    private $userConcerned;
     
     
 
@@ -290,14 +290,14 @@ class Request
         return $this->group;
     }
     
-    public function setUserToCreate(User $user){
-        $this->userToCreate = $user;
+    public function setUserConcerned(User $user){
+        $this->userConcerned = $user;
         return $this;
     }
     
-    public function getUserToCreate(){
+    public function getUserConcerned(){
         
-        return $this->userToCreate;
+        return $this->userConcerned;
     }
     
 }

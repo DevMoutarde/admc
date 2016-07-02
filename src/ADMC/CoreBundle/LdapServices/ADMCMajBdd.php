@@ -157,6 +157,7 @@ class ADMCMajBdd {
         foreach($group as $grp){
             $groupBdd = $this->groupManager->findGroupByName($grp);
             
+            
             if($groupBdd !==null){
                 
                 $user->addGroup($groupBdd);

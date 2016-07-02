@@ -19,8 +19,8 @@ class BaseController extends Controller
        $updateBdd = $this->container->get('ldap_update_database');
        //$addUser->createUser();
        
-       //$utilisateurs = $listUsers->searchUser();
-       
+       $utilisateurs = $listUsers->searchUser();
+       $updateBdd->updateBdd();
        
 //       $em = $this->getDoctrine()->getManager();
 //       $repo = $em->getRepository('ADMCCoreBundle:Group');
@@ -36,7 +36,7 @@ class BaseController extends Controller
        
        
 
-      //$updateBdd->updateBdd();
+     
 
        //$manager = $this->get('fos_user.user_manager');
        
@@ -85,7 +85,7 @@ class BaseController extends Controller
     
     public function requestAction(){
         
-//        $manager = $this->getDoctrine()->getManager();
+        $manager = $this->getDoctrine()->getManager();
 //        
 //        $requestor = $manager->getRepository('ADMCCoreBundle:User')
 //                        ->find(44);
@@ -102,22 +102,29 @@ class BaseController extends Controller
         
         
         // FONCTIONNEL trouver un groupe==============
-        $em = $this->getDoctrine()->getManager();
-       $repo = $em->getRepository('ADMCCoreBundle:Group');
-       $group = $repo->find(7);
-       var_dump($group);
+//        $em = $this->getDoctrine()->getManager();
+//       $repo = $em->getRepository('ADMCCoreBundle:Group');
+//       $group = $repo->find(7);
+      // var_dump($group);
         
        
-
-        
+//   $managerGroup = $this->container->get('fos_user.group_manager');
+//   $group = $managerGroup->findGroupBy(array ('id'=>7));
+//   
+//    $managerUser = $this->container->get('fos_user.user_manager');      
+//    $userRequestor = $managerUser->findUserBy(array ('username' => 'guillaume'));
+//    
+//    $userConcerned = $managerUser->findUserBy(array ('username' => 'ccervos'));
+    
+    
         
 //=====insere une request dans la base=======        
 //        $request = new Request;
-//        $request->setRequestor($requestor);
+//        $request->setRequestor($userRequestor);
 //        $request->setRoleRequest($roleRequest);
-
-//        $request->setComments('un commentaire');
-
+//        $request->setGroup($group);
+//        $request->setComments('Merci de m\'ajouter le logiciel x');
+//
 //        $manager->persist($request);
 //        $manager->flush();
 //=====================================
@@ -127,6 +134,68 @@ class BaseController extends Controller
         
         
         return $this->render('ADMCCoreBundle:Base:request.html.twig');
+    }
+    
+    
+    public function addUserAction(){
+        
+        
+        $manager = $this->get('fos_user.user_manager');
+       
+       $userTest=$manager->findUserByUsername("ccervos");
+        
+        if ($userTest === null){
+            
+            $UserContainer =  $this->container->get('fos_user.user_manager');
+            $user = $UserContainer->createUser();
+            $user->setUsername("ccervos");
+            $user->setUsernameCanonical("ccervos");
+            $user->setEmail("cervos@admc.com");
+            $user->setEmailCanonical("cervos@admc.com");
+            $user->setEnabled(False);
+            $user->setPassword("pass");
+            $user->setAddress("2 rue truc");
+            $user->setTown("Toulouse");
+            $user->setFirstName("cedric");
+            $user->setLastName("cervos");
+            $user->setPostalCode(31400);
+            var_dump($user);
+
+            $UserContainer->updateUser($user);
+            
+            
+        }
+        
+//        var_dump($userTest->getUsername());
+//        
+//        $addUser = $this->container->get('ldap_insert_user');
+//        $addUser->createUserByObject($userTest);
+        
+        
+       return $this->render('ADMCCoreBundle:Base:index.html.twig');
+        
+    }
+    
+    public function addGroupAction(){
+        
+        $manager = $this->getDoctrine()->getManager();
+        
+        $requestUser = $manager->getRepository('ADMCCoreBundle:User');
+        $requestUser->findAll();
+        
+        $requestManager = $manager->getRepository('ADMCCoreBundle:Request');
+        $requete = $requestManager->find(3);
+        
+        //var_dump($requete);
+        
+        $user = $requete->getUserConcerned()->getUsername();
+        $group = $requete->getGroup()->getName();
+        
+//        $addUser = $this->container->get('ldap_insert_user_in_group');
+//        var_dump($addUser->addGroup($group, $user));
+        $delUser = $this->container->get('ldap_delete_user_from_group');
+        $delUser->delUserFromGroup($group, $user);
+        return $this->render('ADMCCoreBundle:Base:index.html.twig');
     }
     
 }

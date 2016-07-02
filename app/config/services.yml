@@ -30,4 +30,11 @@ services:
     ldap_insert_user:
          class: 'ADMC\CoreBundle\LdapServices\ADMCCreateuser'
          arguments: ['@ldap_connect']
+  
+    ldap_insert_user_in_group:
+         class: 'ADMC\CoreBundle\LdapServices\ADMCAddgroup'
+         arguments: ['@ldap_connect']
          
+    ldap_delete_user_from_group:
+         class: 'ADMC\CoreBundle\LdapServices\ADMCDelUserFromGroup'
+         arguments: ['@ldap_connect']

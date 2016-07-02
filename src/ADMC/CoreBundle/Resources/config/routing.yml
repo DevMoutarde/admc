@@ -20,3 +20,12 @@ admc_core_rh:
 admc_core_request:
     path:     /request
     defaults: { _controller: ADMCCoreBundle:Base:request}
+    
+admc_core_adduser:
+    path:     /adduser
+    defaults: { _controller: ADMCCoreBundle:Base:addUser}
+
+
+admc_core_adduser_group:
+    path:     /addgroup
+    defaults: { _controller: ADMCCoreBundle:Base:addGroup}
