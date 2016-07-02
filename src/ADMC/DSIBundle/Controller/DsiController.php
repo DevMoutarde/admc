@@ -8,6 +8,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class DsiController extends Controller
 {
     public function indexAction(){
+        
         return $this->render('ADMCDSIBundle:Dsi:index.html.twig');
     }
     public function menuAction(){
@@ -34,14 +35,18 @@ class DsiController extends Controller
         /*test liste*/
         $subtitle="Menu DSI";
         $list=array(
-            array('link'=>'#', 'name'=>'Liste des demandes en cours'), 
+            array('link'=>$this->get('router')->generate('admcdsi_request_list'), 'name'=>'Liste des demandes en cours'), 
             array('link'=>'#', 'name'=>'Gestion des comptes e-mail'),
             array('link'=>'#', 'name'=>'Etablir la politique de sécurité'),
             array('link'=>'#', 'name'=>'Gestion des non-conformités')
             
         );
         return $this->render('ADMCDSIBundle:Dsi:menu.html.twig', array('subtitle'=>$subtitle,'menu'=>$list
-        ));
+        ));  
+    }
+    public function requestsviewAction(){
+        echo "TEST";
+        return $this->render('ADMCDSIBundle:Dsi:requestsview.html.twig');
     }
     
 }

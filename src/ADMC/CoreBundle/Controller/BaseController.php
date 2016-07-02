@@ -14,7 +14,7 @@ class BaseController extends Controller
        
        $listUsers = $this->container->get('ldap_list_all_users');
        $updateBdd = $this->container->get('ldap_update_database');
-       $utilisateurs = $listUsers->searchUser();
+    //   $utilisateurs = $listUsers->searchUser();
        
 //       $em = $this->getDoctrine()->getManager();
 //       $repo = $em->getRepository('ADMCCoreBundle:Group');
@@ -29,7 +29,7 @@ class BaseController extends Controller
        
        
        
-       $updateBdd->updateBdd();
+    //   $updateBdd->updateBdd();
        
        //$manager = $this->get('fos_user.user_manager');
        

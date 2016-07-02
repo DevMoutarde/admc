@@ -1,0 +1,14 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+    
+    {{parent()}} - DSI
+    
+{% endblock %}
+
+{% block body %}
+    <h1> DSI </h1>
+    <hr>
+    {%block ADMCDSI_body %}
+    {% endblock %}
+{% endblock %}

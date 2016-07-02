@@ -1,4 +1,7 @@
 admcdsi_homepage:
     path:     /
     defaults: { _controller: ADMCDSIBundle:Dsi:index }
-    
+   
+admcdsi_request_list:
+    path:     /list
+    defaults: { _controller: ADMCDSIBundle:Dsi:requestsview }
