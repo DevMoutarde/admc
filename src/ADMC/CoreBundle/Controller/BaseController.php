@@ -90,22 +90,22 @@ class BaseController extends Controller
                         ->find(43);
         
         $roleRequest = $manager->getRepository('ADMCCoreBundle:RoleRequest')
-                                                  ->find(2);
+                                                  ->find(1);
         
 //=======recuperation de la premiere request      
-//        $requestManager = $manager->getRepository('ADMCCoreBundle:Request');
-//        $requete = $requestManager->findBy(array('comments' => 'commentaire'));
-//        
-//        var_dump($requete);
+        $requestManager = $manager->getRepository('ADMCCoreBundle:Request');
+        $requete = $requestManager->find(1);
+        
+        var_dump($requete);
         
         
 //=====insere une request dans la base=======        
-        $request = new Request;
-        $request->setRequestor($requestor);
-        $request->setRoleRequest($roleRequest);
-        $request->setComments('un commentaire');
-        $manager->persist($request);
-        $manager->flush();
+//        $request = new Request;
+//        $request->setRequestor($requestor);
+//        $request->setRoleRequest($roleRequest);
+//        $request->setComments('un commentaire');
+//        $manager->persist($request);
+//        $manager->flush();
 //=====================================
         
         
