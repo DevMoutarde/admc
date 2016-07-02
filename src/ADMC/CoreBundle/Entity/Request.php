@@ -36,6 +36,16 @@ class Request
      * @ORM\JoinColumn(nullable=true)
      */
     private $approver;
+    
+    /**
+     * @var User
+     *
+     * @ORM\OneToOne(targetEntity="ADMC\CoreBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $userToCreate;
+    
+    
 
     
     /**
@@ -278,6 +288,16 @@ class Request
      */
     public function getGroup(){
         return $this->group;
+    }
+    
+    public function setUserToCreate(User $user){
+        $this->userToCreate = $user;
+        return $this;
+    }
+    
+    public function getUserToCreate(){
+        
+        return $this->userToCreate;
     }
     
 }

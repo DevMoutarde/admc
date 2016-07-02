@@ -26,3 +26,8 @@ services:
     ldap_update_database:
          class: 'ADMC\CoreBundle\LdapServices\ADMCMajBdd' 
          arguments: [@ldap_connect, @doctrine.orm.entity_manager, @ldap_list_all_users, @fos_user.user_manager, @fos_user.group_manager]
+         
+    ldap_insert_user:
+         class: 'ADMC\CoreBundle\LdapServices\ADMCCreateuser'
+         arguments: ['@ldap_connect']
+         
