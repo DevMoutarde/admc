@@ -4,6 +4,7 @@ namespace ADMC\DSIBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use ADMC\CoreBundle\Entity\Request;
 
 class DsiController extends Controller
 {
@@ -45,8 +46,15 @@ class DsiController extends Controller
         ));  
     }
     public function requestsviewAction(){
-        echo "TEST";
-        return $this->render('ADMCDSIBundle:Dsi:requestsview.html.twig');
+        $subtitle="Liste des requêtes en attente";
+        /* envoi des requetes au tableau */
+        $requestRepository = $this->getDoctrine()
+                ->getManager()
+                ->getRepository('ADMCCoreBundle:Request');
+        $requests = $requestRepository->findAll();
+       // var_dump($requests);
+        return $this->render('ADMCDSIBundle:Dsi:requestsview.html.twig', array('subtitle'=>$subtitle
+        ));
     }
     
 }
