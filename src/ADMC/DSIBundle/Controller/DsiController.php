@@ -53,6 +53,9 @@ class DsiController extends Controller
        $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
        $requestRepository=$doctManager->getRepository('ADMCCoreBundle:Request');
        $requests=$requestRepository->findAll();
+       
+       var_dump($requests);
+
         
  
         return $this->render('ADMCDSIBundle:Dsi:requestsview.html.twig', array('requetes'=>$requests
