@@ -33,3 +33,7 @@ admc_core_adduser_group:
 admc_core_list_user_by_group:
     path:     /listGroup
     defaults: { _controller: ADMCCoreBundle:Base:listGroup }
+    
+admc_core_modify_user:
+    path:     /modifyUser
+    defaults: { _controller: ADMCCoreBundle:Base:modifyUser }

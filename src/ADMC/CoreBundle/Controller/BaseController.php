@@ -9,6 +9,8 @@ use \ADMC\CoreBundle\Entity\Request;
 
 class BaseController extends Controller
 {
+    
+    //affiche la page d'accueil + contient les déclarations de certains services
     public function indexAction(){
         
         //$pass = $this->container->get('my_password_encoder');
@@ -64,7 +66,7 @@ class BaseController extends Controller
     
     
     
-    
+    //générateur de menu qui déportera l'affichage dans le layout principal
     public function menuAction(){
         
         //test1
@@ -78,11 +80,15 @@ class BaseController extends Controller
             'listMenu' => $items));
     }
     
+    
+    //test rh - voir page rh
     public function rhAction(){
         
         return $this->render('ADMCCoreBundle:Base:rh.html.twig');
     }
     
+    
+    //multiples essais d'ajout d'utilisateurs dans des groupes en bdd + création d'une requête utilisateur
     public function requestAction(){
         
         $manager = $this->getDoctrine()->getManager();
@@ -137,6 +143,7 @@ class BaseController extends Controller
     }
     
     
+    //test d'ajout utilisateur
     public function addUserAction(){
         
         
@@ -177,6 +184,8 @@ class BaseController extends Controller
         
     }
     
+    
+    //test d'ajout dans un groupe puis suppression d'utilisateur d'un groupe
     public function addGroupAction(){
         
         $manager = $this->getDoctrine()->getManager();
@@ -200,6 +209,7 @@ class BaseController extends Controller
     }
     
     
+    //liste les groupes en fonction d'un utilisateur
     public function listGroupAction(){
         
         $listGroup = $this->container->get('ldap_list_group_by_user');
@@ -209,6 +219,19 @@ class BaseController extends Controller
         
         
         return $this->render('ADMCCoreBundle:Base:listGroup.html.twig');
+    }
+    
+    public function modifyUserAction(){
+        
+        $modify = $this->container->get('ldap_list_modify_user');
+        $managerUser = $this->container->get('fos_user.user_manager'); 
+        $userRequestor = $managerUser->findUserBy(array ('username' => 'crausaz'));
+        $userRequestor->setAddress("36 rue benjamin constant");
+        $managerUser->updateUser($userRequestor);
+        
+        $modify->modifyUser($userRequestor);
+        return $this->render('ADMCCoreBundle:Base:index.html.twig');
+        
     }
     
 }

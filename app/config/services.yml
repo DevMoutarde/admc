@@ -47,3 +47,8 @@ services:
     ldap_list_user_by_group:
          class: 'ADMC\CoreBundle\LdapServices\ADMCListUserByGroup'
          arguments: ['@ldap_connect']
+         
+         
+    ldap_list_modify_user:
+         class: 'ADMC\CoreBundle\LdapServices\ADMCModifyUser'
+         arguments: ['@ldap_connect']
