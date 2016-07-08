@@ -4,6 +4,7 @@ namespace ADMC\DSIBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Request as RequestForm;
 use ADMC\CoreBundle\Entity\Request;
 use FOS\UserBundle\Doctrine\UserManager;
 
@@ -23,7 +24,7 @@ class DsiController extends Controller
         if(null === $user){
             throw new NotFoundHttpException("l'utilisateur d'id ".$id_user." n'existe pas");
         }
-        echo $user;
+        //echo $user;
         /*test groups*/
         $id_group = 2;
         $group_repository = $this->getDoctrine()
@@ -33,7 +34,7 @@ class DsiController extends Controller
         if(null === $group){
             throw new NotFoundHttpException("Le groupe d'id ".$id_group." n'existe pas");
         }
-        echo $group;
+        //echo $group;
         /*test liste*/
         $subtitle="Menu DSI";
         $list=array(
@@ -47,19 +48,42 @@ class DsiController extends Controller
         ));  
     }
     public function requestsviewAction(){
-        $subtitle="Liste des requêtes en attente";
-        /* envoi des requetes au tableau */
+               
+ 
+        return $this->render('ADMCDSIBundle:Dsi:requestsview.html.twig');
+    }
+    
+    
+    
+    public function requestListAction(RequestForm $request){
+        
        $doctManager= $this->getDoctrine()->getManager();
        $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
        $requestRepository=$doctManager->getRepository('ADMCCoreBundle:Request');
        $requests=$requestRepository->findAll();
        
-       var_dump($requests);
+       //var_dump($requests);
 
         
  
-        return $this->render('ADMCDSIBundle:Dsi:requestsview.html.twig', array('requetes'=>$requests
+        return $this->render('ADMCDSIBundle:Dsi:requestList.html.twig', array('requetes'=>$requests
         ));
+        
+    }
+    
+    public function consultRequestAction($id){
+        var_dump($id);
+
+       $doctManager= $this->getDoctrine()->getManager();
+       $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
+       $requestRepository=$doctManager->getRepository('ADMCCoreBundle:Request');
+       $request=$requestRepository->find($id);
+       
+       
+       
+       return $this->render('ADMCDSIBundle:Dsi:viewContentRequest.html.twig', array(
+           'request'=>$request
+       ));
     }
     
 }

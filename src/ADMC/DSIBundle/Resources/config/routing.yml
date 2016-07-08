@@ -5,3 +5,12 @@ admcdsi_homepage:
 admcdsi_request_list:
     path:     /list
     defaults: { _controller: ADMCDSIBundle:Dsi:requestsview }
+    
+admcdsi_request_refresh_list:
+    path:     /listRefresh
+    defaults: { _controller: ADMCDSIBundle:Dsi:requestList }
+    
+    
+admcdsi_request_consult:
+    path:     /consultRequest/?{id}
+    defaults: { _controller: ADMCDSIBundle:Dsi:consultRequest }

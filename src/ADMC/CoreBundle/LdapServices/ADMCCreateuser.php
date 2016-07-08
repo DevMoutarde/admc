@@ -54,9 +54,9 @@ class ADMCCreateuser{
         //var_dump($user);
         //echo $user->getFirstName();
         $this->connector->connector();
-        $dn = "CN=".$user->getUsername().",CN=Users;dc=admc,dc=com"; 
-        $adduserAD["cn"][0] = $user->getUsername(); 
-        $adduserAD["samaccountname"][0] =  $user->getUsername(); 
+        $dn = "CN=".$user->getLastName().",CN=Users;dc=admc,dc=com"; 
+        $adduserAD["cn"][0] = $user->getLastName(); 
+        $adduserAD["samaccountname"][0] =  $user->getLastName(); 
         $adduserAD["objectclass"][0] = "top"; 
         $adduserAD["objectclass"][1] = "person"; 
         $adduserAD["objectclass"][2] = "organizationalPerson"; 
@@ -64,7 +64,7 @@ class ADMCCreateuser{
         $adduserAD["displayname"][0] = $user->getFirstName()." ".$user->getLastName() ; 
         $adduserAD["name"][0] = $user->getLastName(); 
         $adduserAD["givenname"][0] = $user->getFirstName(); 
-        $adduserAD["sn"][0] = $user->getFirstName(); 
+        $adduserAD["sn"][0] = $user->getLastName(); 
         $adduserAD["company"][0] ="lbnl"; 
         $adduserAD["description"][0] = "Employé de lbnl"; 
         $adduserAD["mail"][0] = $user->getEmail(); 
@@ -73,6 +73,7 @@ class ADMCCreateuser{
         $adduserAD["l"][0] = $user->getTown();
         $adduserAD["samaccountname"][0] = $user->getUsername(); 
         $adduserAD["userprincipalname"][0] =$user->getEmail(); 
+      //  $adduserAD["profilepath"][0] = "\\WIN-O0SRPP64UEJ\Common\Profils\\".$user->getUsername();
         //$adduserAD['userPassword'] = '{MD5}' . base64_encode(pack('H*',md5("Donjon2016")));
            // add data to directory 
          $result=ldap_add($this->connector->getConnector(), $dn, $adduserAD); 

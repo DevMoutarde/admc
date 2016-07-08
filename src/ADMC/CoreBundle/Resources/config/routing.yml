@@ -29,3 +29,7 @@ admc_core_adduser:
 admc_core_adduser_group:
     path:     /addgroup
     defaults: { _controller: ADMCCoreBundle:Base:addGroup}
+    
+admc_core_list_user_by_group:
+    path:     /listGroup
+    defaults: { _controller: ADMCCoreBundle:Base:listGroup }

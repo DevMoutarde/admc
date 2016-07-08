@@ -142,22 +142,22 @@ class BaseController extends Controller
         
         $manager = $this->get('fos_user.user_manager');
        
-       $userTest=$manager->findUserByUsername("ccervos");
+       $userTest=$manager->findUserByUsername("crausaz");
         
         if ($userTest === null){
             
             $UserContainer =  $this->container->get('fos_user.user_manager');
             $user = $UserContainer->createUser();
-            $user->setUsername("ccervos");
-            $user->setUsernameCanonical("ccervos");
-            $user->setEmail("cervos@admc.com");
-            $user->setEmailCanonical("cervos@admc.com");
-            $user->setEnabled(False);
+            $user->setUsername("crausaz");
+            $user->setUsernameCanonical("crausaz");
+            $user->setEmail("crausaz@admc.com");
+            $user->setEmailCanonical("crausaz@admc.com");
+            $user->setEnabled(True);
             $user->setPassword("pass");
             $user->setAddress("2 rue truc");
             $user->setTown("Toulouse");
-            $user->setFirstName("cedric");
-            $user->setLastName("cervos");
+            $user->setFirstName("audrey");
+            $user->setLastName("crausaz");
             $user->setPostalCode(31400);
             var_dump($user);
 
@@ -168,8 +168,9 @@ class BaseController extends Controller
         
 //        var_dump($userTest->getUsername());
 //        
-//        $addUser = $this->container->get('ldap_insert_user');
-//        $addUser->createUserByObject($userTest);
+        $addUser = $this->container->get('ldap_insert_user');
+
+        $addUser->createUserByObject($userTest);
         
         
        return $this->render('ADMCCoreBundle:Base:index.html.twig');
@@ -196,6 +197,18 @@ class BaseController extends Controller
         $delUser = $this->container->get('ldap_delete_user_from_group');
         $delUser->delUserFromGroup($group, $user);
         return $this->render('ADMCCoreBundle:Base:index.html.twig');
+    }
+    
+    
+    public function listGroupAction(){
+        
+        $listGroup = $this->container->get('ldap_list_group_by_user');
+        //var_dump($listGroup->listUserByGroup('libellule'));
+        var_dump($listGroup->listGroupByUser('jmiller'));
+        
+        
+        
+        return $this->render('ADMCCoreBundle:Base:listGroup.html.twig');
     }
     
 }

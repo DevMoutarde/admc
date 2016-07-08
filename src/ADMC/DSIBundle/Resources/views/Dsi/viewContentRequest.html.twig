@@ -1,0 +1,70 @@
+{% extends 'ADMCDSIBundle::layout.html.twig' %}
+
+
+{% block ADMCDSI_body %}
+    
+    <h2>Consultation requête</h2>
+    
+    
+    
+    <div class="well">
+        
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <p>Valideur: {{ app.user.username }}</p> 
+        {% endif %}
+        <br>
+        
+        
+        <p><b>Type de demande:</b> {{request.roleRequest.roleName}}  </p>
+        
+        <p><b>Date:</b> {{ request.date| date("m/d/y H:i:s") }}</p>
+        
+        <p><b>Demandé par:</b> {{ request.requestor.username }}</p>
+        
+        {% if request.userConcerned is not null %}
+            <p><b>Demandé pour:</b> {{ request.userConcerned }}</p>
+            
+        {% endif %}
+        
+        {% if request.group is not null %}
+            <p><b>Element demandé: </b>{{  request.group.name }}</p>
+        {% endif %}
+        
+        {% if request.comments is not null %}
+            <p><b>Commentaire: </b>{{  request.comments }}</p>
+        {% endif %}
+        
+        {% if request.attached is not null %}
+            <p><b>Document d'approbation: </b><a href= "{{ asset(  request.attached ) }}">doc</a> </p>
+        {% else %}
+            <p><b>Aucun document d'approbation</b></p>
+            
+        {% endif %}
+        
+        
+        
+        <br>
+        <br>
+        <p>
+            <a href=" {{  path("admcdsi_request_list") }} " >
+                <button type="button" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Retour à la liste
+                  </button>
+            
+            </a>
+            
+            <a href="#{#{{path("MONSITE_platform_edit", {'id': advert.id}) }}#}" >
+                <button type="button" class="btn btn-success">
+                    <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Valider la requête
+                  </button>
+            </a>
+            
+            <a href="#{#{{path("MONSITE_platform_delete", {'id': advert.id} )}}#}" >
+                <button type="button" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Refuser la requête
+                  </button>
+            </a>
+        </p>
+        
+    </div>
+{% endblock %}
