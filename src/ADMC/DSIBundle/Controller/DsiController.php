@@ -15,7 +15,7 @@ class DsiController extends Controller
     }
     public function menuAction(){
         /*test user*/
-        $id_user = 1;
+       /* $id_user = 1;
         $repository = $this->getDoctrine()
                 ->getManager()
                 ->getRepository('ADMCCoreBundle:user');
@@ -23,17 +23,17 @@ class DsiController extends Controller
         if(null === $user){
             throw new NotFoundHttpException("l'utilisateur d'id ".$id_user." n'existe pas");
         }
-        echo $user;
+       echo $user;*/
         /*test groups*/
-        $id_group = 2;
+       /* $id_group = 2;
         $group_repository = $this->getDoctrine()
                 ->getManager()
                 ->getRepository('ADMCCoreBundle:group');
         $group = $group_repository->find($id_group);
         if(null === $group){
             throw new NotFoundHttpException("Le groupe d'id ".$id_group." n'existe pas");
-        }
-        echo $group;
+        }*/
+    //    echo $group;
         /*test liste*/
         $subtitle="Menu DSI";
         $list=array(
@@ -52,12 +52,7 @@ class DsiController extends Controller
        $doctManager= $this->getDoctrine()->getManager();
        $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
        $requestRepository=$doctManager->getRepository('ADMCCoreBundle:Request');
-       $requests=$requestRepository->findAll();
-       
-       var_dump($requests);
-
-        
- 
+       $requests=$requestRepository->findAll();         
         return $this->render('ADMCDSIBundle:Dsi:requestsview.html.twig', array('requetes'=>$requests
         ));
     }
