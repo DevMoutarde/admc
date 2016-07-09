@@ -88,30 +88,11 @@ class DsiController extends Controller
     
     public function validateRequestAction($id){
         
-        var_dump($id);
+        $requestManager = $this->container->get('ldap_validate_request');
+        $requestManager->analyse($id);
+        
+
         return $this->render('ADMCDSIBundle:Dsi:index.html.twig');
         
-    }
-    
-    public function selectRequestType($id){
-        var_dump($id);
-        $doctManager= $this->getDoctirne()->getManager();
-        $requesttorRepository=$doctManager->getRepository('ADMCCoreBundle:Request');
-        $request=$requesttorRepository->find($id);
-        $roleRequest= $request->getRoleRequest()->getRoleName();
-        echo $roleRequest."sam";
-       /* switch ($roleRequest){
-            case
-                
-                break;
-            case
-                   
-                break;
-            case
-                
-                break;
-        }*/
-        
-    }
-    
+    } 
 }
