@@ -65,7 +65,12 @@ class ADMCValidateRequest{
         $user=$request->getUserConcerned();
         //$approver=$this->getUser();
         $rapport = $this->insertUserInGroup->addGroup($group, $user);
-        var_dump($approver);
+        if ($rapport == True){
+            echo "opération terminée avec succes";
+        }else{
+            echo "echec de l'oppération, contactez votre administrateur";
+        }
+        //var_dump($approver);
         return $rapport;
         
         

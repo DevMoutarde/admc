@@ -79,7 +79,7 @@ class DsiController extends Controller
     }
     
     public function consultRequestAction($id){
-        var_dump($id);
+        //var_dump($id);
 
        $doctManager= $this->getDoctrine()->getManager();
        $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
@@ -98,6 +98,7 @@ class DsiController extends Controller
         
         $requestManager = $this->container->get('ldap_validate_request');
         $requestManager->analyse($id);
+        
         
 
         return $this->render('ADMCDSIBundle:Dsi:index.html.twig');
