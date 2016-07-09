@@ -49,6 +49,10 @@ services:
          arguments: ['@ldap_connect']
          
          
-    ldap_list_modify_user:
+    ldap_modify_user:
          class: 'ADMC\CoreBundle\LdapServices\ADMCModifyUser'
          arguments: ['@ldap_connect']
+         
+    ldap_validate_request:
+         class: 'ADMC\CoreBundle\LdapServices\ADMCModifyUser'
+         arguments: [@ldap_insert_user, @ldap_insert_user_in_group, @ldap_delete_user_from_group, @fos_user.user_manager, @fos_user.group_manager, @doctrine.orm.entity_manager]

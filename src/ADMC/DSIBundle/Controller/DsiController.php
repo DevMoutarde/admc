@@ -88,7 +88,10 @@ class DsiController extends Controller
     
     public function validateRequestAction($id){
         
-        var_dump($id);
+        $requestManager = $this->container->get('ldap_validate_request');
+        $requestManager->analyse($id);
+        
+        
         
         
         
