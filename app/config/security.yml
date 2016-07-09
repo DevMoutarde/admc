@@ -10,6 +10,7 @@ security:
  
     role_hierarchy:
         ROLE_HUMAN_RESSOURCES:  ROLE_RH
+        ROLE_DSI:  ROLE_DSI
         ROLE_ADMIN:       ROLE_USER
         ROLE_SUPER_ADMIN: ROLE_ADMIN
 
@@ -83,3 +84,4 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/rh, role: ROLE_RH }
+        - { path: ^/dsi, role: ROLE_DSI }
