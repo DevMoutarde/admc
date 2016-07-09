@@ -24,7 +24,7 @@ class ADMCIsInGroup{
     public function isInGroup($group, $userName){
         $trouve = false;
         $listUser = $this->listUserByGroup->listUserByGroup($group);
-        
+        var_dump($listUser);
         for ($i=0; $i < $listUser["member"]["count"]; $i++){
             if(strpos($listUser["member"][$i], $userName)){
                 return true;
