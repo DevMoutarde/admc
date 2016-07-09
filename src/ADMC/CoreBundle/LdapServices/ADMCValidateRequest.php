@@ -63,7 +63,8 @@ class ADMCValidateRequest{
     
     public function ajouterUserDansGroup($group, $user){
         
-        $this->insertUserInGroup->addGroup($group, $user);
+        $rapport = $this->insertUserInGroup->addGroup($group, $user);
+        return $rapport;
         
         
     }
