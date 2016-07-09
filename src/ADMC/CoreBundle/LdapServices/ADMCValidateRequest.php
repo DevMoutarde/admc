@@ -55,6 +55,21 @@ class ADMCValidateRequest{
         
     }
     
+    public function ajouterUtilisateur($user){
+        
+        $this->insertUser->createUserByObject($user);
+        
+    }
+    
+    public function ajouterUserDansGroup($group, $user){
+        
+        $this->insertUserInGroup->addGroup($group, $user);
+        
+        
+    }
+    
+    
+    
     
     
 }
