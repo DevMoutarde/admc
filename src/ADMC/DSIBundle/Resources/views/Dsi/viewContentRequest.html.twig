@@ -15,6 +15,7 @@
         <br>
         
         
+        
         <p><b>Type de demande:</b> {{request.roleRequest.roleName}}  </p>
         
         <p><b>Date:</b> {{ request.date| date("m/d/y H:i:s") }}</p>
@@ -45,6 +46,10 @@
         
         <br>
         <br>
+        {% if request.status == 'Validé' or request.status == 'Refusé'%}
+            <p><b>La requête est validée</b></p>
+         
+        {% endif %}
         <p>
             <a href=" {{  path("admcdsi_request_list") }} " >
                 <button type="button" class="btn btn-primary">
@@ -52,19 +57,25 @@
                   </button>
             
             </a>
+                
+                
+            {% if request.status != 'Validé' and request.status != 'Refusé'%}
             
-            <a href="{{ path("admcdsi_validate_request", {'id': request.id}) }}" >
-                <button type="button" class="btn btn-success">
-                    <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Valider la requête
-                  </button>
-            </a>
-            
-            <a href="#{#{{path("MONSITE_platform_delete", {'id': advert.id} )}}#}" >
-                <button type="button" class="btn btn-danger">
-                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Refuser la requête
-                  </button>
-            </a>
-        </p>
+         
         
+                <a href="{{ path("admcdsi_validate_request", {'id': request.id}) }}" >
+                    <button type="button" class="btn btn-success">
+                        <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Valider la requête
+                      </button>
+                </a>
+
+                <a href="#{#{{path("MONSITE_platform_delete", {'id': advert.id} )}}#}" >
+                    <button type="button" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Refuser la requête
+                      </button>
+                </a>
+        
+        {% endif %}
+        </p>
     </div>
 {% endblock %}

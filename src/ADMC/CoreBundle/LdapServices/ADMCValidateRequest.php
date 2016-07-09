@@ -8,6 +8,8 @@ use \ADMC\CoreBundle\LdapServices\ADMCAddgroup;
 use \ADMC\CoreBundle\LdapServices\ADMCDelUserFromGroup;
 use FOS\UserBundle\Doctrine\UserManager;
 use FOS\UserBundle\Doctrine\GroupManager;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+
 
 
 class ADMCValidateRequest{
@@ -18,8 +20,10 @@ class ADMCValidateRequest{
     private $doctrineManager;
     private $userManager;
     private $groupManager;
+    private $security;
     
-    public function __construct(ADMCCreateuser $createUser, ADMCAddgroup $addGroup, ADMCDelUserFromGroup $delUserFromGroup, UserManager $userManager, GroupManager $groupManager, EntityManager $entityManager) {
+    
+    public function __construct(ADMCCreateuser $createUser, ADMCAddgroup $addGroup, ADMCDelUserFromGroup $delUserFromGroup, UserManager $userManager, GroupManager $groupManager, EntityManager $entityManager,  $token) {
         
         $this->insertUser = $createUser;
         $this->insertUserInGroup = $addGroup;
@@ -27,34 +31,55 @@ class ADMCValidateRequest{
         $this->userManager = $userManager;
         $this->groupManager = $groupManager;
         $this->doctrineManager = $entityManager;
+        $this->security = $token;
+        
         
     }
     
     public function analyse($id){
-        var_dump($id);
+        
         $doctManager= $this->doctrineManager->getRepository('ADMCCoreBundle:Request');
+        
         $requestorRepository=$this->doctrineManager->getRepository('ADMCCoreBundle:User')->findAll();
         $request=$doctManager->find($id);
         $roleRequest= $request->getRoleRequest()->getRoleName();
+        
+        
+        $approverUsername = $this->security->getToken()->getUser();
+        $approver = $this->userManager->findUserByUsername($approverUsername);
+        $report = False;
         switch ($roleRequest){
             case "Installation logiciel":
-                var_dump($this->ajouterUserDansGroup($request));
+                $report = $this->ajouterUserDansGroup($request);
                 break;
+            
             case "Connexion lecteur réseau":
-                $this->ajouterUserDansGroup($request->getGroup(), $request->getUserConcerned());
+                $this->ajouterUserDansGroup($request);
                 break;
+            
             case "Insertion utilisateur":
-                $this->ajouterUtilisateur($request->getUserConcerned(), $request->getApprover());
+                $this->ajouterUtilisateur($request->getUserConcerned());
                 break;
+            
             case "Suppression utilisateur":
                 break;
-        }      
+        }
         
+        
+        
+        
+        if ($report){
+            $request->setStatus("Validé");
+            $request->setRequestor($approver);
+            $this->doctrineManager->flush($request);
+            
+        }
+        return $report;
         
         
     }
     
-    public function ajouterUtilisateur($user, $approver){
+    public function ajouterUtilisateur($user){
         
         $this->insertUser->createUserByObject($user);
         
