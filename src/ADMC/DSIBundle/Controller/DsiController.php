@@ -40,11 +40,11 @@ class DsiController extends Controller
         /*test liste*/
         $subtitle="Menu DSI";
         $list=array(
-            array('link'=>$this->get('router')->generate('admcdsi_request_list'), 'name'=>'Liste des demandes en cours'), 
+            array('link'=>$this->get('router')->generate('admcdsi_request_list'), 'name'=>'Liste des demandes en cours'),
+            array('link'=>$this->get('router')->generate('admcdsi_processed_refresh_list'), 'name'=>'Liste des demandes traitées'),
             array('link'=>'#', 'name'=>'Gestion des comptes e-mail'),
             array('link'=>'#', 'name'=>'Etablir la politique de sécurité'),
             array('link'=>'#', 'name'=>'Gestion des non-conformités')
-            
         );
         return $this->render('ADMCDSIBundle:Dsi:menu.html.twig', array('subtitle'=>$subtitle,'menu'=>$list
         ));  
@@ -73,7 +73,8 @@ class DsiController extends Controller
         $doctManager= $this->getDoctrine()->getManager();
         $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
         $requestRepository=$doctManager->getRepository('ADMCCoreBundle:Request');
-        $request=$Repository=$doctManager->findAll();
+        
+        $requests=$requestRepository->findAll();
         return $this->render('ADMCDSIBundle:Dsi:processedList.html.twig', array('requetes'=>$requests
         ));
     }
