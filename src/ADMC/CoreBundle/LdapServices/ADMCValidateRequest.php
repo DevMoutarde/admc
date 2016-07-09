@@ -31,22 +31,41 @@ class ADMCValidateRequest{
     }
     
     public function analyse($id){
-        
-        
         var_dump($id);
+        $doctManager= $this->doctrineManager->getRepository('ADMCCoreBundle:Request');
+        $requestorRepository=$this->doctrineManager->getRepository('ADMCCoreBundle:User')->findAll();
+        $request=$doctManager->find($id);
+        $roleRequest= $request->getRoleRequest()->getRoleName();
+        switch ($roleRequest){
+            case "Installation logiciel":
+                var_dump($this->ajouterUserDansGroup($request));
+                break;
+            case "Connexion lecteur réseau":
+                $this->ajouterUserDansGroup($request->getGroup(), $request->getUserConcerned());
+                break;
+            case "Insertion utilisateur":
+                $this->ajouterUtilisateur($request->getUserConcerned(), $request->getApprover());
+                break;
+            case "Suppression utilisateur":
+                break;
+        }      
+        
         
         
     }
     
-    public function ajouterUtilisateur($user){
+    public function ajouterUtilisateur($user, $approver){
         
         $this->insertUser->createUserByObject($user);
         
     }
     
-    public function ajouterUserDansGroup($group, $user){
-        
+    public function ajouterUserDansGroup($request){
+        $group=$request->getGroup();
+        $user=$request->getUserConcerned();
+        //$approver=$this->getUser();
         $rapport = $this->insertUserInGroup->addGroup($group, $user);
+        var_dump($approver);
         return $rapport;
         
         

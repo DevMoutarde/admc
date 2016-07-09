@@ -91,12 +91,8 @@ class DsiController extends Controller
         $requestManager = $this->container->get('ldap_validate_request');
         $requestManager->analyse($id);
         
-        
-        
-        
-        
+
         return $this->render('ADMCDSIBundle:Dsi:index.html.twig');
         
-    }
-    
+    } 
 }
