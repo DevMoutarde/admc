@@ -31,22 +31,26 @@ class ADMCValidateRequest{
     }
     
     public function analyse($id){
-       var_dump($id);
-        /* $doctManager= $this->doctrineManager->getRepository('ADMCCoreBundle:Request');
+        var_dump($id);
+        $doctManager= $this->doctrineManager->getRepository('ADMCCoreBundle:Request');
+        $requestorRepository=$this->doctrineManager->getRepository('ADMCCoreBundle:User')->findAll();
         $request=$doctManager->find($id);
         $roleRequest= $request->getRoleRequest()->getRoleName();
-        echo $roleRequest."sam";
         switch ($roleRequest){
-            case
-                
+            case "Installation logiciel":
+                $this.ajouterUtilisateur();
                 break;
-            case
+            case "Connexion lecteur réseau":
                    
                 break;
-            case
+            case "Insertion utilisateur":
                 
                 break;
-        }*/                
+            case "Suppression utilisateur":
+                
+                break;
+        }      
+        
         
         
     }
