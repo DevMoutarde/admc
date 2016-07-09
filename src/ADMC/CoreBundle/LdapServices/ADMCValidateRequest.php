@@ -38,16 +38,15 @@ class ADMCValidateRequest{
         $roleRequest= $request->getRoleRequest()->getRoleName();
         switch ($roleRequest){
             case "Installation logiciel":
-                var_dump($this->ajouterUserDansGroup($request->getGroup(),$request->getUserConcerned()));
+                var_dump($this->ajouterUserDansGroup($request));
                 break;
             case "Connexion lecteur réseau":
-                $this->ajouterUserDansGroup($request->getGroup(),$request->getUserConcerned());
+                $this->ajouterUserDansGroup($request->getGroup(), $request->getUserConcerned());
                 break;
             case "Insertion utilisateur":
-                $this->ajouterUtilisateur($request->getUserConcerned());
+                $this->ajouterUtilisateur($request->getUserConcerned(), $request->getApprover());
                 break;
             case "Suppression utilisateur":
-                
                 break;
         }      
         
@@ -55,15 +54,18 @@ class ADMCValidateRequest{
         
     }
     
-    public function ajouterUtilisateur($user){
+    public function ajouterUtilisateur($user, $approver){
         
         $this->insertUser->createUserByObject($user);
         
     }
     
-    public function ajouterUserDansGroup($group, $user){
-        
+    public function ajouterUserDansGroup($request){
+        $group=$this->getGroup();
+        $user=$this->getUserConcerned();
+        $approver=$this->getUser();
         $rapport = $this->insertUserInGroup->addGroup($group, $user);
+        var_dump($approver);
         return $rapport;
         
         
