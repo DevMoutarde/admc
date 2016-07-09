@@ -4,19 +4,23 @@
 
 namespace ADMC\CoreBundle\LdapServices;
 use \ADMC\CoreBundle\LdapServices\ADMCConnector;
-
+use \ADMC\CoreBundle\LdapServices\ADMCIsInGroup;
 
 class ADMCAddgroup{
     
     private $connector;
+    private $isInGroup;
     
-    public function __construct(ADMCConnector $connector) {
+    public function __construct(ADMCConnector $connector, ADMCIsInGroup $isInGroup) {
         $this->connector = $connector;
+        $this->isInGroup = $isInGroup;
     }
     
     
     public function addGroup($group, $user){
         
+        echo "est ce que l'utilisateur est dans la liste";
+        var_dump($this->isInGroup->isInGroup($group->getName(), $user->getUsername()));
         
         
         $this->connector->connector();

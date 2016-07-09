@@ -22,6 +22,10 @@ services:
          class: 'ADMC\CoreBundle\LdapServices\ADMCSearchAllUsers' 
          arguments: ['@ldap_connect']
          
+    ldap_list_user_by_group:
+         class: 'ADMC\CoreBundle\LdapServices\ADMCListUserByGroup'
+         arguments: ['@ldap_connect']
+         
 
     ldap_update_database:
          class: 'ADMC\CoreBundle\LdapServices\ADMCMajBdd' 
@@ -30,10 +34,14 @@ services:
     ldap_insert_user:
          class: 'ADMC\CoreBundle\LdapServices\ADMCCreateuser'
          arguments: ['@ldap_connect']
+         
+    ldap_is_in_group:
+         class: 'ADMC\CoreBundle\LdapServices\ADMCIsInGroup'
+         arguments: ['@ldap_list_user_by_group']
   
     ldap_insert_user_in_group:
          class: 'ADMC\CoreBundle\LdapServices\ADMCAddgroup'
-         arguments: ['@ldap_connect']
+         arguments: ['@ldap_connect', @ldap_is_in_group]
          
     ldap_delete_user_from_group:
          class: 'ADMC\CoreBundle\LdapServices\ADMCDelUserFromGroup'
@@ -43,12 +51,6 @@ services:
          class: 'ADMC\CoreBundle\LdapServices\ADMCListGroupByUser'
          arguments: ['@ldap_connect']
          
-         
-    ldap_list_user_by_group:
-         class: 'ADMC\CoreBundle\LdapServices\ADMCListUserByGroup'
-         arguments: ['@ldap_connect']
-         
-         
     ldap_modify_user:
          class: 'ADMC\CoreBundle\LdapServices\ADMCModifyUser'
          arguments: ['@ldap_connect']
@@ -56,3 +58,6 @@ services:
     ldap_validate_request:
          class: 'ADMC\CoreBundle\LdapServices\ADMCValidateRequest'
          arguments: [@ldap_insert_user, @ldap_insert_user_in_group, @ldap_delete_user_from_group, @fos_user.user_manager, @fos_user.group_manager, @doctrine.orm.entity_manager]
+         
+         
+    
