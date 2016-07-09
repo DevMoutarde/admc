@@ -85,4 +85,15 @@ class DsiController extends Controller
        ));
     }
     
+    
+    public function validateRequestAction($id){
+        
+        var_dump($id);
+        
+        
+        
+        return $this->render('ADMCDSIBundle:Dsi:index.html.twig');
+        
+    }
+    
 }

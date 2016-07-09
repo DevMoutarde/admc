@@ -14,3 +14,7 @@ admcdsi_request_refresh_list:
 admcdsi_request_consult:
     path:     /consultRequest/?{id}
     defaults: { _controller: ADMCDSIBundle:Dsi:consultRequest }
+    
+admcdsi_validate_request:
+    path:     /validateRequest/{id}
+    defaults: { _controller: ADMCDSIBundle:Dsi:validateRequest }

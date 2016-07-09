@@ -231,7 +231,7 @@ class BaseController extends Controller
         
         $modify->modifyUser($userRequestor);
         return $this->render('ADMCCoreBundle:Base:index.html.twig');
-        
+    
     }
     
 }
