@@ -38,13 +38,13 @@ class ADMCValidateRequest{
         $roleRequest= $request->getRoleRequest()->getRoleName();
         switch ($roleRequest){
             case "Installation logiciel":
-                $this.ajouterUtilisateur();
+                var_dump($this->ajouterUserDansGroup($request->getGroup(),$request->getUserConcerned()));
                 break;
             case "Connexion lecteur réseau":
-                   
+                $this->ajouterUserDansGroup($request->getGroup(),$request->getUserConcerned());
                 break;
             case "Insertion utilisateur":
-                
+                $this->ajouterUtilisateur($request->getUserConcerned());
                 break;
             case "Suppression utilisateur":
                 
