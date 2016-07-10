@@ -41,7 +41,7 @@ class DsiController extends Controller
         $subtitle="Menu DSI";
         $list=array(
             array('link'=>$this->get('router')->generate('admcdsi_request_list'), 'name'=>'Liste des demandes en cours'),
-            array('link'=>$this->get('router')->generate('admcdsi_processed_refresh_list'), 'name'=>'Liste des demandes traitées'),
+            array('link'=>$this->get('router')->generate('admcdsi_processed_list'), 'name'=>'Liste des demandes traitées'),
             array('link'=>'#', 'name'=>'Gestion des comptes e-mail'),
             array('link'=>'#', 'name'=>'Etablir la politique de sécurité'),
             array('link'=>'#', 'name'=>'Gestion des non-conformités')
@@ -50,31 +50,29 @@ class DsiController extends Controller
         ));  
     }
     public function requestsviewAction(){
-               
- 
         return $this->render('ADMCDSIBundle:Dsi:requestsview.html.twig');
-    }
-    
-    
-    
+    }   
     public function requestListAction(RequestForm $request){
         
        $doctManager= $this->getDoctrine()->getManager();
        $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
        $requestRepository=$doctManager->getRepository('ADMCCoreBundle:Request');
-
-       $requests=$requestRepository->findAll();         
+       $requests=$requestRepository->findByStatus("En attente");
         return $this->render('ADMCDSIBundle:Dsi:requestList.html.twig', array('requetes'=>$requests
 
         ));
         
     }
+    
+    public function processedviewAction(){
+        return $this->render('ADMCDSIBundle:Dsi:processedView.html.twig');
+    }
     public function processedListAction(RequestForm $request){
         $doctManager= $this->getDoctrine()->getManager();
         $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
         $requestRepository=$doctManager->getRepository('ADMCCoreBundle:Request');
+        $requests=$requestRepository->findByStatus(array('Validée', 'Refusée'));
         
-        $requests=$requestRepository->findAll();
         return $this->render('ADMCDSIBundle:Dsi:processedList.html.twig', array('requetes'=>$requests
         ));
     }

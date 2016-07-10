@@ -9,9 +9,13 @@ admcdsi_request_list:
 admcdsi_request_refresh_list:
     path:     /listRefresh
     defaults: { _controller: ADMCDSIBundle:Dsi:requestList }
+    
+admcdsi_processed_list:
+    path:     /processed
+    defaults: { _controller: ADMCDSIBundle:Dsi:processedView}
 
 admcdsi_processed_refresh_list:
-    path:     /processedList
+    path:     /processedRefresh
     defaults: { _controller: ADMCDSIBundle:Dsi:processedList }
     
 admcdsi_request_consult:

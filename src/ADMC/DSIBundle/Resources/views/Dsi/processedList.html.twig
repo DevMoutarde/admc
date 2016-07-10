@@ -1,4 +1,7 @@
 
+    <hr>
+    <h4> Liste des demandes traitées</h4>
+    <hr>
 <div class="container">
         <table class="table table-hover">
           <thead>
@@ -69,7 +72,7 @@
                 var url = '{{ path('admcdsi_request_consult', {'id': 'noRequest'}) }}';
                 url = url.replace('noRequest', $(this).attr("data-href"));
                 //alert($(this).attr("data-href"));
-                var noRequest = $(this).attr("data-href");
+                //var noRequest = $(this).attr("data-href");
                 window.document.location = url;
                 
             
