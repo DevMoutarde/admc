@@ -8,11 +8,19 @@ class ADMCListUserByGroup{
     
     private $connect;
     
+    /**
+     * 
+     * @param ADMCConnector $connector
+     */
     public function __construct(ADMCConnector $connector){
         $this->connect = $connector;
     }
     
-
+    /**
+     * Liste les utilisateurs qui sont enregistrés dans un groupe
+     * @param String $nameGroup
+     * @return Array Liste des utilisateurs
+     */
     public function listUserByGroup($nameGroup){
         
         $this->connect->connector();
@@ -41,30 +49,18 @@ class ADMCListUserByGroup{
        return $listUser;
         
         
-        
-        
-        
-        
-        
-        
-//        for ($x=0; $x<$entries['count']; $x++){
-//            
-//        if(!empty($entries[$x]['memberof'][0])){
-//                   //var_dump($entries[$x]['memberof']);
-//                   for($y=0; $y< $entries[$x]['memberof']['count']; $y++){
-//
-//
-//                       $listUser[strtoupper(trim($entries[$x]['samaccountname'][0]))]['memberof'][$y] = $this->getBetween($entries[$x]['memberof'][$y], "=", ",");
-//                   }
-//
-//               }
-//        }
-//        return $listUser;
-        
+
         
     }
     
     
+    /**
+     * Isole un élément entre $start et $end
+     * @param String $content
+     * @param String $start
+     * @param String $end
+     * @return string
+     */
    public function getBetween($content,$start,$end){
     $r = explode($start, $content);
     if (isset($r[1])){

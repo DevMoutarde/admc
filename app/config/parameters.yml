@@ -5,21 +5,8 @@ parameters:
     database_name: admc
     database_user: root
     database_password: Donjon2016
-    
-    
     mailer_transport: smtp
     mailer_host: 192.168.1.17
     mailer_user: user
     mailer_password: Donjon2016
     secret: 0e2a8f5ef887db67eea62eb3d536403ad4df4ebc
-
-
-
-
-
-
-#database_host: 127.0.0.1
-  #  database_port: null
-    #database_name: admc
-    #database_user: root
-    #database_password: null

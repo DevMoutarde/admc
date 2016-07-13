@@ -4,15 +4,33 @@
 namespace ADMC\CoreBundle\LdapServices;
 use ADMC\CoreBundle\LdapServices\ADMCConnector;
 
-
+/**
+ * ADMCSearchAllUsers
+ * Récupère tous les utilisateurs et groupes
+ */
 class ADMCSearchAllUsers{
     
     private $connect;
     
+    /**
+     * 
+     * @param ADMCConnector $connector
+     */
     public function __construct(ADMCConnector $connector){
         $this->connect = $connector;
     }
     
+    
+    /**
+     * Récupère les utilisateurs et groupes de l'AD
+     * Isole les informations importantes par utilisateurs et groupes et retourne un Array unique
+     * 
+     * Possibilité d'envoyer un paramètre contenant le nom d'un user afin de renvoyer que les 
+     * informations relatives à ce dernier
+     * 
+     * @param String $name
+     * @return Array
+     */
     public function searchUser($name = null){
         
         $this->connect->connector();
@@ -71,6 +89,13 @@ class ADMCSearchAllUsers{
         
    }
    
+     /**
+     * Isole un élément entre $start et $end
+     * @param String $content
+     * @param String $start
+     * @param String $end
+     * @return string
+     */
    public function getBetween($content,$start,$end){
     $r = explode($start, $content);
     if (isset($r[1])){
@@ -79,6 +104,7 @@ class ADMCSearchAllUsers{
     }
     return '';
 }
+
 
 function startsWith($haystack, $needle) {
     

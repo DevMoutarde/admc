@@ -11,11 +11,19 @@ class ADMCListGroupByUser{
     
     private $connect;
     
+    /**
+     * 
+     * @param ADMCConnector $connector
+     */
     public function __construct(ADMCConnector $connector){
         $this->connect = $connector;
     }
     
-
+    /**
+     * Liste les groupes dans lesquels un utilisateur se trouve
+     * @param String $name
+     * @return Array liste des groupes
+     */
     public function listGroupByUser($name){
         
         $this->connect->connector();

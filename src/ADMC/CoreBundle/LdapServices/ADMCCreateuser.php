@@ -4,51 +4,28 @@ namespace ADMC\CoreBundle\LdapServices;
 use \ADMC\CoreBundle\LdapServices\ADMCConnector;
 use ADMC\CoreBundle\Entity\User;
 
+
+/**
+ * Classe ADMCCreateuser
+ * Permet la création d'un utilisateur
+ */
 class ADMCCreateuser{
     
     private $connector;
     
+    /**
+     * 
+     * @param ADMCConnector $connector
+     */
     public function __construct(ADMCConnector $connector){
         $this->connector = $connector;
     }
     
-    public function createUser(){
-        
-        $this->connector->connector();
-        $dn = "CN=mcfly,CN=Users;dc=admc,dc=com"; 
-        $adduserAD["cn"][0] = "mcfly"; 
-        $adduserAD["samaccountname"][0] =  "mcfly"; 
-        $adduserAD["objectclass"][0] = "top"; 
-        $adduserAD["objectclass"][1] = "person"; 
-        $adduserAD["objectclass"][2] = "organizationalPerson"; 
-        $adduserAD["objectclass"][3] = "user"; 
-        $adduserAD["displayname"][0] = "marty mcfly"; 
-        $adduserAD["name"][0] = "mcfly"; 
-        $adduserAD["givenname"][0] = "Marty"; 
-        $adduserAD["sn"][0] =  "mcfly"; 
-        $adduserAD["company"][0] ="labinal"; 
-        $adduserAD["description"][0] = "retour vers le futur"; 
-        $adduserAD["mail"][0] = "mcfly@admc.com"; 
-        $adduserAD["streetAddress"][0] = "adress";
-        $adduserAD["postalCode"][0] = "31400";
-        $adduserAD["l"][0] = "Toulouse";
-        $adduserAD["userprincipalname"][0] ="mcfly@admc.com"; 
-        //$adduserAD['userPassword'] = '{MD5}' . base64_encode(pack('H*',md5("Donjon2016")));
-           // add data to directory 
-         $result=ldap_add($this->connector->getConnector(), $dn, $adduserAD); 
-          if ($result){
-              echo "Ajout utilisateur!";
-              $this->activateUser($adduserAD["samaccountname"][0]);
-              
-              
-              
-          } 
-          else{
-              echo "Echec de l'opération";
-          } 
-               
-    }
     
+    /**
+     * Créé un utilisateur dans l'annuaire AD
+     * @param User $user
+     */
     public function createUserByObject($user){
         
         //var_dump($user);
@@ -90,7 +67,10 @@ class ADMCCreateuser{
         
     }
     
-    
+    /**
+     * Active l'utilisateur une fois enregistré dans l'annuaire
+     * @param str $sameaccountname 
+     */
     public function activateUser($sameaccountname){
         
         $baseDn = "dc=admc, dc=com";

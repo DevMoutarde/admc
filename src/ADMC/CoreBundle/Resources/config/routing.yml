@@ -37,3 +37,7 @@ admc_core_list_user_by_group:
 admc_core_modify_user:
     path:     /modifyUser
     defaults: { _controller: ADMCCoreBundle:Base:modifyUser }
+    
+admc_core_delete_user:
+    path:     /deleteUser
+    defaults: { _controller: ADMCCoreBundle:Base:deleteUser }

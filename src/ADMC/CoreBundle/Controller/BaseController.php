@@ -7,10 +7,17 @@ use FOS\UserBundle\Doctrine\UserManager;
 use FOS\UserBundle\Doctrine\GroupManager;
 use \ADMC\CoreBundle\Entity\Request;
 
+
+/**
+ * Controlleur principal - démarre l'application
+ */
 class BaseController extends Controller
 {
-    
-    //affiche la page d'accueil + contient les déclarations de certains services
+    /**
+     * affiche la page d'accueil + contient les déclarations de certains services en guise de tests
+     * Contacte le serveur AD et mets à jour les données en base
+     */
+ 
     public function indexAction(){
         
         //$pass = $this->container->get('my_password_encoder');
@@ -67,6 +74,10 @@ class BaseController extends Controller
     
     
     //générateur de menu qui déportera l'affichage dans le layout principal
+    /**
+     * Génère le menu qui sera déporté sur le layout principal
+     * @return menu.html.twig
+     */
     public function menuAction(){
         
         //test1
@@ -81,7 +92,7 @@ class BaseController extends Controller
     }
     
     
-    //test rh - voir page rh
+    
     public function rhAction(){
         
         return $this->render('ADMCCoreBundle:Base:rh.html.twig');
@@ -223,7 +234,7 @@ class BaseController extends Controller
     
     public function modifyUserAction(){
         
-        $modify = $this->container->get('ldap_list_modify_user');
+        $modify = $this->container->get('ldap_modify_user');
         $managerUser = $this->container->get('fos_user.user_manager'); 
         $userRequestor = $managerUser->findUserBy(array ('username' => 'crausaz'));
         $userRequestor->setAddress("36 rue benjamin constant");
@@ -232,6 +243,20 @@ class BaseController extends Controller
         $modify->modifyUser($userRequestor);
         return $this->render('ADMCCoreBundle:Base:index.html.twig');
     
+    }
+    
+    public function deleteUserAction(){
+        
+        $deleteUser = $this->container->get('ldap_delete_user');
+        $managerUser = $this->container->get('fos_user.user_manager'); 
+        $userToDelete = $managerUser->findUserBy(array ('username' => 'delaunay'));
+        
+        if ($deleteUser->deleteUser($userToDelete)){
+            echo "reussite de l'operation";
+        }else{
+            echo "echec de l'operation";
+        }
+        return $this->render('ADMCCoreBundle:Base:index.html.twig');
     }
     
 }

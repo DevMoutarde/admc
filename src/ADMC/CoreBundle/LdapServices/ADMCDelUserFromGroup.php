@@ -4,15 +4,27 @@
 namespace ADMC\CoreBundle\LdapServices;
 use \ADMC\CoreBundle\LdapServices\ADMCConnector;
 
-
+/**
+ * Classe ADMCDelUserFromGroup
+ * Supprime un utilisateur d'un groupe
+ */
 class ADMCDelUserFromGroup{
     
     private $connector;
     
+    
+    /**
+     * @param ADMCConnector $connector
+     */
     public function __construct(ADMCConnector $connector) {
         $this->connector = $connector;
     }
     
+    /**
+     * Supprime l'utilisateur du groupe $group
+     * @param str $group
+     * @param str $user
+     */
  public function delUserFromGroup($group, $user){
      
      $this->connector->connector();

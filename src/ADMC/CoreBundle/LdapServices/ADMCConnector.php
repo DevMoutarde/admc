@@ -2,6 +2,11 @@
 
 namespace ADMC\CoreBundle\LdapServices;
 
+
+/**
+ * Classe ADMCConnector
+ * Créé une connexion + bind avec le serveur LDAP
+ */
 class ADMCConnector{
     
     private $bind;
@@ -12,6 +17,11 @@ class ADMCConnector{
         
     }
     
+    
+    /**
+     * Fonction connector établit une connexion et le bind avec le serveur
+     * @return type
+     */
     public function connector(){
         $server = "192.168.1.240";
         $ad = ldap_connect($server, 389) or die ("pas de connexion possibles");
@@ -103,10 +113,19 @@ class ADMCConnector{
         
     }
     
+    /**
+     * getBind retourne le bind du serveur afin de faciliter les opérations serveurs pour les 
+     * autres services
+     * @return Bind
+     */
     public function getBind(){
         return $this->bind;
     }
     
+    /**
+     * Renvoie le connecteur 
+     * @return Connector
+     */
     public function getConnector(){
         return $this->connect;
     }

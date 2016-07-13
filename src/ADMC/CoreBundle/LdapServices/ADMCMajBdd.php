@@ -7,6 +7,9 @@ use FOS\UserBundle\Doctrine\UserManager;
 use FOS\UserBundle\Doctrine\GroupManager;
 
 
+/**
+ * Met à jour la base de données avec les utilisateurs et groupes présents dans l'Active Directory
+ */
 class ADMCMajBdd {
     
     private $connect;
@@ -15,6 +18,15 @@ class ADMCMajBdd {
     private $userManager;
     private $groupManager;
     
+    
+    /**
+     * 
+     * @param \ADMC\CoreBundle\LdapServices\ADMCConnector $connector
+     * @param EntityManager $entityManager
+     * @param ADMCSearchAllUsers $users
+     * @param UserManager $userManager
+     * @param GroupManager $groupManager
+     */
     public function __construct(ADMCConnector $connector, EntityManager $entityManager, ADMCSearchAllUsers $users, UserManager $userManager, GroupManager $groupManager){
         $this->connect = $connector;
         $this->em = $entityManager;
@@ -23,6 +35,11 @@ class ADMCMajBdd {
         $this->groupManager = $groupManager;
     }
     
+    
+     /**
+     * La méthode updateBdd appelle le service serachUser afin de récupérer les données AD et procède à l'insertion en base
+     * @author Fourcault Gabin
+     */
     public function updateBdd(){
         
        
@@ -89,6 +106,13 @@ class ADMCMajBdd {
         
     }
     
+    
+     /**
+     * Supprime le rôle d'un utilisateur. Un rôle représente des autorisations d'accès sur l'application
+     * @param User $userBdd L'utilisateur concerné par cette suppression de rôles
+     * @param str $userLdap le nom du groupe
+     * @author Fourcault Gabin
+     */
     public function removeRole(\ADMC\CoreBundle\Entity\User $userBdd, $userLdap){
         
        $userBdd->getRoles();
@@ -105,6 +129,7 @@ class ADMCMajBdd {
     }
     
     
+    
     public function checkPassword($bddPass, $ldapPass, $user){
         
         if($bddPass != $ldapPass){
@@ -113,6 +138,12 @@ class ADMCMajBdd {
     }
     
     
+     /**
+     * Ajoute des autorisations d'accès à l'utilisateur
+     * @param User $user Objet de l'entity User
+      * @param array $data contient les données provenant du ldap
+     * @author Fourcault Gabin
+     */
     public function addRole($user, $data){
         if(isset($data['memberof'])){
             //if start with ROLE
@@ -125,6 +156,11 @@ class ADMCMajBdd {
         }
     }
 
+     /**
+     * Vérifie que les groupes présent sur l'AD sont présent en BDD
+     * @param array $data Données issues du ldap
+     * @author Fourcault Gabin
+     */
     public function groupChecker($data=null){
        
         if(isset($data['memberof'])){
@@ -147,9 +183,12 @@ class ADMCMajBdd {
         
     }
     
-    /*
-     * var $group array of string from ldap
-     * var $user Entity\User 
+     /**
+     * Déclencheur de addGroup ou removeUserToGroup 
+     * ajoute un utilisateur ou le supprime dans un groupe en BDD si les données issues du LDAP l'autorise
+     * @param User $user L'utilisateur concerné par l'ajout de groupe
+     * @param array $group liste des groupes
+     * @author Fourcault Gabin
      */
     public function addUserToGroup( $user, $group){
         
@@ -167,9 +206,11 @@ class ADMCMajBdd {
     }
     
     
-     /*
-     * var $group array of string from ldap
-     * var $user Entity\User
+    /**
+     * Supprime un utilisateur d'un groupe si les données provenant de l'AD ne correspondent pas
+     * @param User $user L'utilisateur concerné par l'ajout de groupe
+     * @param array $group liste des groupes
+     * @author Fourcault Gabin
      */
     public function removeUserToGroup($user,$group){
         //if(!in_array($roleBdd, $userLdap['memberof']))
@@ -205,7 +246,10 @@ class ADMCMajBdd {
     
     
     
-    
+     /**
+     *  Renvoie True ou False si un élément est contenu dans un array
+     * @author Fourcault Gabin
+     */
     public function startsWith($haystack, $needle) {
     
         return $needle === "" || strrpos($haystack, $needle, -strlen($haystack)) !== false;

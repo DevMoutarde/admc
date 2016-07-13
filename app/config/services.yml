@@ -60,4 +60,10 @@ services:
          arguments: [@ldap_insert_user, @ldap_insert_user_in_group, @ldap_delete_user_from_group, @fos_user.user_manager, @fos_user.group_manager, @doctrine.orm.entity_manager, @security.context]
          
          
+         
+    ldap_delete_user:
+         class: 'ADMC\CoreBundle\LdapServices\ADMCDeleteUser'
+         arguments: [@ldap_connect, @fos_user.user_manager]
+         
+         
     

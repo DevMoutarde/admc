@@ -11,7 +11,10 @@ use FOS\UserBundle\Doctrine\GroupManager;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 
-
+/**
+ * Classe ADMCValidateRequest
+ * Permet au DSI de valider une requête et execute le service correspondant
+ */
 class ADMCValidateRequest{
     
     private $insertUser;
@@ -22,7 +25,16 @@ class ADMCValidateRequest{
     private $groupManager;
     private $security;
     
-    
+    /**
+     * 
+     * @param ADMCCreateuser $createUser
+     * @param ADMCAddgroup $addGroup
+     * @param ADMCDelUserFromGroup $delUserFromGroup
+     * @param UserManager $userManager
+     * @param GroupManager $groupManager
+     * @param EntityManager $entityManager
+     * @param type $token
+     */
     public function __construct(ADMCCreateuser $createUser, ADMCAddgroup $addGroup, ADMCDelUserFromGroup $delUserFromGroup, UserManager $userManager, GroupManager $groupManager, EntityManager $entityManager,  $token) {
         
         $this->insertUser = $createUser;
@@ -36,6 +48,14 @@ class ADMCValidateRequest{
         
     }
     
+    
+    /**
+     * La méthode analyse permet de lancer les requêtes en fonction du type de requête
+     * et appelle le service correspondant
+     * @param str  $id  L'id de la requête à traiter
+     * @return Boolean  Indique si la tache est accomplie ou non
+     * @author Fourcault Gabin
+     */
     public function analyse($id){
         
         $doctManager= $this->doctrineManager->getRepository('ADMCCoreBundle:Request');
@@ -79,12 +99,25 @@ class ADMCValidateRequest{
         
     }
     
+    
+     /**
+     * La méthode ajouterUtilisateur appelle le service d'ajout d'utilisateurs
+     * @param User  $user L'objet de l'entité User
+     * @author Fourcault Gabin
+     */
     public function ajouterUtilisateur($user){
         
         $this->insertUser->createUserByObject($user);
         
     }
     
+    
+     /**
+     * La méthode ajouterUserDansGroup
+     * @param Request  $request  L'objet de la requête à traiter
+     * @return Boolean  Indique si la tache est accomplie ou non
+     * @author Fourcault Gabin
+     */
     public function ajouterUserDansGroup($request){
         $group=$request->getGroup();
         $user=$request->getUserConcerned();
@@ -101,6 +134,7 @@ class ADMCValidateRequest{
         
     }
     
+
     
     
     
