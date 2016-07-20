@@ -41,3 +41,7 @@ admc_core_modify_user:
 admc_core_delete_user:
     path:     /deleteUser
     defaults: { _controller: ADMCCoreBundle:Base:deleteUser }
+    
+admc_core_delete_user_from_group:
+    path:     /deleteUserFromGroup
+    defaults: { _controller: ADMCCoreBundle:Base:deleteUserFromGroup }

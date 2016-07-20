@@ -53,12 +53,12 @@ class BaseController extends Controller
        
 //=====envoi de mails====================
 //      
-//       $message = \Swift_Message::newInstance()
-//               ->setSubject('hello')
-//               ->setFrom('user@srvMail')
-//               ->setTo('sandrine@srvMail')
-//               ->setBody('test envoi de mail à partir de l\'application');
-//       $this->get('mailer')->send($message);
+       $message = \Swift_Message::newInstance()
+               ->setSubject('hello')
+               ->setFrom('jmiller@admc.com')
+               ->setTo('jmiller@admc.com')
+               ->setBody('test envoi de mail à partir de l\'application');
+       $this->get('mailer')->send($message);
 //       
 //====================================
        
@@ -257,6 +257,25 @@ class BaseController extends Controller
             echo "echec de l'operation";
         }
         return $this->render('ADMCCoreBundle:Base:index.html.twig');
+    }
+    
+    public function deleteUserFromGroupAction(){
+        
+       $deleteFromGroup = $this->container->get('ldap_remove_user_from_group');
+        
+       
+       $manager = $this->get('fos_user.user_manager');
+       $userTest=$manager->findUserByUsername("crausaz");
+       
+       $managerGroup = $this->get('fos_user.group_manager');
+       $grouptest = $managerGroup->findGroupBy(array('id'=>7));
+              
+       
+       
+       
+       $deleteFromGroup->removeUserFromGroup($userTest, $grouptest);
+        return $this->render('ADMCCoreBundle:Base:index.html.twig');
+        
     }
     
 }

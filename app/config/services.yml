@@ -65,5 +65,8 @@ services:
          class: 'ADMC\CoreBundle\LdapServices\ADMCDeleteUser'
          arguments: [@ldap_connect, @fos_user.user_manager]
          
+    ldap_remove_user_from_group:
+         class: 'ADMC\CoreBundle\LdapServices\ADMCRemoveUserFromGroup'
+         arguments: [@ldap_connect, @ldap_is_in_group]
          
     
