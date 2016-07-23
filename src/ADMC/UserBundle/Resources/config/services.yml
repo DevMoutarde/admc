@@ -1,0 +1,4 @@
+services:
+#    admc_user.example:
+#        class: ADMC\UserBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
