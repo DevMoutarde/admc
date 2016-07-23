@@ -1,6 +1,6 @@
 admcrh:
     resource: "@ADMCRHBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /rh
 
 admcdsi:
     resource: "@ADMCDSIBundle/Resources/config/routing.yml"
