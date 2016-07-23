@@ -1,7 +1,0 @@
-admcrh_homepage:
-    path:     /
-    defaults: { _controller: ADMCRHBundle:Rh:index }
-    
-admcrh_request_list:
-    path:     /list
-    defaults: { _controller: ADMCRHBundle:Rh:requestsview }
