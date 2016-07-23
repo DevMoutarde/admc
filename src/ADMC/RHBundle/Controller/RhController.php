@@ -4,23 +4,24 @@ namespace ADMC\RHBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class RhController extends Controller
+class RHController extends Controller
 {
-    public function indexAction(){
-        return $this->render('ADMCRHBundle:Rh:index.html.twig');
+    public function indexAction()
+    {
+        return $this->render('ADMCRHBundle:Default:index.html.twig');
     }
     
-        public function menuAction(){
-
-        $subtitle="Menu RH";
-        $list=array(
-            array('link'=>$this->get('router')->generate('admcrh_request_list'), 'name'=>'Liste des demandes en cours'),
-            array('link'=>'#', 'name'=>'Création user'),
-            array('link'=>'#', 'name'=>'Modification user')
-            //attribution logiciel MAIS DANS USER
-            //attribution lecteur réseau MAIS DANS USER
-        );
-        return $this->render('ADMCRHBundle:Rh:menu.html.twig', array('subtitle'=>$subtitle,'menu'=>$list
-        ));  
-    }
+//        public function menuAction(){
+//
+//        $subtitle="Menu RH";
+//        $list=array(
+//            array('link'=>$this->get('router')->generate('admcrh_request_list'), 'name'=>'Liste des demandes en cours'),
+//            array('link'=>$this->get('router')->generate('admcrh_processed_list'), 'name'=>'Liste des demandes traitées'),
+//            array('link'=>'#', 'name'=>'Gestion des comptes e-mail'),
+//            array('link'=>'#', 'name'=>'Etablir la politique de sécurité'),
+//            array('link'=>'#', 'name'=>'Gestion des non-conformités')
+//        );
+//        return $this->render('ADMCRHBundle:RH:menu.html.twig', array('subtitle'=>$subtitle,'menu'=>$list
+//        ));  
+//    }
 }
