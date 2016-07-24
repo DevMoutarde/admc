@@ -4,7 +4,7 @@ admc_user_homepage:
     
 admcdsi_request_view:
     path:     /view
-    defaults: { _controller: ADMCDSIBundle:Dsi:requestsview }
+    defaults: { _controller: ADMCUserBundle:User:requestsview }
 
 admcuser_request_own_list:
     path:     /userlist
