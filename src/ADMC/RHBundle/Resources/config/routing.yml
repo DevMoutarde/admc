@@ -1,0 +1,3 @@
+admcrh_homepage:
+    path:     /
+    defaults: { _controller: ADMCRHBundle:Default:index }

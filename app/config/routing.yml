@@ -1,3 +1,7 @@
+admcrh:
+    resource: "@ADMCRHBundle/Resources/config/routing.yml"
+    prefix:   /
+
 admcdsi:
     resource: "@ADMCDSIBundle/Resources/config/routing.yml"
     prefix:   /dsi

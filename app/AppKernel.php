@@ -20,7 +20,8 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
-            new FR3D\LdapBundle\FR3DLdapBundle()
+            new FR3D\LdapBundle\FR3DLdapBundle(),
+            new ADMC\RHBundle\ADMCRHBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
