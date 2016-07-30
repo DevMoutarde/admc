@@ -1,0 +1,76 @@
+{# empty Twig template #}
+
+    <hr>
+    <h4> Liste des demandes à traiter</h4>
+    <hr>
+
+<div class="container">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Role</th>
+              <th>Demandeur</th>
+              <th>Status</th>
+              <th>Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+              
+
+             {% for request in requetes %}
+                  
+              
+            <tr class='clickable-row' data-href={{ request.id }}>
+                <td>{{ request.roleRequest.roleName }}</td>
+                <td>{{ request.requestor.lastName }}</td>
+                <td>{{ request.status }}</td>
+                <td>{{ request.date| date("m/d/Y") }}</td>
+                <td>
+                    <button type="button" class="btn btn-info">
+                        <span class="glyphicon glyphicon-search"></span> voir
+                    </button>
+                </td>
+            </tr>
+              
+            
+            {% endfor %}
+            
+          </tbody>
+        </table>
+</div>
+            
+            
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+            
+           
+{% block javascripts %}
+    
+    <script>
+       jQuery(document).ready(function($) {
+            
+            $(".clickable-row").click(function() {
+                var url = '{{ path('admcrh_request_consult', {'id': 'noRequest'}) }}';
+                url = url.replace('noRequest', $(this).attr("data-href"));
+                window.document.location = url;
+            });
+        });
+    </script>
+
+{% endblock %}

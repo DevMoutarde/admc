@@ -1,0 +1,76 @@
+{% extends "ADMCRHBundle::layout.html.twig" %}
+
+
+ 
+{% block ADMCRH_body %}
+
+<h3>Création Utilisateur</h3>
+
+{#<div class="well">
+    
+    {{ form(form) }}
+</div>
+ 
+{% endblock %}#}
+
+<div class="well">
+    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+    {{ form_errors(form) }}
+
+    <div class="form-group">
+        {{ form_label(form.lastname, "Nom", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+        {{ form_errors(form.lastname) }}
+        <div class="col-sm-4">
+            {{ form_widget(form.lastname, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>    
+
+    <div class="form-group">
+        {{ form_label(form.firstname, "Prénom", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+        {{ form_errors(form.firstname) }}
+        <div class="col-sm-4">
+            {{ form_widget(form.firstname, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+        
+    <div class="form-group">
+        {{ form_label(form.address, "Adresse", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+        {{ form_errors(form.address) }}
+        <div class="col-sm-4">
+            {{ form_widget(form.address, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+        
+    <div class="form-group">
+        {{ form_label(form.postalcode, "Code Postal", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+        {{ form_errors(form.postalcode) }}
+        <div class="col-sm-4">
+            {{ form_widget(form.postalcode, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+        
+    <div class="form-group">
+        {{ form_label(form.town, "Ville", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+        {{ form_errors(form.town) }}
+        <div class="col-sm-4">
+            {{ form_widget(form.town, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+        
+    <div class="form-group">
+        {{ form_label(form.email, "E-mail", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+        {{ form_errors(form.email) }}
+        <div class="col-sm-4">
+            {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    
+    <a href="{{ path("admcrh_user_created") }}" >
+        {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+    </a>
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+</div>
+
+{% endblock %}
+

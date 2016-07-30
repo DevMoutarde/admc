@@ -78,7 +78,6 @@ class DsiController extends Controller
     }
     
     public function consultRequestAction($id){
-        //var_dump($id);
 
        $doctManager= $this->getDoctrine()->getManager();
        $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
