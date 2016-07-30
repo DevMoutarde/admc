@@ -1,0 +1,35 @@
+{% extends "ADMCUserBundle::layout.html.twig" %}
+
+{% block ADMCUser_body %}
+ 
+    <p class="listRequest">
+    
+    </p>
+    
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+       jQuery(document).ready(function($) {
+            
+            routine();
+            function routine(){
+                var form = $('.listRequest');
+                        $.ajax({
+                            url: "{{ path('admcuser_request_own_list') }}",
+                            data: form.serialize(),
+                            error: function(jqXHR, textStatus, errorThrown) { $('.listRequest').html('error') },
+                            success: function(htmlResponse) { $('.listRequest').html(htmlResponse) }
+                        });
+            }
+            setInterval(routine, 4000);
+
+            $(".clickable-row").click(function() {
+                //alert("tests");
+                //window.document.location = $(this).data("href");
+            });
+        });
+    </script>
+    
+{% endblock %}
