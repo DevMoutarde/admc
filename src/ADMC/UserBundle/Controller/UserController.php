@@ -17,24 +17,30 @@ class UserController extends Controller
 
         $subtitle="Menu Utilisateur";
         $list=array(
-            array('link'=>$this->get('router')->generate('admcdsi_request_view'), 'name'=>'Liste de mes demandes en cours'),
-            array('link'=>'#', 'name'=>'1'),
-            array('link'=>'#', 'name'=>'2'),
-            array('link'=>'#', 'name'=>'3'),
+            array('link'=>$this->get('router')->generate('admcuser_request_networkdrive_view'), 'name'=>'Demande de lecteur réseau'),
+            array('link'=>$this->get('router')->generate('admcuser_request_software_view'), 'name'=>'Demande de logiciel'),
+            array('link'=>$this->get('router')->generate('admcuser_request_own_list'), 'name'=>'Consultation/Modification de mes informations personnelles')
         );
         return $this->render('ADMCUserBundle:User:menu.html.twig', array('subtitle'=>$subtitle,'menu'=>$list
         )); 
     }
-    public function requestsOwnListAction(RequestForm $request){
-        $doctManager = $this->getDoctrine()->getManager();
-        $requestorRepository = $doctManager->getRepository('ADMCCoreBundle:User')->findAll();
-        $requestRepository = $doctManager->getRepository('ADMCCoreBundle:Request');
-        $requests = $requestRepository->findByStatus("En attente");
-        return $this->render('ADMCUserBundle:User:requestsOwnList.html.twig', array('requetes' => $requests
-        ));
+    
+    public function requestsOwnListAction(){
+
+            return $this->render('ADMCUserBundle:User:requestsOwnList.html.twig');
     }
+    
     public function requestsviewAction(){
         return $this->render('ADMCUserBundle:User:requestsview.html.twig');
     } 
+    
+    public function requestSoftwareAction(){
+            return $this->render('ADMCUserBundle:User:requestsview.html.twig');
+    }
+    
+    public function requestNetworkAction(){
+            return $this->render('ADMCUserBundle:User:requestsview.html.twig');
+    }
+    
     
 }

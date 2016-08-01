@@ -3,15 +3,9 @@
 
 {% block ADMCRH_body %}
 
-    <p class="listRequest">
-    
-
-    </p>
+    <p class="listRequest"></p>
 
 {% endblock %}
-
-
-
 
 {% block javascripts %}
     {{ parent() }}
@@ -30,24 +24,13 @@
                             success: function(htmlResponse) { $('.listRequest').html(htmlResponse) }
                         });
             }
- 
             setInterval(routine, 4000);
-
-            
             $(".clickable-row").click(function() {
                 //alert("tests");
                 //window.document.location = $(this).data("href");
-                
-    });
-            
-            
-            
+            });
         });
-        
-    
-    
     </script>
-    
 {% endblock %}
 
 

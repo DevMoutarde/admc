@@ -1,86 +1,32 @@
-    <hr>
-    <h4> Liste de mes demandes en cours de traitement</h4>
-    <hr>
+{% extends "ADMCUserBundle::layout.html.twig" %}
 
-<div class="container">
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th>Role</th>
-              <th>Demandeur</th>
-              <th>Status</th>
-              <th>Date</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-              
-              {% for request in requetes %}
-                  
-              
-                <tr class='clickable-row' data-href={{ request.id }}>
-                  <td>
-                      {{ request.roleRequest.roleName }}</td>
-                  <td>
-                      {{ request.requestor.lastName }}</td>
-                  <td>
-                      {{ request.status }}</td>
-                  <td>
-                      {{ request.date| date("m/d/Y") }}</td>
-                  <td><button type="button" class="btn btn-info">
-                  <span class="glyphicon glyphicon-search"></span> voir
-                  </button></td>
-                </tr>
-              
-            
-            {% endfor %}
-            
-          </tbody>
-        </table>
-</div>
-            
-            
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-            
-           
-{% block javascripts %}
+{% block ADMCUser_body %}
+    <p class="listRequest">
+    </p>
     
+    <p>zefzefzefez</p>
+{% endblock %}
+
+{#{% block javascripts %}
+    {{ parent() }}
     <script>
        jQuery(document).ready(function($) {
             
+            routine();
+            function routine(){
+                var form = $('.listRequest');
+                        $.ajax({
+                            url: "{{ path('admcuser_request_refresh_list') }}",
+                            data: form.serialize(),
+                            error: function(jqXHR, textStatus, errorThrown) { $('.listRequest').html('error') },
+                            success: function(htmlResponse) { $('.listRequest').html(htmlResponse) }
+                        });
+            }
+             setInterval(routine, 4000);
+            
             $(".clickable-row").click(function() {
-                var url = '{{ path('admcdsi_request_consult', {'id': 'noRequest'}) }}';
-                url = url.replace('noRequest', $(this).attr("data-href"));
-                //alert($(this).attr("data-href"));
-                //var noRequest = $(this).attr("data-href");
-                window.document.location = url;
-                
-            
-});
-                
+             });
         });
-            
-            
-  
-        
-    
-    
     </script>
-
-{% endblock %}
+    
+{% endblock %}#}
