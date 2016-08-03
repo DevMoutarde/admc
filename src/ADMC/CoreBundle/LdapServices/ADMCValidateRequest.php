@@ -9,6 +9,7 @@ use \ADMC\CoreBundle\LdapServices\ADMCDelUserFromGroup;
 use FOS\UserBundle\Doctrine\UserManager;
 use FOS\UserBundle\Doctrine\GroupManager;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use ADMC\CoreBundle\LdapServices\ADMCDeleteUser;
 
 
 /**
@@ -24,6 +25,7 @@ class ADMCValidateRequest{
     private $userManager;
     private $groupManager;
     private $security;
+    private $deleteUser;
     
     /**
      * 
@@ -35,7 +37,7 @@ class ADMCValidateRequest{
      * @param EntityManager $entityManager
      * @param type $token
      */
-    public function __construct(ADMCCreateuser $createUser, ADMCAddgroup $addGroup, ADMCDelUserFromGroup $delUserFromGroup, UserManager $userManager, GroupManager $groupManager, EntityManager $entityManager,  $token) {
+    public function __construct(ADMCCreateuser $createUser, ADMCAddgroup $addGroup, ADMCDelUserFromGroup $delUserFromGroup, UserManager $userManager, GroupManager $groupManager, EntityManager $entityManager,  $token, ADMCDeleteUser $deleteUser) {
         
         $this->insertUser = $createUser;
         $this->insertUserInGroup = $addGroup;
@@ -44,6 +46,7 @@ class ADMCValidateRequest{
         $this->groupManager = $groupManager;
         $this->doctrineManager = $entityManager;
         $this->security = $token;
+        $this->deleteUser = $deleteUser;
         
         
     }
@@ -82,6 +85,7 @@ class ADMCValidateRequest{
                 break;
             
             case "Suppression utilisateur":
+                $this->supprimerUtilisateur($request);
                 break;
         }
         
@@ -133,10 +137,8 @@ class ADMCValidateRequest{
         
         
     }
-    
-
-    
-    
-    
-    
+    public function supprimerUtilisateur($user){
+        
+        $this->deleteUser->deleteUser($user);
+    }  
 }
