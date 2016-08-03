@@ -1,3 +1,7 @@
+admc_user:
+    resource: "@ADMCUserBundle/Resources/config/routing.yml"
+    prefix:   /user
+
 admcrh:
     resource: "@ADMCRHBundle/Resources/config/routing.yml"
     prefix:   /rh

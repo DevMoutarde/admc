@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
             new FR3D\LdapBundle\FR3DLdapBundle(),
             new ADMC\RHBundle\ADMCRHBundle(),
+            new ADMC\UserBundle\ADMCUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
