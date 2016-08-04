@@ -57,12 +57,14 @@ class ADMCCreateuser{
           if ($result){
               echo "Ajout utilisateur!";
               $this->activateUser($adduserAD["samaccountname"][0]);
+              return True;
               
               
               
           } 
           else{
               echo "Echec de l'opération";
+              return False;
           } 
         
     }
