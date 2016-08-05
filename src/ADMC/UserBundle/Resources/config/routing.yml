@@ -8,9 +8,9 @@ admcuser_request_own_list:
        defaults: { _controller: ADMCUserBundle:User:requestsOwnList}
     
 admcuser_request_networkdrive_view:
-    path: /
+    path: /network
     defaults: { _controller: ADMCUserBundle:User:requestNetwork }
 
 admcuser_request_software_view:
-    path: /
+    path: /software
     defaults: { _controller: ADMCUserBundle:User:requestSoftware}

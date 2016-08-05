@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request as RequestForm;
 use ADMC\CoreBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
-use \ADMC\CoreBundle\Entity\Request as RequestSend;
+use ADMC\CoreBundle\Entity\Request as RequestSend;
 
 
 
@@ -95,7 +95,7 @@ class RhController extends Controller
               ->add('town',             'text')
               ->add('save',             'submit')
               ->add('email',            'text')
-            ;
+             ;
             $form = $formBuilder->getForm();
             $form->handleRequest($request);
             
@@ -109,25 +109,23 @@ class RhController extends Controller
                   $em->persist($user);
                   $UserContainer->updateUser($user);
                   $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
+                  
+                  $requestdsi=$this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\RoleRequest")->find(3);
+                  
+                  $request1 = new RequestSend;
+                  $request1->setRequestor($user);
+                  $request1->setRoleRequest($requestdsi);
+                  $request1->setComments('Merci de valider la création de l\utilisateur '.$user->getUsername());
+                  $request1->setStatus("En attente");
+                  $em->persist($request1);
+                  $em->flush();
+
                   return $this->redirect($this->generateUrl('admcrh_user_created', array('id' => $user->getId())));
                 }
             return $this->render('ADMCRHBundle:Rh:createUser.html.twig', array(
               'form' => $form->createView(),
             ));
         }
-        
-//        public function requestAction(){
-//
-//            $manager = $this->getDoctrine()->getManager();
-//            $request = new Request;
-//            $request->setRequestor($userRequestor);
-//            $request->setRoleRequest($roleRequest);
-//            $request->setGroup($group);
-//            $request->setComments('Merci de m\'ajouter le logiciel x');
-//            $manager->persist($request);
-//            $manager->flush();
-//            return $this->render('ADMCUserBundle:Rh:request.html.twig');
-//        }
         
         public function userCreatedAction(){
             return $this->render('ADMCRHBundle:Rh:userCreated.html.twig');

@@ -13,6 +13,7 @@ security:
         ROLE_DSI:  ROLE_DSI
         ROLE_ADMIN:       ROLE_USER
         ROLE_SUPER_ADMIN: ROLE_ADMIN
+        ROLE_EMPLOYE: ROLE_EMPLOYE
 
 
 
@@ -83,5 +84,6 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
-        - { path: ^/rh, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/rh, role: ROLE_RH }
         - { path: ^/dsi, role: ROLE_DSI }
+        - { path: ^/user, role: ROLE_EMPLOYE }
