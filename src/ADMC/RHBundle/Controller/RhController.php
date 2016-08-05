@@ -29,6 +29,7 @@ class RhController extends Controller
         ));  
     }
     
+
         public function requestsviewAction(){
              return $this->render('ADMCRHBundle:Rh:requestsview.html.twig');
         }  
@@ -133,4 +134,5 @@ class RhController extends Controller
 
 
     
+
 }

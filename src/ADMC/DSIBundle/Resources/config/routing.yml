@@ -29,3 +29,4 @@ admcdsi_request_consult_id:
 admcdsi_validate_request:
     path:     /validateRequest/{id}
     defaults: { _controller: ADMCDSIBundle:Dsi:validateRequest }
+    

@@ -42,9 +42,9 @@ class DsiController extends Controller
         $list=array(
             array('link'=>$this->get('router')->generate('admcdsi_request_list'), 'name'=>'Liste des demandes en cours'),
             array('link'=>$this->get('router')->generate('admcdsi_processed_list'), 'name'=>'Liste des demandes traitées'),
-            array('link'=>'#', 'name'=>'Gestion des comptes e-mail'),
-            array('link'=>'#', 'name'=>'Etablir la politique de sécurité'),
-            array('link'=>'#', 'name'=>'Gestion des non-conformités')
+           // array('link'=>$this->get('router')->generate('admcdsi_create_user'), 'name'=>'Créer un utilisateur'),
+           // array('link'=>$this->get('router')->generate('admcdsi_delete_user'), 'name'=>'Supprimer un utilisateur'),
+           // array('link'=>'#', 'name'=>'Gestion des non-conformités')
         );
         return $this->render('ADMCDSIBundle:Dsi:menu.html.twig', array('subtitle'=>$subtitle,'menu'=>$list
         ));  
@@ -109,4 +109,5 @@ class DsiController extends Controller
         ));
         
     } 
+    
 }

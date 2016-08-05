@@ -8,5 +8,5 @@ parameters:
     mailer_transport: smtp
     mailer_host: 192.168.1.240
     mailer_user: jmiller@admc.com
-    mailer_password: Password123
+    mailer_password: Abracadabra1
     secret: 0e2a8f5ef887db67eea62eb3d536403ad4df4ebc
