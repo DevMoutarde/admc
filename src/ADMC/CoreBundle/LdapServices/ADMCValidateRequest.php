@@ -130,7 +130,7 @@ class ADMCValidateRequest{
         if ($rapport == True){
             echo "opération terminée avec succes";
         }else{
-            echo "echec de l'oppération, contactez votre administrateur";
+            echo "echec de l'opération, contactez votre administrateur";
         }
         //var_dump($approver);
         return $rapport;
