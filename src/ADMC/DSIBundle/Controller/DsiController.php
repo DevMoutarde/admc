@@ -7,6 +7,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Request as RequestForm;
 use ADMC\CoreBundle\Entity\Request;
 use FOS\UserBundle\Doctrine\UserManager;
+use Symfony\Component\Security\Core\SecurityContext;
 
 class DsiController extends Controller
 {
@@ -108,6 +109,31 @@ class DsiController extends Controller
 
         ));
         
-    } 
+    }
+    
+    public function refuseRequestAction($id){
+        
+        // récupération de la requete
+        $doctManager= $this->getDoctrine()->getManager();
+        $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
+        $requestRepository=$doctManager->getRepository('ADMCCoreBundle:Request');
+        $request=$requestRepository->find($id);
+        
+        // Passage du status "Refusée"
+        $request->setStatus("Refusée");
+        $doctManager->persist($request);
+        $doctManager->flush($request);
+        
+        // Remplissage du valideur
+       // $currentUser = $this->getUser();
+       // $approver = $this->userManager->findUserByUsername($currentUser);
+       // $request->setRequestor($approver);
+        $requests=$requestRepository->findAll();  
+        return $this->render('ADMCDSIBundle:Dsi:requestsview.html.twig', array('requetes'=>$requests
+
+        ));
+    }
+    
+    
     
 }
