@@ -14,3 +14,11 @@ admcuser_request_networkdrive_view:
 admcuser_request_software_view:
     path: /software
     defaults: { _controller: ADMCUserBundle:User:requestSoftware}
+    
+admcuser_software_request_created:
+    path: /requestSoftwareDone
+    defaults: { _controller: ADMCUserBundle:User:requestSoftwareCreated}
+    
+admcuser_network_request_created:
+    path: /requestNetworkDone
+    defaults: { _controller: ADMCUserBundle:User:requestNetworkCreated}

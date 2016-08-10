@@ -110,9 +110,7 @@ class RhController extends Controller
                   $em->persist($user);
                   $UserContainer->updateUser($user);
                   $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
-                  
                   $requestdsi=$this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\RoleRequest")->find(3);
-                  
                   $request1 = new RequestSend;
                   $request1->setRequestor($user);
                   $request1->setRoleRequest($requestdsi);
@@ -131,8 +129,6 @@ class RhController extends Controller
         public function userCreatedAction(){
             return $this->render('ADMCRHBundle:Rh:userCreated.html.twig');
         }
-
-
-    
+  
 
 }

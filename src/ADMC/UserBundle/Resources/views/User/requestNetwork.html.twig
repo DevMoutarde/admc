@@ -2,5 +2,29 @@
 
 
 {% block ADMCUser_body %}
+    
+{#    <div class="well">
+        {{form(form)}}
+    </div>
+        #}
         
+<div class="well">
+    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+    {{ form_errors(form) }}
+
+    <div class="form-group">
+        {{ form_label(form.Network, "Lecteur réseau", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+        {{ form_errors(form.Network) }}
+        <div class="col-sm-4">
+            {{ form_widget(form.Network, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>    
+
+    
+    <a href="{{ path("admcrh_user_created") }}" >
+        {{ form_widget(form.Valider, {'attr': {'class': 'btn btn-primary'}}) }}
+    </a>
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+</div>
 {% endblock %}
