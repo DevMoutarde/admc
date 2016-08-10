@@ -58,6 +58,7 @@ class DsiController extends Controller
        $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
        $requestRepository=$doctManager->getRepository('ADMCCoreBundle:Request');
        $requests=$requestRepository->findByStatus("En attente");
+
         return $this->render('ADMCDSIBundle:Dsi:requestList.html.twig', array('requetes'=>$requests
 
         ));
@@ -78,7 +79,6 @@ class DsiController extends Controller
     }
     
     public function consultRequestAction($id){
-        //var_dump($id);
 
        $doctManager= $this->getDoctrine()->getManager();
        $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();

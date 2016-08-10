@@ -69,4 +69,8 @@ services:
          class: 'ADMC\CoreBundle\LdapServices\ADMCRemoveUserFromGroup'
          arguments: [@ldap_connect, @ldap_is_in_group]
          
+    ldap_list_group:
+         class: 'ADMC\CoreBundle\LdapServices\ADMCListGroup' 
+         arguments: ['@ldap_connect']
+         
     

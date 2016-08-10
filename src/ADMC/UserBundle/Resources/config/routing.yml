@@ -1,11 +1,24 @@
-admc_user_homepage:
+admcuser_homepage:
     path:     /
     defaults: { _controller: ADMCUserBundle:User:index }
     
-admcdsi_request_view:
-    path:     /view
-    defaults: { _controller: ADMCUserBundle:User:requestsview }
 
 admcuser_request_own_list:
-    path:     /userlist
-    defaults: { _controller: ADMCUserBundle:User:requestsOwnList }
+       path:    /modify
+       defaults: { _controller: ADMCUserBundle:User:requestsOwnList}
+    
+admcuser_request_networkdrive_view:
+    path: /network
+    defaults: { _controller: ADMCUserBundle:User:requestNetwork }
+
+admcuser_request_software_view:
+    path: /software
+    defaults: { _controller: ADMCUserBundle:User:requestSoftware}
+    
+admcuser_software_request_created:
+    path: /requestSoftwareDone
+    defaults: { _controller: ADMCUserBundle:User:requestSoftwareCreated}
+    
+admcuser_network_request_created:
+    path: /requestNetworkDone
+    defaults: { _controller: ADMCUserBundle:User:requestNetworkCreated}

@@ -5,3 +5,35 @@ admcrh_homepage:
 admcrh_request_list:
     path:     /list
     defaults: { _controller: ADMCRHBundle:Rh:requestsview }
+
+admcrh_request_refresh_list:
+    path:     /listRefresh
+    defaults: { _controller: ADMCRHBundle:Rh:requestList }
+    
+admcrh_processed_list:
+    path:     /processed
+    defaults: { _controller: ADMCRHBundle:Rh:processedView}
+
+admcrh_processed_refresh_list:
+    path:     /processedRefresh
+    defaults: { _controller: ADMCRHBundle:Rh:processedList }
+    
+admcrh_request_consult:
+    path:     /consultRequest/?{id}
+    defaults: { _controller: ADMCRHBundle:Rh:consultRequest }
+ 
+admcrh_request_consult_id:
+    path:     /consultRequest/{id}
+    defaults: { _controller: ADMCRHBundle:Rh:consultRequest }
+    
+admcrh_validate_request:
+    path:     /validateRequest/{id}
+    defaults: { _controller: ADMCRHBundle:Rh:validateRequest }
+    
+admcrh_create_user:
+       path:    /createUser
+       defaults: { _controller: ADMCRHBundle:Rh:createUser}
+       
+admcrh_user_created:
+    path: /userCreated
+    defaults: {_controller: ADMCRHBundle:Rh:userCreated}

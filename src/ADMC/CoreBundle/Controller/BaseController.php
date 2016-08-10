@@ -26,6 +26,8 @@ class BaseController extends Controller
        $addUser = $this->container->get('ldap_insert_user');
        $listUsers = $this->container->get('ldap_list_all_users');
        $updateBdd = $this->container->get('ldap_update_database');
+       $listGroup = $this->container->get('ldap_list_group');
+       $listGroup->listGroup();
        //$addUser->createUser();
        
        $utilisateurs = $listUsers->searchUser();
@@ -160,35 +162,35 @@ class BaseController extends Controller
         
         $manager = $this->get('fos_user.user_manager');
        
-       $userTest=$manager->findUserByUsername("crausaz");
+       $userTest=$manager->findUserByUsername("camus");
         
         if ($userTest === null){
             
             $UserContainer =  $this->container->get('fos_user.user_manager');
             $user = $UserContainer->createUser();
-            $user->setUsername("crausaz");
-            $user->setUsernameCanonical("crausaz");
-            $user->setEmail("crausaz@admc.com");
-            $user->setEmailCanonical("crausaz@admc.com");
+            $user->setUsername("camus");
+            $user->setUsernameCanonical("camus");
+            $user->setEmail("camus@admc.com");
+            $user->setEmailCanonical("camus@admc.com");
             $user->setEnabled(True);
             $user->setPassword("pass");
             $user->setAddress("2 rue truc");
             $user->setTown("Toulouse");
-            $user->setFirstName("audrey");
-            $user->setLastName("crausaz");
+            $user->setFirstName("albert");
+            $user->setLastName("camus");
             $user->setPostalCode(31400);
             var_dump($user);
 
             $UserContainer->updateUser($user);
             
+            $addUser = $this->container->get('ldap_insert_user');
+            $addUser->createUserByObject($user);
             
         }
         
 //        var_dump($userTest->getUsername());
 //        
-        $addUser = $this->container->get('ldap_insert_user');
-
-        $addUser->createUserByObject($userTest);
+        
         
         
        return $this->render('ADMCCoreBundle:Base:index.html.twig');
