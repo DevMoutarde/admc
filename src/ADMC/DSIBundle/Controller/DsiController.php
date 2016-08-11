@@ -121,13 +121,15 @@ class DsiController extends Controller
         
         // Passage du status "Refusée"
         $request->setStatus("Refusée");
+        
+        // Remplissage de l'approver
+        $currentUser = $this->getUser(); // check
+        $request->setApprover($currentUser); 
+        
+        // Validation des modifications
         $doctManager->persist($request);
         $doctManager->flush($request);
-        
-        // Remplissage du valideur
-       // $currentUser = $this->getUser();
-       // $approver = $this->userManager->findUserByUsername($currentUser);
-       // $request->setRequestor($approver);
+        // retourne à la liste en fin de traitement
         $requests=$requestRepository->findAll();  
         return $this->render('ADMCDSIBundle:Dsi:requestsview.html.twig', array('requetes'=>$requests
 
