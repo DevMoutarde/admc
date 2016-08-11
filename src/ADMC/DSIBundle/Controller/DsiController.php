@@ -78,14 +78,23 @@ class DsiController extends Controller
         return $this->render('ADMCDSIBundle:Dsi:processedList.html.twig', array('requetes'=>$requests
         ));
     }
-    
+    public function consultProcessedRequestAction($id){
+       $doctManager= $this->getDoctrine()->getManager();
+       $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
+       $requestRepository=$doctManager->getRepository('ADMCCoreBundle:Request');
+       $request=$requestRepository->find($id);
+       
+      
+       return $this->render('ADMCDSIBundle:Dsi:viewContentProcessedRequest.html.twig', array(
+           'request'=>$request
+       ));
+    }
     public function consultRequestAction($id){
 
        $doctManager= $this->getDoctrine()->getManager();
        $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
        $requestRepository=$doctManager->getRepository('ADMCCoreBundle:Request');
        $request=$requestRepository->find($id);
-       
        
        
        return $this->render('ADMCDSIBundle:Dsi:viewContentRequest.html.twig', array(
@@ -121,13 +130,15 @@ class DsiController extends Controller
         
         // Passage du status "Refusée"
         $request->setStatus("Refusée");
+        
+        // Remplissage de l'approver
+        $currentUser = $this->getUser(); // check
+        $request->setApprover($currentUser); 
+        
+        // Validation des modifications
         $doctManager->persist($request);
         $doctManager->flush($request);
-        
-        // Remplissage du valideur
-       // $currentUser = $this->getUser();
-       // $approver = $this->userManager->findUserByUsername($currentUser);
-       // $request->setRequestor($approver);
+        // retourne à la liste en fin de traitement
         $requests=$requestRepository->findAll();  
         return $this->render('ADMCDSIBundle:Dsi:requestsview.html.twig', array('requetes'=>$requests
 
