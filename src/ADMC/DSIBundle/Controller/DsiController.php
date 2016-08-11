@@ -78,14 +78,23 @@ class DsiController extends Controller
         return $this->render('ADMCDSIBundle:Dsi:processedList.html.twig', array('requetes'=>$requests
         ));
     }
-    
+    public function consultProcessedRequestAction($id){
+       $doctManager= $this->getDoctrine()->getManager();
+       $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
+       $requestRepository=$doctManager->getRepository('ADMCCoreBundle:Request');
+       $request=$requestRepository->find($id);
+       
+      
+       return $this->render('ADMCDSIBundle:Dsi:viewContentProcessedRequest.html.twig', array(
+           'request'=>$request
+       ));
+    }
     public function consultRequestAction($id){
 
        $doctManager= $this->getDoctrine()->getManager();
        $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
        $requestRepository=$doctManager->getRepository('ADMCCoreBundle:Request');
        $request=$requestRepository->find($id);
-       
        
        
        return $this->render('ADMCDSIBundle:Dsi:viewContentRequest.html.twig', array(
