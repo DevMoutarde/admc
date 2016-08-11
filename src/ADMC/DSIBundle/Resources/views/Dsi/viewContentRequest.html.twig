@@ -22,7 +22,7 @@
         
         <p><b>Demandé par:</b> {{ request.requestor.username }}</p>
         
-        {% if request.userConcerned is not null %}
+        {% if request.userConcerned is not null and (request.roleRequest.roleName != 'Logiciel' and request.roleRequest.roleName != 'Lecteur\ Réseau')%}
             <p><b>Demandé pour:</b> {{ request.userConcerned }}</p>
             
         {% endif %}
