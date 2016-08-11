@@ -19,6 +19,14 @@
             {{ form_widget(form.Network, {'attr': {'class': 'form-control'}}) }}
         </div>
     </div>    
+        
+    <div class="form-group">
+        {{ form_label(form.Commentaire, "Commentaire", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+        {{ form_errors(form.Commentaire) }}
+        <div class="col-sm-4">
+            {{ form_widget(form.Commentaire, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
 
     
     <a href="{{ path("admcrh_user_created") }}" >

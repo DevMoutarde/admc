@@ -36,4 +36,12 @@ admcrh_create_user:
        
 admcrh_user_created:
     path: /userCreated
-    defaults: {_controller: ADMCRHBundle:Rh:userCreated}
+    defaults: { _controller: ADMCRHBundle:Rh:userCreated}
+    
+admcrh_delete_user:
+    path: /deleteUser
+    defaults: { _controller:ADMCRHBundle:Rh:deleteUser}
+    
+admcrh_user_deleted:
+    path: /userDeleted
+    defaults: { _controller:ADMCRHBundle:Rh:userDeleted}

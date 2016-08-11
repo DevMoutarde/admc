@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Request as RequestForm;
 use ADMC\CoreBundle\Entity\Request as RequestSend;
 use ADMC\CoreBundle\Entity\User;
 use ADMC\CoreBundle\Entity\Group;
-
 use FOS\UserBundle\Doctrine\UserManager;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
@@ -34,8 +33,8 @@ class UserController extends Controller
         $selfuser = $this->getUser();
         $formBuilder = $this->get('form.factory')->createBuilder('form', $selfuser);
         $formBuilder
-          ->add('lastname',      'text')
-          ->add('firstname',      'text')
+          ->add('lastname',      'text',array('read_only' => true))
+          ->add('firstname',      'text',array('read_only' => true))
           ->add('address',       'textarea')
           ->add('postalcode',   'number')
           ->add('town',             'text')
@@ -87,42 +86,43 @@ class UserController extends Controller
            }
         }
 
-            $formBuilder = $this->get('form.factory')->createBuilder('form', $groupListSoftware);
-            $formBuilder
-                    ->add('Logiciel', 'choice', ['choices' => $groupListSoftware ])
-                    ->add('Valider',             'submit')
-
-             ;
+        $formBuilder = $this->get('form.factory')->createBuilder('form', $groupListSoftware);
+        $formBuilder
+                ->add('Logiciel', 'choice', ['choices' => $groupListSoftware ])
+                ->add('Commentaire',       'textarea')
+                ->add('Valider',             'submit')
+         ;
             
-            $form = $formBuilder->getForm();
-            $form->handleRequest($request);
-            
-            if ($form->isValid()) {
-                
-                $var = $form->get('Logiciel')->getData();
-                if ($var==0){
-                    $currentSoftware='Notepad';
-                }
+        $form = $formBuilder->getForm();
+        $form->handleRequest($request);
 
-                $UserContainer =  $this->container->get('fos_user.user_manager');
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($selfuser);
-                $UserContainer->updateUser($selfuser);
-                $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
-                $requestdsi=$this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\RoleRequest")->find(1);
-                $request1 = new RequestSend;
-                $request1->setRequestor($selfuser);
-                $request1->setRoleRequest($requestdsi);
-                $request1->setComments('Demande de logiciel '.$currentSoftware.'de l\utilisateur '.$selfuser->getUsername());
-                $request1->setStatus("En attente");
-                $em->persist($request1);
-                $em->flush();
-                return $this->redirect($this->generateUrl('admcuser_software_request_created', array('id' => $selfuser->getId())));
-            }
+        if ($form->isValid()) {
+            $varComments = $form->get('Commentaire')->getData();
+            $var = $form->get('Logiciel')->getData();
+            $listSoftware=$groupListSoftware[$var];
+            $suffixeSoftware='GRP_APP_';
+            $nomCompletSoftware=$suffixeSoftware.$listSoftware;
+            $UserContainer =  $this->container->get('fos_user.user_manager');
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($selfuser);
+            $UserContainer->updateUser($selfuser);
+            $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
+            $requestRoleRequest=$this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\RoleRequest")->find(1);
+            $requestGroup=$this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\Group")->findOneByName($nomCompletSoftware);
+            $request1 = new RequestSend;
+            $request1->setRequestor($selfuser);
+            $request1->setRoleRequest($requestRoleRequest);
+            $request1->setGroup($requestGroup);
+            $request1->setComments($varComments);
+            $request1->setStatus("En attente");
+            $em->persist($request1);
+            $em->flush();
+            return $this->redirect($this->generateUrl('admcuser_software_request_created', array('id' => $selfuser->getId())));
+        }
 
-            return $this->render('ADMCUserBundle:User:requestSoftware.html.twig', array(
-              'form' => $form->createView(),
-            ));
+        return $this->render('ADMCUserBundle:User:requestSoftware.html.twig', array(
+          'form' => $form->createView(),
+        ));
     }
     
     
@@ -140,36 +140,36 @@ class UserController extends Controller
                $groupListNetwork[]=$matches[1];
            }
         }
+        
+        dump($groupListNetwork);
+        
           $formBuilder = $this->get('form.factory')->createBuilder('form', $groupListNetwork);
             $formBuilder
                 ->add('Network', 'choice', ['choices' => $groupListNetwork ])
+                ->add('Commentaire',       'textarea')
                 ->add('Valider',             'submit')
              ;
             $form = $formBuilder->getForm();
             $form->handleRequest($request);
-            
 
             if ($form->isValid()) {
-                
+                $varComments = $form->get('Commentaire')->getData();
                 $var = $form->get('Network')->getData();
-                if ($var==0){
-                    $currentNetwork='Comptabilité';
-                }
-                elseif ($var==1) {
-                    $currentNetwork='RH';
-                }
-                
-                
+                $listNetwork=$groupListNetwork[$var];
+                $suffixeNetwork='GRP_DRV_';
+                $nomCompletNetwork=$suffixeNetwork.$listNetwork;
                 $UserContainer =  $this->container->get('fos_user.user_manager');
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($selfuser);
                 $UserContainer->updateUser($selfuser);
                 $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
-                $requestdsi=$this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\RoleRequest")->find(2);
+                $requestRoleRequest=$this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\RoleRequest")->find(2);
+                $requestGroup=$this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\Group")->findOneByName($nomCompletNetwork);
                 $request1 = new RequestSend;
                 $request1->setRequestor($selfuser);
-                $request1->setRoleRequest($requestdsi);
-                $request1->setComments('Demande de lecteur réseau '.$currentNetwork.' de l\utilisateur '.$selfuser->getUsername());
+                $request1->setRoleRequest($requestRoleRequest);
+                $request1->setGroup($requestGroup);
+                $request1->setComments($varComments);
                 $request1->setStatus("En attente");
                 $em->persist($request1);
                 $em->flush();

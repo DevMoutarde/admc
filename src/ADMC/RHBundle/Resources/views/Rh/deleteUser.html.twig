@@ -1,0 +1,31 @@
+{% extends "ADMCRHBundle::layout.html.twig" %}
+
+
+ 
+{% block ADMCRH_body %}
+    
+{#<div class="well">
+    {{ form(form) }}
+</div>#}
+
+
+<div class="well">
+    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+    {{ form_errors(form) }}
+    
+    <div class="form-group">
+        {{ form_label(form.id, "ID", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+        {{ form_errors(form.id) }}
+        <div class="col-sm-4">
+            {{ form_widget(form.id, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>    
+    
+    <a href="{{ path("admcrh_user_created") }}" >
+        {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+    </a>
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+</div>
+    
+{% endblock %}
