@@ -93,7 +93,7 @@ class ADMCValidateRequest{
         
         
         if ($report){
-            $request->setStatus("Validé");
+            $request->setStatus("Validée");
             $request->setRequestor($approver);
             $this->doctrineManager->flush($request);
             

@@ -105,16 +105,16 @@ class DsiController extends Controller
     
     public function validateRequestAction($id){
         
-        $requestManager = $this->container->get('ldap_validate_request');
-        $report = $requestManager->analyse($id);
+       $requestManager = $this->container->get('ldap_validate_request');
+       $report = $requestManager->analyse($id);
         
         
-        $doctManager= $this->getDoctrine()->getManager();
+       $doctManager= $this->getDoctrine()->getManager();
        $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
        $requestRepository=$doctManager->getRepository('ADMCCoreBundle:Request');
 
        $requests=$requestRepository->findAll();         
-        return $this->render('ADMCDSIBundle:Dsi:requestsview.html.twig', array('requetes'=>$requests
+       return $this->render('ADMCDSIBundle:Dsi:requestsview.html.twig', array('requetes'=>$requests
 
         ));
         
