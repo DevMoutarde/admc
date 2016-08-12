@@ -105,10 +105,12 @@ class DsiController extends Controller
     
     public function validateRequestAction($id){
         
+       // Appel du service de validation de la requête
        $requestManager = $this->container->get('ldap_validate_request');
        $report = $requestManager->analyse($id);
         
         
+       // Redirection vers la liste des requêtes en cours
        $doctManager= $this->getDoctrine()->getManager();
        $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
        $requestRepository=$doctManager->getRepository('ADMCCoreBundle:Request');
