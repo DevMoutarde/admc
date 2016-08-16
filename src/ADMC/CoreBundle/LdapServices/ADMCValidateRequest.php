@@ -72,19 +72,19 @@ class ADMCValidateRequest{
         $approver = $this->userManager->findUserByUsername($approverUsername);
         $report = False;
         switch ($roleRequest){
-            case "Installation logiciel":
+            case "Logiciel":
                 $report = $this->ajouterUserDansGroup($request);
                 break;
             
-            case "Connexion lecteur réseau":
-                $this->ajouterUserDansGroup($request);
+            case "Lecteur Réseau":
+                $report = $this->ajouterUserDansGroup($request);
                 break;
             
-            case "Insertion utilisateur":
+            case "Insérer utilisateur":
                 $this->ajouterUtilisateur($request->getUserConcerned());
                 break;
             
-            case "Suppression utilisateur":
+            case "Supprimer utilisateur":
                 $this->supprimerUtilisateur($request);
                 break;
         }
@@ -93,7 +93,7 @@ class ADMCValidateRequest{
         
         
         if ($report){
-            $request->setStatus("Validé");
+            $request->setStatus("Validée");
             $request->setRequestor($approver);
             $this->doctrineManager->flush($request);
             
