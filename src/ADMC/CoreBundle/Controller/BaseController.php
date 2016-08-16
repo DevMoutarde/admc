@@ -280,4 +280,9 @@ class BaseController extends Controller
         
     }
     
+    public function deniedAction(){
+        
+        return $this->render('ADMCCoreBundle:Base:accessDenied.html.twig');
+    }
+    
 }

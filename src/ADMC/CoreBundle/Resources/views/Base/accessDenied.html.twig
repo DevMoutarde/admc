@@ -1,0 +1,14 @@
+{# empty Twig template #}
+
+{% extends "ADMCCoreBundle::layout.html.twig" %}
+
+
+
+{% block ADMCCore_body %}
+    
+    <h2>Droits insuffisants</h2>
+    
+    <p>Vous n'avez pas les accès nécessaires pour accéder à cette page</p>
+    <p> <a href=" {{ path('admc_core_homepage')  }}" >Retour à la page d'accueil</a></p>
+    
+{% endblock %}

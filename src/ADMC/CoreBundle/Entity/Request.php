@@ -40,7 +40,7 @@ class Request
     /**
      * @var User
      *
-     * @ORM\OneToOne(targetEntity="ADMC\CoreBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="ADMC\CoreBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */
     private $userConcerned;

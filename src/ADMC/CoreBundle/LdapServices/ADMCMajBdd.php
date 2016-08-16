@@ -48,7 +48,6 @@ class ADMCMajBdd {
         foreach ($users as $user){
             $result =  $this->userManager->findUserByUsername($user['logon']);
             //var_dump($user);
-            
             //create group if not exist
             $this->groupChecker($user);
             

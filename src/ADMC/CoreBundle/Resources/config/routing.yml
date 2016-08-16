@@ -45,3 +45,7 @@ admc_core_delete_user:
 admc_core_delete_user_from_group:
     path:     /deleteUserFromGroup
     defaults: { _controller: ADMCCoreBundle:Base:deleteUserFromGroup }
+    
+admc_core_access_denied:
+    path:     /accessDenied
+    defaults: { _controller: ADMCCoreBundle:Base:denied }
