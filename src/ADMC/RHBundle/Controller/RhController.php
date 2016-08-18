@@ -36,11 +36,16 @@ class RhController extends Controller
         }  
     
         public function requestListAction(RequestForm $request){
-
+            $selfuser = $this->getUser();
+            $selfuserId=$selfuser->getId();
             $doctManager= $this->getDoctrine()->getManager();
             $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
             $requestRepository=$doctManager->getRepository('ADMCCoreBundle:Request');
-            $requests=$requestRepository->findByStatus("En attente");
+            $requests=$requestRepository->findBy(
+                    array('status'                  =>'En attente',
+                              'requestor'        =>$selfuserId)
+                    );
+            
             return $this->render('ADMCRHBundle:Rh:requestList.html.twig', array('requetes'=>$requests
             ));
         }
@@ -88,6 +93,7 @@ class RhController extends Controller
         
         public function createUserAction(Request $request) {
             $user= new User();
+            $selfuser = $this->getUser();
             $formBuilder = $this->get('form.factory')->createBuilder('form', $user);
             $formBuilder
               ->add('lastname',      'text')
@@ -105,7 +111,7 @@ class RhController extends Controller
                 $UserContainer =  $this->container->get('fos_user.user_manager');
                 $em = $this->getDoctrine()->getManager();
                 $user->setEmailCanonical($user->getEmail());
-                $user->setUsername($user->getFirstName());
+                $user->setUsername($user->getLastName());
                 $user->setUsernameCanonical($user->getUsername());
                 $user->setPassword("pass");
                 $em->persist($user);
@@ -113,8 +119,9 @@ class RhController extends Controller
                 $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
                 $requestdsi=$this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\RoleRequest")->find(3);
                 $request1 = new RequestSend;
-                $request1->setRequestor($user);
+                $request1->setRequestor($selfuser);
                 $request1->setRoleRequest($requestdsi);
+                $request1->setUserConcerned($user);
                 $request1->setComments('Merci de valider la création de l\utilisateur '.$user->getUsername());
                 $request1->setStatus("En attente");
                 $em->persist($request1);
@@ -127,23 +134,21 @@ class RhController extends Controller
             ));
         }
         
-        public function deleteUserAction(Request $request){
-            $user= new User();
-            $formBuilder = $this->get('form.factory')->createBuilder('form', $user);
-            $formBuilder
-              ->add('id',      'integer')
-              ->add('save',             'submit')
-             ;
-            $form = $formBuilder->getForm();
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                        return $this->redirect($this->generateUrl('admcrh_user_deleted', array('id' => $user->getId())));
-            }
+        public function deleteUserAction(){
             
+            $doctManager= $this->getDoctrine()->getManager();
+//            $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
+            $requestRepository=$doctManager->getRepository('ADMCCoreBundle:User');
+            $users=$requestRepository->findAll();
+            return $this->render('ADMCRHBundle:Rh:userList.html.twig', array('utilisateur'=>$users
+            ));
             
-            return $this->render('ADMCRHBundle:Rh:deleteUser.html.twig', array(
-              'form' => $form->createView(),
-            ));    
+        }
+        
+        public function requestDeleteUserAction(Request $request){
+            
+            return $this->render('ADMCRHBundle:Rh:userDeleted.html.twig');
+            
         }
         
         public function userCreatedAction(){

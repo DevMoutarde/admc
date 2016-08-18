@@ -114,6 +114,7 @@ class UserController extends Controller
             $request1->setRoleRequest($requestRoleRequest);
             $request1->setGroup($requestGroup);
             $request1->setComments($varComments);
+            $request1->setUserConcerned($selfuser);
             $request1->setStatus("En attente");
             $em->persist($request1);
             $em->flush();
@@ -140,46 +141,45 @@ class UserController extends Controller
                $groupListNetwork[]=$matches[1];
            }
         }
-        
-        dump($groupListNetwork);
-        
-          $formBuilder = $this->get('form.factory')->createBuilder('form', $groupListNetwork);
-            $formBuilder
-                ->add('Network', 'choice', ['choices' => $groupListNetwork ])
-                ->add('Commentaire',       'textarea')
-                ->add('Valider',             'submit')
-             ;
-            $form = $formBuilder->getForm();
-            $form->handleRequest($request);
+                
+        $formBuilder = $this->get('form.factory')->createBuilder('form', $groupListNetwork);
+        $formBuilder
+            ->add('Network', 'choice', ['choices' => $groupListNetwork ])
+            ->add('Commentaire',       'textarea')
+            ->add('Valider',             'submit')
+         ;
+        $form = $formBuilder->getForm();
+        $form->handleRequest($request);
 
-            if ($form->isValid()) {
-                $varComments = $form->get('Commentaire')->getData();
-                $var = $form->get('Network')->getData();
-                $listNetwork=$groupListNetwork[$var];
-                $suffixeNetwork='GRP_DRV_';
-                $nomCompletNetwork=$suffixeNetwork.$listNetwork;
-                $UserContainer =  $this->container->get('fos_user.user_manager');
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($selfuser);
-                $UserContainer->updateUser($selfuser);
-                $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
-                $requestRoleRequest=$this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\RoleRequest")->find(2);
-                $requestGroup=$this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\Group")->findOneByName($nomCompletNetwork);
-                $request1 = new RequestSend;
-                $request1->setRequestor($selfuser);
-                $request1->setRoleRequest($requestRoleRequest);
-                $request1->setGroup($requestGroup);
-                $request1->setComments($varComments);
-                $request1->setStatus("En attente");
-                $em->persist($request1);
-                $em->flush();
-                return $this->redirect($this->generateUrl('admcuser_network_request_created', array('id' => $selfuser->getId())));
-            }
-            else{
-            return $this->render('ADMCUserBundle:User:requestNetwork.html.twig', array(
-              'form' => $form->createView(),
-            ));
-            }
+        if ($form->isValid()) {
+            $varComments = $form->get('Commentaire')->getData();
+            $var = $form->get('Network')->getData();
+            $listNetwork=$groupListNetwork[$var];
+            $suffixeNetwork='GRP_DRV_';
+            $nomCompletNetwork=$suffixeNetwork.$listNetwork;
+            $UserContainer =  $this->container->get('fos_user.user_manager');
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($selfuser);
+            $UserContainer->updateUser($selfuser);
+            $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
+            $requestRoleRequest=$this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\RoleRequest")->find(2);
+            $requestGroup=$this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\Group")->findOneByName($nomCompletNetwork);
+            $request1 = new RequestSend;
+            $request1->setRequestor($selfuser);
+            $request1->setRoleRequest($requestRoleRequest);
+            $request1->setGroup($requestGroup);
+            $request1->setComments($varComments);
+            $request1->setStatus("En attente");
+            $request1->setUserConcerned($selfuser);
+            $em->persist($request1);
+            $em->flush();
+            return $this->redirect($this->generateUrl('admcuser_network_request_created', array('id' => $selfuser->getId())));
+        }
+        else{
+        return $this->render('ADMCUserBundle:User:requestNetwork.html.twig', array(
+          'form' => $form->createView(),
+        ));
+        }
     }
     
     public function requestSoftwareCreatedAction(){
