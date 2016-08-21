@@ -4,7 +4,9 @@
 {% block ADMCDSI_body %}
     
     <h2>Consultation requête</h2>
-    
+    <hr>
+    <h5>Cette requête a déjà été traitée</h5>
+    <hr>
     
     
     <div class="well">
@@ -22,7 +24,7 @@
         
         <p><b>Demandé par:</b> {{ request.requestor.username }}</p>
         
-        {% if request.userConcerned is not null and (request.roleRequest.roleName != 'Logiciel' and request.roleRequest.roleName != 'Lecteur\ Réseau')%}
+        {% if request.userConcerned is not null %}
             <p><b>Demandé pour:</b> {{ request.userConcerned }}</p>
             
         {% endif %}
@@ -56,26 +58,7 @@
                     <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Retour à la liste
                   </button>
             
-            </a>
-                
-                
-            {% if request.status != 'Validé' and request.status != 'Refusé'%}
-            
-         
-        
-                <a href="{{ path("admcdsi_validate_request", {'id': request.id}) }}" >
-                    <button type="button" class="btn btn-success">
-                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Valider la requête
-                      </button>
-                </a>
-
-                <a href="{{path("admcdsi_refuse_request", {'id': request.id} )}}" >
-                    <button type="button" class="btn btn-danger">
-                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Refuser la requête
-                      </button>
-                </a>
-        
-        {% endif %}
+            </a> 
         </p>
     </div>
 {% endblock %}

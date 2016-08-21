@@ -28,6 +28,7 @@ class ADMCDeleteUser{
     /**
      * permet la suppression d'un utilisateur sur l'AD
      * ainsi que sa désactivation en base de données
+     * Vérifie que l'utilisateur existe avant la suppression
      * @param User  $user  L'utilisateur à supprimer
      * @return Boolean  Indique si la tache est accomplie ou non
      * @author Fourcault Gabin

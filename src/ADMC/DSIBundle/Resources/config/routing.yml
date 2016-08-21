@@ -25,8 +25,16 @@ admcdsi_request_consult:
 admcdsi_request_consult_id:
     path:     /consultRequest/{id}
     defaults: { _controller: ADMCDSIBundle:Dsi:consultRequest }
+
+admcdsi_processed_request_consult:
+    path:     /consultProcessedRequest/?{id}
+    defaults: { _controller: ADMCDSIBundle:Dsi:consultProcessedRequest }
     
 admcdsi_validate_request:
     path:     /validateRequest/{id}
     defaults: { _controller: ADMCDSIBundle:Dsi:validateRequest }
+
+admcdsi_refuse_request:
+    path:     /refuseRequest/{id}
+    defaults: { _controller: ADMCDSIBundle:Dsi:refuseRequest }
     

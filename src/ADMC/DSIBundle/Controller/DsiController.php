@@ -7,6 +7,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Request as RequestForm;
 use ADMC\CoreBundle\Entity\Request;
 use FOS\UserBundle\Doctrine\UserManager;
+use Symfony\Component\Security\Core\SecurityContext;
 
 class DsiController extends Controller
 {
@@ -77,14 +78,23 @@ class DsiController extends Controller
         return $this->render('ADMCDSIBundle:Dsi:processedList.html.twig', array('requetes'=>$requests
         ));
     }
-    
+    public function consultProcessedRequestAction($id){
+       $doctManager= $this->getDoctrine()->getManager();
+       $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
+       $requestRepository=$doctManager->getRepository('ADMCCoreBundle:Request');
+       $request=$requestRepository->find($id);
+       
+      
+       return $this->render('ADMCDSIBundle:Dsi:viewContentProcessedRequest.html.twig', array(
+           'request'=>$request
+       ));
+    }
     public function consultRequestAction($id){
 
        $doctManager= $this->getDoctrine()->getManager();
        $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
        $requestRepository=$doctManager->getRepository('ADMCCoreBundle:Request');
        $request=$requestRepository->find($id);
-       
        
        
        return $this->render('ADMCDSIBundle:Dsi:viewContentRequest.html.twig', array(
@@ -95,19 +105,48 @@ class DsiController extends Controller
     
     public function validateRequestAction($id){
         
-        $requestManager = $this->container->get('ldap_validate_request');
-        $report = $requestManager->analyse($id);
+       // Appel du service de validation de la requête
+       $requestManager = $this->container->get('ldap_validate_request');
+       $report = $requestManager->analyse($id);
         
         
-        $doctManager= $this->getDoctrine()->getManager();
+       // Redirection vers la liste des requêtes en cours
+       $doctManager= $this->getDoctrine()->getManager();
        $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
        $requestRepository=$doctManager->getRepository('ADMCCoreBundle:Request');
 
        $requests=$requestRepository->findAll();         
-        return $this->render('ADMCDSIBundle:Dsi:requestsview.html.twig', array('requetes'=>$requests
+       return $this->render('ADMCDSIBundle:Dsi:requestsview.html.twig', array('requetes'=>$requests
 
         ));
         
-    } 
+    }
+    
+    public function refuseRequestAction($id){
+        
+        // récupération de la requete
+        $doctManager= $this->getDoctrine()->getManager();
+        $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
+        $requestRepository=$doctManager->getRepository('ADMCCoreBundle:Request');
+        $request=$requestRepository->find($id);
+        
+        // Passage du status "Refusée"
+        $request->setStatus("Refusée");
+        
+        // Remplissage de l'approver
+        $currentUser = $this->getUser(); // check
+        $request->setApprover($currentUser); 
+        
+        // Validation des modifications
+        $doctManager->persist($request);
+        $doctManager->flush($request);
+        // retourne à la liste en fin de traitement
+        $requests=$requestRepository->findAll();  
+        return $this->render('ADMCDSIBundle:Dsi:requestsview.html.twig', array('requetes'=>$requests
+
+        ));
+    }
+    
+    
     
 }
