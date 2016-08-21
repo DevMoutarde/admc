@@ -47,5 +47,14 @@ admcrh_user_deleted:
     defaults: { _controller: ADMCRHBundle:Rh:userDeleted}
     
 admc_user_delete_button:
-    path: /requestDeleteUser
+    path: /requestDeleteUser/?{id}
     defaults: { _controller: ADMCRHBundle:Rh:requestDeleteUser}
+
+admcrh_user_refresh_list:
+    path:     /listUserRefresh
+    defaults: { _controller: ADMCRHBundle:Rh:userList }
+    
+admcrh_user_list:
+    path:     /userList
+    defaults: { _controller: ADMCRHBundle:Rh:userView }
+    

@@ -1,6 +1,6 @@
     
-{% extends "ADMCRHBundle::layout.html.twig" %}
-{% block ADMCRH_body %}
+{#{% extends "ADMCRHBundle::layout.html.twig" %}
+{% block ADMCRH_body %}#}
 
     <hr>
         <h4> Liste des utilisateurs</h4>
@@ -25,16 +25,17 @@
               
             <tr class='clickable-row' data-href={{ user.id }}>
                 <td>{{ user.username }}</td>
-                <td>{{ user.id }}</td>
+                <td class='classID'>{{ user.id }}</td>
                 <td>{{ user.lastname }}</td>
                 <td>{{ user.firstname }}</td>
                 <td>{{ user.email }}</td>
                 <td>
-                    <a href=" {{  path("admc_user_delete_button") }} " >
+{#                    <a href=" {{  path("admc_user_delete_button") }} " > #}
+                    
                         <button type="button" class="btn btn-info" >
                             <span class="glyphicon glyphicon-search"></span> Supprimer
                         </button>
-                    </a>
+
                 </td>
             </tr>
               
@@ -63,24 +64,21 @@
     </div>
   </div>
 </div>
- {% endblock %}
-           
+{# {% endblock %}
+#}           
            
 {% block javascripts %}
     
     <script>
-{#       jQuery(document).ready(function($) {
-            
+       jQuery(document).ready(function($) {
             $(".clickable-row").click(function() {
-                var url = '{{ path('admcrh_user_consult', {'id': 'noRequest'}) }}';
+                var url = '{{ path('admc_user_delete_button', {'id': 'noRequest'}) }}';
                 url = url.replace('noRequest', $(this).attr("data-href"));
+{#                alert($(this).attr("data-href"));
+                var noRequest = $(this).attr("data-href");#}
                 window.document.location = url;
             });
-        });#}
-            
-             jQuery(document).ready(function($){
-                onclick="location.href='http://www.website.com/search/'+document.getElementById('search').value;"
-             };
+        });
     </script>
 
 {% endblock %}

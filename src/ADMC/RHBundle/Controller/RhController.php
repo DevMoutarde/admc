@@ -24,7 +24,7 @@ class RhController extends Controller
         $list=array(
             array('link'=>$this->get('router')->generate('admcrh_request_list'), 'name'=>'Liste des demandes en cours'),
             array('link'=>$this->get('router')->generate('admcrh_create_user'), 'name'=>'Créer utilisateur'),
-            array('link'=>$this->get('router')->generate('admcrh_delete_user'), 'name'=>'Supprimer un utilisateur')
+            array('link'=>$this->get('router')->generate('admcrh_user_list'), 'name'=>'Supprimer un utilisateur')
         );
         return $this->render('ADMCRHBundle:RH:menu.html.twig', array('subtitle'=>$subtitle,'menu'=>$list
         ));  
@@ -45,7 +45,6 @@ class RhController extends Controller
                     array('status'                  =>'En attente',
                               'requestor'        =>$selfuserId)
                     );
-            
             return $this->render('ADMCRHBundle:Rh:requestList.html.twig', array('requetes'=>$requests
             ));
         }
@@ -134,19 +133,38 @@ class RhController extends Controller
             ));
         }
         
-        public function deleteUserAction(){
+        public function userListAction(){
             
             $doctManager= $this->getDoctrine()->getManager();
 //            $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
             $requestRepository=$doctManager->getRepository('ADMCCoreBundle:User');
             $users=$requestRepository->findAll();
-            return $this->render('ADMCRHBundle:Rh:userList.html.twig', array('utilisateur'=>$users
+            return $this->render('ADMCRHBundle:Rh:userList.html.twig', array(
+                    'utilisateur'=>$users
             ));
             
         }
         
-        public function requestDeleteUserAction(Request $request){
-            
+        
+
+        public function requestDeleteUserAction(Request $request, $id){
+            $selfuser = $this->getUser();
+            $user=$this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\User")->find($id);
+            dump($user);
+
+            $em = $this->getDoctrine()->getManager();
+            $requestdsi=$this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\RoleRequest")->find(4);
+            $request1 = new RequestSend;
+            $request1->setRequestor($selfuser);
+            $request1->setRoleRequest($requestdsi);
+            $request1->setUserConcerned($user);
+            $request1->setComments('Merci de valider la suppression de l\utilisateur '.$user->getUsername());
+            $request1->setStatus("En attente");
+            $em->persist($request1);
+            $em->flush();
+            dump($id);
+
+
             return $this->render('ADMCRHBundle:Rh:userDeleted.html.twig');
             
         }
@@ -154,6 +172,11 @@ class RhController extends Controller
         public function userCreatedAction(){
             return $this->render('ADMCRHBundle:Rh:userCreated.html.twig');
         }
+        
+        
+        public function userviewAction(){
+             return $this->render('ADMCRHBundle:Rh:userView.html.twig');
+        }  
   
 
 }

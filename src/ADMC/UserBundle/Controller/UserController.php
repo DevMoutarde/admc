@@ -52,6 +52,7 @@ class UserController extends Controller
               $request1 = new RequestSend;
               $request1->setRequestor($selfuser);
               $request1->setRoleRequest($requestdsi);
+              $request1->setUserConcerned($selfuser);
               $request1->setComments('Merci de valider la modification  de l\utilisateur '.$selfuser->getUsername());
               $request1->setStatus("En attente");
               $em->persist($request1);
