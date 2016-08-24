@@ -1,38 +1,46 @@
+    
+{#{% extends "ADMCRHBundle::layout.html.twig" %}
+{% block ADMCRH_body %}#}
 
     <hr>
-    <h4> Liste des demandes traitées</h4>
+        <h4> Liste des utilisateurs</h4>
     <hr>
+
 <div class="container">
         <table class="table table-hover">
           <thead>
             <tr>
-              <th>Role</th>
-              <th>Demandeur</th>
-              <th>Status</th>
-              <th>Date</th>
-              <th>Action</th>
+              <th>Nom d'utilisateur</th>
+              <th>Identifiant</th>
+              <th>Nom</th>
+              <th>Prénom</th>
+              <th>E-mail</th>
             </tr>
           </thead>
           <tbody>
               
-              {% for request in requetes %}
+
+             {% for user in utilisateur %}
                   
-                <tr class='clickable-row' data-href={{ request.id }}>
-                  <td>
-                      {{ request.roleRequest.roleName }}</td>
-                  <td>
-                      {{ request.requestor.lastName }}</td>
-                  <td>
-                      {{ request.status }}</td>
-                  <td>
-                      {{ request.date| date("m/d/Y") }}</td>
-                  <td>
-                        <button type="button" class="btn btn-info">
-                        <span class="glyphicon glyphicon-search"></span> voir
+              
+            <tr class='clickable-row' data-href={{ user.id }}>
+                <td>{{ user.username }}</td>
+                <td class='classID'>{{ user.id }}</td>
+                <td>{{ user.lastname }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+{#                    <a href=" {{  path("admc_user_delete_button") }} " > #}
+                    
+                        <button type="button" class="btn btn-info" >
+                            <span class="glyphicon glyphicon-search"></span> Supprimer
                         </button>
-                  </td>
-                </tr>
-             {% endfor %}
+
+                </td>
+            </tr>
+              
+            
+            {% endfor %}
             
           </tbody>
         </table>
@@ -56,14 +64,15 @@
     </div>
   </div>
 </div>
-            
+{# {% endblock %}
+#}           
            
 {% block javascripts %}
     
     <script>
        jQuery(document).ready(function($) {
             $(".clickable-row").click(function() {
-                var url = '{{ path('admcrh_request_consult', {'id': 'noRequest'}) }}';
+                var url = '{{ path('admc_user_delete_button', {'id': 'noRequest'}) }}';
                 url = url.replace('noRequest', $(this).attr("data-href"));
 {#                alert($(this).attr("data-href"));
                 var noRequest = $(this).attr("data-href");#}

@@ -1,0 +1,34 @@
+{% extends "ADMCRHBundle::layout.html.twig" %}
+
+{% block ADMCRH_body %}
+    <p class="listUser">
+    </p>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+       jQuery(document).ready(function($) {
+            
+            routine();
+            function routine(){
+                var form = $('.listUser');
+                        $.ajax({
+                            //type: "POST",
+                            //beforeSend: function() { $('.listRequest').html('en charge.....') },
+                            url: "{{ path('admcrh_user_refresh_list') }}",
+                            data: form.serialize(),
+                            error: function(jqXHR, textStatus, errorThrown) { $('.listUser').html('error') },
+                            success: function(htmlResponse) { $('.listUser').html(htmlResponse) }
+                        });
+            }
+             setInterval(routine, 4000);
+            
+            $(".clickable-row").click(function() {
+                //alert("tests");
+                //window.document.location = $(this).data("href");
+             });
+        });
+    </script>
+    
+{% endblock %}

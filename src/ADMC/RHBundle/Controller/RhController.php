@@ -23,7 +23,8 @@ class RhController extends Controller
         $subtitle="Menu RH";
         $list=array(
             array('link'=>$this->get('router')->generate('admcrh_request_list'), 'name'=>'Liste des demandes en cours'),
-            array('link'=>$this->get('router')->generate('admcrh_create_user'), 'name'=>'Créer utilisateur')
+            array('link'=>$this->get('router')->generate('admcrh_create_user'), 'name'=>'Créer utilisateur'),
+            array('link'=>$this->get('router')->generate('admcrh_user_list'), 'name'=>'Supprimer un utilisateur')
         );
         return $this->render('ADMCRHBundle:RH:menu.html.twig', array('subtitle'=>$subtitle,'menu'=>$list
         ));  
@@ -35,11 +36,15 @@ class RhController extends Controller
         }  
     
         public function requestListAction(RequestForm $request){
-
+            $selfuser = $this->getUser();
+            $selfuserId=$selfuser->getId();
             $doctManager= $this->getDoctrine()->getManager();
             $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
             $requestRepository=$doctManager->getRepository('ADMCCoreBundle:Request');
-            $requests=$requestRepository->findByStatus("En attente");
+            $requests=$requestRepository->findBy(
+                    array('status'                  =>'En attente',
+                              'requestor'        =>$selfuserId)
+                    );
             return $this->render('ADMCRHBundle:Rh:requestList.html.twig', array('requetes'=>$requests
             ));
         }
@@ -87,6 +92,7 @@ class RhController extends Controller
         
         public function createUserAction(Request $request) {
             $user= new User();
+            $selfuser = $this->getUser();
             $formBuilder = $this->get('form.factory')->createBuilder('form', $user);
             $formBuilder
               ->add('lastname',      'text')
@@ -101,34 +107,76 @@ class RhController extends Controller
             $form->handleRequest($request);
             
             if ($form->isValid()) {
-                  $UserContainer =  $this->container->get('fos_user.user_manager');
-                  $em = $this->getDoctrine()->getManager();
-                  $user->setEmailCanonical($user->getEmail());
-                  $user->setUsername($user->getFirstName());
-                  $user->setUsernameCanonical($user->getUsername());
-                  $user->setPassword("pass");
-                  $em->persist($user);
-                  $UserContainer->updateUser($user);
-                  $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
-                  $requestdsi=$this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\RoleRequest")->find(3);
-                  $request1 = new RequestSend;
-                  $request1->setRequestor($user);
-                  $request1->setRoleRequest($requestdsi);
-                  $request1->setComments('Merci de valider la création de l\utilisateur '.$user->getUsername());
-                  $request1->setStatus("En attente");
-                  $em->persist($request1);
-                  $em->flush();
+                $UserContainer =  $this->container->get('fos_user.user_manager');
+                $em = $this->getDoctrine()->getManager();
+                $user->setEmailCanonical($user->getEmail());
+                $user->setUsername($user->getLastName());
+                $user->setUsernameCanonical($user->getUsername());
+                $user->setPassword("pass");
+                $em->persist($user);
+                $UserContainer->updateUser($user);
+                $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
+                $requestdsi=$this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\RoleRequest")->find(3);
+                $request1 = new RequestSend;
+                $request1->setRequestor($selfuser);
+                $request1->setRoleRequest($requestdsi);
+                $request1->setUserConcerned($user);
+                $request1->setComments('Merci de valider la création de l\utilisateur '.$user->getUsername());
+                $request1->setStatus("En attente");
+                $em->persist($request1);
+                $em->flush();
 
-                  return $this->redirect($this->generateUrl('admcrh_user_created', array('id' => $user->getId())));
+                return $this->redirect($this->generateUrl('admcrh_user_created', array('id' => $user->getId())));
                 }
             return $this->render('ADMCRHBundle:Rh:createUser.html.twig', array(
               'form' => $form->createView(),
             ));
         }
         
+        public function userListAction(){
+            
+            $doctManager= $this->getDoctrine()->getManager();
+//            $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
+            $requestRepository=$doctManager->getRepository('ADMCCoreBundle:User');
+            $users=$requestRepository->findAll();
+            return $this->render('ADMCRHBundle:Rh:userList.html.twig', array(
+                    'utilisateur'=>$users
+            ));
+            
+        }
+        
+        
+
+        public function requestDeleteUserAction(Request $request, $id){
+            $selfuser = $this->getUser();
+            $user=$this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\User")->find($id);
+            dump($user);
+
+            $em = $this->getDoctrine()->getManager();
+            $requestdsi=$this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\RoleRequest")->find(4);
+            $request1 = new RequestSend;
+            $request1->setRequestor($selfuser);
+            $request1->setRoleRequest($requestdsi);
+            $request1->setUserConcerned($user);
+            $request1->setComments('Merci de valider la suppression de l\utilisateur '.$user->getUsername());
+            $request1->setStatus("En attente");
+            $em->persist($request1);
+            $em->flush();
+            dump($id);
+
+
+            return $this->render('ADMCRHBundle:Rh:userDeleted.html.twig');
+            
+        }
+        
         public function userCreatedAction(){
             return $this->render('ADMCRHBundle:Rh:userCreated.html.twig');
         }
+        
+        
+        public function userviewAction(){
+             return $this->render('ADMCRHBundle:Rh:userView.html.twig');
+        }  
   
 
 }

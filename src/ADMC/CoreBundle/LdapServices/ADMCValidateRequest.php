@@ -85,7 +85,7 @@ class ADMCValidateRequest{
                 break;
             
             case "Supprimer utilisateur":
-                $this->supprimerUtilisateur($request);
+                $this->supprimerUtilisateur($request->getUserConcerned());
                 break;
         }
         

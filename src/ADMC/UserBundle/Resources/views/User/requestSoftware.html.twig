@@ -12,12 +12,20 @@
     {{ form_errors(form) }}
 
     <div class="form-group">
-        {{ form_label(form.Logiciel, "Logiciel", {'label_attr': {'class': 'col-sm-1 control-label'}}) }}
+        {{ form_label(form.Logiciel, "Logiciel", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
         {{ form_errors(form.Logiciel) }}
         <div class="col-sm-4">
             {{ form_widget(form.Logiciel, {'attr': {'class': 'form-control'}}) }}
         </div>
     </div>    
+
+    <div class="form-group">
+        {{ form_label(form.Commentaire, "Commentaire", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+        {{ form_errors(form.Commentaire) }}
+        <div class="col-sm-4">
+            {{ form_widget(form.Commentaire, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
 
     
     <a href="{{ path("admcrh_user_created") }}" >
