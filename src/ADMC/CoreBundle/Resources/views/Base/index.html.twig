@@ -5,14 +5,28 @@
 
 {% block ADMCCore_body %}
     
-    <h2>Les news</h2>
-    
-    <ul>
-         
-            <li>news 1 </li>
-            <li>news 2</li>
-            <li>news 3</li>
+    <h2>Actualités</h2>
+
+            
+          
+      <section class="row">
+          <div class="col-xs-5 col-sm-7 col-md-6"><img class = "img-thumbnail" src="{{ asset('pictures/entretien.jpg') }}" alt="Entretien">
+              <p>Entretien annuel avec votre manager avant septembre</p></div>
+              
+          <div class="col-xs-5 col-sm-7 col-md-6"><img class = "img-thumbnail" src="{{ asset('pictures/blood.jpg') }}" alt="Blood">
+              <p>Session dont sanguin à midi</p></div>
+              
+         </section>     
+              <br>
+         <section class="row">     
+              
+              <div class="col-xs-4 col-sm-7 col-md-6"><img class = "img-thumbnail" src="{{ asset('pictures/stress.jpg') }}" alt="Entretien">
+              <p>Stress au travail? Faites-vous aider</p></div>
+              
+          <div class="col-xs-4 col-sm-7 col-md-6"><img class = "img-thumbnail" src="{{ asset('pictures/alternant.png') }}" alt="Blood">
+              <p>Session recrutement alternants</p></div>
+      </section>
      
-    </ul>
+ 
     
 {% endblock %}

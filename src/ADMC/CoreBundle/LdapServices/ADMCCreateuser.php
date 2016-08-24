@@ -28,7 +28,7 @@ class ADMCCreateuser{
      */
     public function createUserByObject($user){
         
-        //var_dump($user);
+        //dump($user);
         //echo $user->getFirstName();
         $this->connector->connector();
         $dn = "CN=".$user->getLastName().",CN=Users;dc=admc,dc=com"; 
