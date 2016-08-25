@@ -82,10 +82,12 @@ class ADMCValidateRequest{
             
             case "Insérer utilisateur":
                 $this->ajouterUtilisateur($request->getUserConcerned());
+                $report = True; // a reprendre
                 break;
             
             case "Supprimer utilisateur":
                 $this->supprimerUtilisateur($request->getUserConcerned());
+                $report = True; // a reprendre
                 break;
         }
         
@@ -94,7 +96,7 @@ class ADMCValidateRequest{
         
         if ($report){
             $request->setStatus("Validée");
-            $request->setRequestor($approver);
+            $request->setApprover($approver); //corrigé par Sam
             $this->doctrineManager->flush($request);
             
         }
@@ -137,6 +139,11 @@ class ADMCValidateRequest{
         
         
     }
+     /**
+     * La méthode supprimerUtilisateur
+     * @param User  $user L'objet de l'entité User
+     * @author Salles Samuel
+     */
     public function supprimerUtilisateur($user){
         
         $this->deleteUser->deleteUser($user);
