@@ -177,6 +177,19 @@ class RhController extends Controller
         public function userviewAction(){
              return $this->render('ADMCRHBundle:Rh:userView.html.twig');
         }  
+        
+        public function deleteRequestAction($id){
+            
+            $em = $this->getDoctrine()->getEntityManager();
+            
+            $request2 = $this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\User")->findAll();
+            $request1 = $this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\Request")->find($id);
+            $em->remove($request1);
+            $em->flush();
+
+            return $this->render('ADMCRHBundle:Rh:requestDeleted.html.twig');
+
+        }
   
 
 }

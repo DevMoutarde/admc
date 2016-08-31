@@ -58,3 +58,7 @@ admcrh_user_list:
     path:     /userList
     defaults: { _controller: ADMCRHBundle:Rh:userView }
     
+admcrh_delete_request:
+    path: /deleteRequest/{id}
+    defaults: { _controller:ADMCRHBundle:Rh:deleteRequest }
+    
