@@ -55,7 +55,7 @@ class ADMCCreateuser{
            // add data to directory 
          $result=ldap_add($this->connector->getConnector(), $dn, $adduserAD); 
           if ($result){
-              echo "Ajout utilisateur!";
+              //echo "Ajout utilisateur!";
               $this->activateUser($adduserAD["samaccountname"][0]);
               return True;
               
@@ -63,7 +63,7 @@ class ADMCCreateuser{
               
           } 
           else{
-              echo "Echec de l'opération";
+              //echo "Echec de l'opération";
               return False;
           } 
         

@@ -135,8 +135,8 @@ class DsiController extends Controller
         $request->setStatus("Refusée");
         
         // Remplissage de l'approver
-        $currentUser = $this->getUser(); // check
-        $request->setApprover($currentUser); 
+        $currentUser = $this->getUser(); // ok
+        $request->setApprover($currentUser); // à corriger
         
         // Validation des modifications
         $doctManager->persist($request);
