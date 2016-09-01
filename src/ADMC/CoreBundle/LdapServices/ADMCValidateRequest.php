@@ -10,6 +10,8 @@ use FOS\UserBundle\Doctrine\UserManager;
 use FOS\UserBundle\Doctrine\GroupManager;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use ADMC\CoreBundle\LdapServices\ADMCDeleteUser;
+use FOS\UserBundle\Model\User as Model;
+use ADMC\CoreBundle\Entity\User;
 
 
 /**
@@ -82,6 +84,8 @@ class ADMCValidateRequest{
             
             case "Insérer utilisateur":
                 $this->ajouterUtilisateur($request->getUserConcerned());
+                // activer l'utilisateur en bdd
+                $this->activerUtilisateur($request->getUserConcerned());
                 $report = True; // a reprendre
                 break;
             
@@ -148,4 +152,14 @@ class ADMCValidateRequest{
         
         $this->deleteUser->deleteUser($user);
     }  
+    
+    /**
+     * La méthode activerUtilisateur
+     * @param User  $user L'objet de l'entité User
+     * @author Salles Samuel
+     */
+    public function activerUtilisateur($user){
+        $user->setEnabled(true);
+        $this->userManager->updateUser($user);
+    }
 }
