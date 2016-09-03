@@ -74,4 +74,8 @@ services:
          class: 'ADMC\CoreBundle\LdapServices\ADMCListGroup' 
          arguments: ['@ldap_connect']
          
+    ldap_send_mail:
+        class: 'ADMC\CoreBundle\LdapServices\ADMCSendMail'
+        arguments: [@mailer]
+         
     

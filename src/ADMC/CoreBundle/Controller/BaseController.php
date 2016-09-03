@@ -27,6 +27,7 @@ class BaseController extends Controller
        $listUsers = $this->container->get('ldap_list_all_users');
        $updateBdd = $this->container->get('ldap_update_database');
        $listGroup = $this->container->get('ldap_list_group');
+       $mailSender = $this->container->get('ldap_send_mail');
        $listGroup->listGroup();
        //$addUser->createUser();
        
@@ -45,7 +46,7 @@ class BaseController extends Controller
 //       
        
        
-       
+       $mailSender->envoyerMail("jmiller@admc.com", "service", "testService");
 
      
 
@@ -55,12 +56,12 @@ class BaseController extends Controller
        
 //=====envoi de mails====================
 //      
-       $message = \Swift_Message::newInstance()
-               ->setSubject('hello')
-               ->setFrom('jmiller@admc.com')
-               ->setTo('jmiller@admc.com')
-               ->setBody('test envoi de mail à partir de l\'application');
-       $this->get('mailer')->send($message);
+//       $message = \Swift_Message::newInstance()
+//               ->setSubject('hello')
+//               ->setFrom('jmiller@admc.com')
+//               ->setTo('jmiller@admc.com')
+//               ->setBody('test envoi de mail à partir de l\'application');
+//       $this->get('mailer')->send($message);
 //       
 //====================================
        
