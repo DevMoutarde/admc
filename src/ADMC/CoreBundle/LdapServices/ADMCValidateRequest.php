@@ -2,6 +2,8 @@
 
 
 namespace ADMC\CoreBundle\LdapServices;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use \Doctrine\ORM\EntityManager;
 use ADMC\CoreBundle\LdapServices\ADMCCreateuser;
 use \ADMC\CoreBundle\LdapServices\ADMCAddgroup;
@@ -10,8 +12,10 @@ use FOS\UserBundle\Doctrine\UserManager;
 use FOS\UserBundle\Doctrine\GroupManager;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use ADMC\CoreBundle\LdapServices\ADMCDeleteUser;
-use FOS\UserBundle\Model\User as Model;
 use ADMC\CoreBundle\Entity\User;
+use ADMC\CoreBundle\LdapServices\ADMCSendMail;
+
+
 
 
 /**
@@ -28,6 +32,7 @@ class ADMCValidateRequest{
     private $groupManager;
     private $security;
     private $deleteUser;
+    private $mailManager;
     
     /**
      * 
@@ -39,7 +44,7 @@ class ADMCValidateRequest{
      * @param EntityManager $entityManager
      * @param type $token
      */
-    public function __construct(ADMCCreateuser $createUser, ADMCAddgroup $addGroup, ADMCDelUserFromGroup $delUserFromGroup, UserManager $userManager, GroupManager $groupManager, EntityManager $entityManager,  $token, ADMCDeleteUser $deleteUser) {
+    public function __construct(ADMCCreateuser $createUser, ADMCAddgroup $addGroup, ADMCDelUserFromGroup $delUserFromGroup, UserManager $userManager, GroupManager $groupManager, EntityManager $entityManager,  $token, ADMCDeleteUser $deleteUser, ADMCSendMail $mailManager) {
         
         $this->insertUser = $createUser;
         $this->insertUserInGroup = $addGroup;
@@ -49,6 +54,7 @@ class ADMCValidateRequest{
         $this->doctrineManager = $entityManager;
         $this->security = $token;
         $this->deleteUser = $deleteUser;
+        $this->mailManager = $mailManager;
         
         
     }
@@ -68,7 +74,8 @@ class ADMCValidateRequest{
         $requestorRepository=$this->doctrineManager->getRepository('ADMCCoreBundle:User')->findAll();
         $request=$doctManager->find($id);
         $roleRequest= $request->getRoleRequest()->getRoleName();
-        
+
+
         
         $approverUsername = $this->security->getToken()->getUser();
         $approver = $this->userManager->findUserByUsername($approverUsername);
@@ -76,6 +83,9 @@ class ADMCValidateRequest{
         switch ($roleRequest){
             case "Logiciel":
                 $report = $this->ajouterUserDansGroup($request);
+                if($report){
+                   $this->mailManager->envoyerMail("jmiller@admc.com","Demande acceptée", "Votre demande d'ajout de logiciel a été acceptée."); 
+                }
                 break;
             
             case "Lecteur Réseau":
