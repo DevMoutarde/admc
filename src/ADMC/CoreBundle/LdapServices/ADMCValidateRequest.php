@@ -100,11 +100,13 @@ class ADMCValidateRequest{
                 // activer l'utilisateur en bdd
                 $this->activerUtilisateur($request->getUserConcerned());
                 $report = True; // a reprendre
+                $this->mailManager->envoyerMail("jmiller@admc.com","Utilisateur créé", "L'utilisateur %% a été créé.");
                 break;
             
             case "Supprimer utilisateur":
                 $this->supprimerUtilisateur($request->getUserConcerned());
                 $report = True; // a reprendre
+                $this->mailManager->envoyerMail("jmiller@admc.com","Utilisateur supprimé", "L'utilisateur %% a été supprimé.");
                 break;
         }
         
