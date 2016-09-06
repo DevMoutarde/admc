@@ -90,6 +90,9 @@ class ADMCValidateRequest{
             
             case "Lecteur Réseau":
                 $report = $this->ajouterUserDansGroup($request);
+                if($report){
+                   $this->mailManager->envoyerMail("jmiller@admc.com","Demande acceptée", "Votre demande d'accès à un lecteur a été acceptée."); 
+                }
                 break;
             
             case "Insérer utilisateur":
