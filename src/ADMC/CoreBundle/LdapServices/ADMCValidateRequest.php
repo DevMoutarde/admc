@@ -76,34 +76,38 @@ class ADMCValidateRequest{
         $roleRequest= $request->getRoleRequest()->getRoleName();     
         $approverUsername = $this->security->getToken()->getUser();
         $approver = $this->userManager->findUserByUsername($approverUsername);
+        $userConcerned = $request->getUserConcerned();
+        $userConcernedFirstName = $userConcerned->getFirstName();
+        $userConcernedLastName = $userConcerned->getLastName();
+        // $userConcernnedMailAddress
         $report = False;
         switch ($roleRequest){
             case "Logiciel":
                 $report = $this->ajouterUserDansGroup($request);
                 if($report){
-                   $this->mailManager->envoyerMail("jmiller@admc.com","Demande acceptée", "Votre demande d'ajout de logiciel a été acceptée par " . $approverUsername . " ."); 
+                   $this->mailManager->envoyerMail("jmiller@admc.com","Demande acceptée", "Bonjour " . $userConcernedFirstName. " " . $userConcernedLastName . " Votre demande d'ajout de logiciel a été acceptée par " . $approverUsername . " ."); 
                 }
                 break;
             
             case "Lecteur Réseau":
                 $report = $this->ajouterUserDansGroup($request);
                 if($report){
-                   $this->mailManager->envoyerMail("jmiller@admc.com","Demande acceptée", "Votre demande d'accès à un lecteur a été acceptée par " . $approverUsername . " ."); 
+                   $this->mailManager->envoyerMail("jmiller@admc.com","Demande acceptée", "Bonjour " . $userConcernedFirstName. " " . $userConcernedLastName .  " Votre demande d'accès à un lecteur a été acceptée par " . $approverUsername . " ."); 
                 }
                 break;
             
             case "Insérer utilisateur":
-                $this->ajouterUtilisateur($request->getUserConcerned());
+                $this->ajouterUtilisateur($userConcerned);
                 // activer l'utilisateur en bdd
-                $this->activerUtilisateur($request->getUserConcerned());
+                $this->activerUtilisateur($userConcerned);
                 $report = True; // a reprendre
-                $this->mailManager->envoyerMail("jmiller@admc.com","Utilisateur créé", "La création de l'utilisateur %% a été validée par " . $approverUsername . " .");
+                $this->mailManager->envoyerMail("jmiller@admc.com","Utilisateur créé ", "La création de l'utilisateur ". $userConcernedLastName. " a été validée par " . $approverUsername . " .");
                 break;
             
             case "Supprimer utilisateur":
-                $this->supprimerUtilisateur($request->getUserConcerned());
+                $this->supprimerUtilisateur($userConcerned);
                 $report = True; // a reprendre
-                $this->mailManager->envoyerMail("jmiller@admc.com","Utilisateur supprimé", "La suppression de l'utilisateur %% a été validée par " . $approverUsername . " .");
+                $this->mailManager->envoyerMail("jmiller@admc.com","Utilisateur supprimé", "La suppression de l'utilisateur ". $userConcernedLastName. " a été validée par " . $approverUsername . " .");
                 break;
         }
         
