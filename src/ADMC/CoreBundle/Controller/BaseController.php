@@ -204,21 +204,24 @@ class BaseController extends Controller
         
         $manager = $this->getDoctrine()->getManager();
         
-        $requestUser = $manager->getRepository('ADMCCoreBundle:User');
-        $requestUser->findAll();
-        
-        $requestManager = $manager->getRepository('ADMCCoreBundle:Request');
-        $requete = $requestManager->find(3);
+        //$requestUser = $manager->getRepository('ADMCCoreBundle:User');
+        //$user = $requestUser->findByUsername("camus");
+        $managerUser = $this->container->get('fos_user.user_manager');      
+        $user = $managerUser->findUserBy(array ('username' => 'camus'));
+        //dump($user);
+        //$requestManager = $manager->getRepository('ADMCCoreBundle:Request');
+        //$requete = $requestManager->find(62);
         
         //var_dump($requete);
         
-        $user = $requete->getUserConcerned()->getUsername();
-        $group = $requete->getGroup()->getName();
+        //$user = $requete->getUserConcerned()->getUsername();
+        //$group = $requete->getGroup()->getName();
         
-//        $addUser = $this->container->get('ldap_insert_user_in_group');
+        $addUserInGroup = $this->container->get('ldap_insert_user_in_group');
+        $addUserInGroup->addRoleEmploye($user);
 //        var_dump($addUser->addGroup($group, $user));
-        $delUser = $this->container->get('ldap_delete_user_from_group');
-        $delUser->delUserFromGroup($group, $user);
+        //$delUser = $this->container->get('ldap_delete_user_from_group');
+      //  $delUser->delUserFromGroup($group, $user);
         return $this->render('ADMCCoreBundle:Base:index.html.twig');
     }
     

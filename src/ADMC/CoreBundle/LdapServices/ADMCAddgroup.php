@@ -33,6 +33,7 @@ class ADMCAddgroup{
      * @param Group $group
      * @param User $user
      * @return boolean
+     * @author Gabin Fourcault
      */
     public function addGroup($group, $user){
         
@@ -63,4 +64,34 @@ class ADMCAddgroup{
         
     }
 
+     /**
+     * Ajoute un utilisateur dans le groupe ROLE_EMPLOYE 
+      * Ce service est invoqué dès qu'un utilisateur est créé
+     * @param User $user
+     * @return boolean
+     * @author Gabin Fourcault
+     */   
+ public function addRoleEmploye($user){
+        dump($user);
+        $this->connector->connector();
+        $ds = $this->connector->getConnector();
+        $racine =  "dc=admc, dc=com";
+        $rechercheGroupe = ldap_search($ds, $racine, "(&(objectclass=group)(name=ROLE_EMPLOYE))");
+        $resultatGroupe = ldap_get_entries($ds, $rechercheGroupe);
+        //var_dump($resultatGroupe);
+        $groupe = $resultatGroupe[0];
+        //var_dump($groupe);
+        $dn_group = $groupe['dn'];
+        $recupMember = $groupe["member"];
+            $groupe = array();
+            $groupe['member']="cn=".$user->getUsername().",cn=Users,dc=admc,dc=com";
+
+        return  ldap_mod_add($this->connector->getConnector(), $dn_group, $groupe) or die ();
+
+  
+        
+    }
+    
+    
+    
 }
