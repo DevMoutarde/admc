@@ -73,26 +73,35 @@ class ADMCValidateRequest{
         
         $requestorRepository=$this->doctrineManager->getRepository('ADMCCoreBundle:User')->findAll();
         $request=$doctManager->find($id);
-        $roleRequest= $request->getRoleRequest()->getRoleName();     
+        $roleRequest= $request->getRoleRequest()->getRoleName();    
+        // informations approver
         $approverUsername = $this->security->getToken()->getUser();
         $approver = $this->userManager->findUserByUsername($approverUsername);
+        $approverLastName = $approver->getLastName();
+        
+        // informations user
         $userConcerned = $request->getUserConcerned();
         $userConcernedFirstName = $userConcerned->getFirstName();
         $userConcernedLastName = $userConcerned->getLastName();
-        // $userConcernnedMailAddress
+        $userConcernnedMailAddress = $userConcerned->getEmail();
+        
+        // informations requestor
+        $requestor = $request->getRequestor();
+        $requestorMail = $requestor->getEmail();
+        
         $report = False;
         switch ($roleRequest){
             case "Logiciel":
                 $report = $this->ajouterUserDansGroup($request);
                 if($report){
-                   $this->mailManager->envoyerMail("jmiller@admc.com","Demande acceptée", "Bonjour " . $userConcernedFirstName. " " . $userConcernedLastName . " Votre demande d'ajout de logiciel a été acceptée par " . $approverUsername . " ."); 
+                   $this->mailManager->envoyerMail($userConcernnedMailAddress,"Demande acceptée", "Bonjour " . $userConcernedFirstName. " " . $userConcernedLastName . " Votre demande d'ajout de logiciel a été acceptée par " . $approverUsername . " " . $approverLastName); 
                 }
                 break;
             
             case "Lecteur Réseau":
                 $report = $this->ajouterUserDansGroup($request);
                 if($report){
-                   $this->mailManager->envoyerMail("jmiller@admc.com","Demande acceptée", "Bonjour " . $userConcernedFirstName. " " . $userConcernedLastName .  " Votre demande d'accès à un lecteur a été acceptée par " . $approverUsername . " ."); 
+                   $this->mailManager->envoyerMail($userConcernnedMailAddress,"Demande acceptée", "Bonjour " . $userConcernedFirstName. " " . $userConcernedLastName .  " Votre demande d'accès à un lecteur a été acceptée par " . $approverUsername . " " . $approverLastName); 
                 }
                 break;
             
@@ -101,13 +110,13 @@ class ADMCValidateRequest{
                 // activer l'utilisateur en bdd
                 $this->activerUtilisateur($userConcerned);
                 $report = True; // a reprendre
-                $this->mailManager->envoyerMail("jmiller@admc.com","Utilisateur créé ", "La création de l'utilisateur ". $userConcernedLastName. " a été validée par " . $approverUsername . " .");
+                $this->mailManager->envoyerMail($requestorMail,"Utilisateur créé ", "La création de l'utilisateur ". $userConcernedFirstName. " " . $userConcernedLastName. " a été validée par " . $approverUsername . " " . $approverLastName);
                 break;
             
             case "Supprimer utilisateur":
                 $this->supprimerUtilisateur($userConcerned);
                 $report = True; // a reprendre
-                $this->mailManager->envoyerMail("jmiller@admc.com","Utilisateur supprimé", "La suppression de l'utilisateur ". $userConcernedLastName. " a été validée par " . $approverUsername . " .");
+                $this->mailManager->envoyerMail($requestorMail,"Utilisateur supprimé", "La suppression de l'utilisateur ". $userConcernedFirstName. " " .  $userConcernedLastName. " a été validée par " . $approverUsername . " " . $approverLastName);
                 break;
         }
         
@@ -165,8 +174,9 @@ class ADMCValidateRequest{
      * @author Salles Samuel
      */
     public function supprimerUtilisateur($user){
-        
         $this->deleteUser->deleteUser($user);
+        $user->setEnabled(false);
+        $this->userManager->updateUser($user);
     }  
     
     /**
