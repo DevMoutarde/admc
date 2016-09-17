@@ -87,7 +87,7 @@ class ADMCMajBdd {
             }else{
                 
                 //add roles
-                dump($result);
+//                dump($result);
                 $this->addRole($result, $user);
                 $this->removeRole($result, $user);
                 //update the password in DB if not similar

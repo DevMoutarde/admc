@@ -50,15 +50,20 @@ class UserController extends Controller
               $em->persist($selfuser);
               $UserContainer->updateUser($selfuser);
               $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
-              $requestdsi=$this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\RoleRequest")->find(3);
-              $request1 = new RequestSend;
-              $request1->setRequestor($selfuser);
-              $request1->setRoleRequest($requestdsi);
-              $request1->setUserConcerned($selfuser);
-              $request1->setComments('Merci de valider la modification  de l\utilisateur '.$selfuser->getUsername());
-              $request1->setStatus("En attente");
-              $em->persist($request1);
-              $em->flush();
+              
+              $requestManager = $this->container->get('ldap_modify_user');
+              $modifUser=$requestManager->modifyUser($selfuser);
+
+              
+//              $requestdsi=$this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\RoleRequest")->find(3);
+//              $request1 = new RequestSend;
+//              $request1->setRequestor($selfuser);
+//              $request1->setRoleRequest($requestdsi);
+//              $request1->setUserConcerned($selfuser);
+//              $request1->setComments('Merci de valider la modification  de l\utilisateur '.$selfuser->getUsername());
+//              $request1->setStatus("En attente");
+//              $em->persist($request1);
+//              $em->flush();
               return $this->render('ADMCUserBundle:User:requestsOwnList.html.twig', array(
                 'form' => $form->createView(),
               ));
@@ -77,6 +82,12 @@ class UserController extends Controller
     /////////////////////////////LOGICIEL--LOGICIEL--LOGICIEL--LOGICIEL--LOGICIEL--/////////////////////////////////////////////////////
     public function requestSoftwareAction(RequestForm $request){
         $selfuser = $this->getUser();
+        $selfName = $selfuser->getUserName();
+        $selfMail=$selfuser->getEmail();
+        dump($selfMail);
+        
+        
+            
         $groupList=$this->get('ldap_list_group');
         $partieATronquer = '/^GRP_APP_(.+)$/';
         $groupListSoftware= array();
@@ -121,6 +132,13 @@ class UserController extends Controller
             $request1->setStatus("En attente");
             $em->persist($request1);
             $em->flush();
+            
+            $roleName=$requestRoleRequest->getRoleName();
+            $sujet="Demande de".$roleName;
+            $message="La demande de".$roleName."pour l'utilisateur".$selfName."a bien été prise en compte";
+            $requestManager = $this->container->get('ldap_send_mail');
+            $sendMail = $requestManager->envoyerMail($selfMail,$sujet,$message);
+            
             return $this->redirect($this->generateUrl('admcuser_software_request_created', array('id' => $selfuser->getId())));
         }
 
