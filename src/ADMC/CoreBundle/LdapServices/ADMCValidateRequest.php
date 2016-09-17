@@ -74,6 +74,7 @@ class ADMCValidateRequest{
         $requestorRepository=$this->doctrineManager->getRepository('ADMCCoreBundle:User')->findAll();
         $request=$doctManager->find($id);
         $roleRequest= $request->getRoleRequest()->getRoleName();    
+        
         // informations approver
         $approverUsername = $this->security->getToken()->getUser();
         $approver = $this->userManager->findUserByUsername($approverUsername);
