@@ -219,7 +219,15 @@ class UserController extends Controller
                 );
         return $this->render('ADMCUserBundle:User:requestList.html.twig', array('requetes'=>$requests
         ));
-        
-        
     }
+        public function deleteRequestAction($id){
+            
+            $em = $this->getDoctrine()->getEntityManager();
+            $request2 = $this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\User")->findAll();
+            $request1 = $this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\Request")->find($id);
+            $em->remove($request1);
+            $em->flush();
+            return $this->render('ADMCUserBundle:User:requestDeleted.html.twig');
+
+        }
 }
