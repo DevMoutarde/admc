@@ -47,12 +47,14 @@ class ADMCMajBdd {
        $users = $this->users->searchUser();
         foreach ($users as $user){
             $result =  $this->userManager->findUserByUsername($user['logon']);
+            
             //var_dump($user);
             //create group if not exist
             $this->groupChecker($user);
             
             
             if ($result === null){
+                
                 //if user unknown
                 $userCreate = $this->userManager->createUser();
                 $userCreate->setUsername($user['logon']);
@@ -85,6 +87,7 @@ class ADMCMajBdd {
             }else{
                 
                 //add roles
+                dump($result);
                 $this->addRole($result, $user);
                 $this->removeRole($result, $user);
                 //update the password in DB if not similar
@@ -116,13 +119,18 @@ class ADMCMajBdd {
         
        $userBdd->getRoles();
        foreach ($userBdd->getRoles() as $roleBdd){
+           
+           
            if(isset($userLdap['memberof'])){
-               
+               //dump($user);
                 if(!in_array($roleBdd, $userLdap['memberof'])){
                     $userBdd->removeRole($roleBdd);
                 }
                
-           }
+           }else{
+           $userBdd->removeRole($roleBdd);
+           
+            }
        }
         
     }

@@ -2,6 +2,8 @@
 
 
 namespace ADMC\CoreBundle\LdapServices;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use \Doctrine\ORM\EntityManager;
 use ADMC\CoreBundle\LdapServices\ADMCCreateuser;
 use \ADMC\CoreBundle\LdapServices\ADMCAddgroup;
@@ -10,6 +12,10 @@ use FOS\UserBundle\Doctrine\UserManager;
 use FOS\UserBundle\Doctrine\GroupManager;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use ADMC\CoreBundle\LdapServices\ADMCDeleteUser;
+use ADMC\CoreBundle\Entity\User;
+use ADMC\CoreBundle\LdapServices\ADMCSendMail;
+
+
 
 
 /**
@@ -26,6 +32,7 @@ class ADMCValidateRequest{
     private $groupManager;
     private $security;
     private $deleteUser;
+    private $mailManager;
     
     /**
      * 
@@ -37,7 +44,7 @@ class ADMCValidateRequest{
      * @param EntityManager $entityManager
      * @param type $token
      */
-    public function __construct(ADMCCreateuser $createUser, ADMCAddgroup $addGroup, ADMCDelUserFromGroup $delUserFromGroup, UserManager $userManager, GroupManager $groupManager, EntityManager $entityManager,  $token, ADMCDeleteUser $deleteUser) {
+    public function __construct(ADMCCreateuser $createUser, ADMCAddgroup $addGroup, ADMCDelUserFromGroup $delUserFromGroup, UserManager $userManager, GroupManager $groupManager, EntityManager $entityManager,  $token, ADMCDeleteUser $deleteUser, ADMCSendMail $mailManager) {
         
         $this->insertUser = $createUser;
         $this->insertUserInGroup = $addGroup;
@@ -47,6 +54,7 @@ class ADMCValidateRequest{
         $this->doctrineManager = $entityManager;
         $this->security = $token;
         $this->deleteUser = $deleteUser;
+        $this->mailManager = $mailManager;
         
         
     }
@@ -65,29 +73,41 @@ class ADMCValidateRequest{
         
         $requestorRepository=$this->doctrineManager->getRepository('ADMCCoreBundle:User')->findAll();
         $request=$doctManager->find($id);
-        $roleRequest= $request->getRoleRequest()->getRoleName();
-        
-        
+        $roleRequest= $request->getRoleRequest()->getRoleName();     
         $approverUsername = $this->security->getToken()->getUser();
         $approver = $this->userManager->findUserByUsername($approverUsername);
+        $userConcerned = $request->getUserConcerned();
+        $userConcernedFirstName = $userConcerned->getFirstName();
+        $userConcernedLastName = $userConcerned->getLastName();
+        // $userConcernnedMailAddress
         $report = False;
         switch ($roleRequest){
             case "Logiciel":
                 $report = $this->ajouterUserDansGroup($request);
+                if($report){
+                   $this->mailManager->envoyerMail("jmiller@admc.com","Demande acceptée", "Bonjour " . $userConcernedFirstName. " " . $userConcernedLastName . " Votre demande d'ajout de logiciel a été acceptée par " . $approverUsername . " ."); 
+                }
                 break;
             
             case "Lecteur Réseau":
                 $report = $this->ajouterUserDansGroup($request);
+                if($report){
+                   $this->mailManager->envoyerMail("jmiller@admc.com","Demande acceptée", "Bonjour " . $userConcernedFirstName. " " . $userConcernedLastName .  " Votre demande d'accès à un lecteur a été acceptée par " . $approverUsername . " ."); 
+                }
                 break;
             
             case "Insérer utilisateur":
-                $this->ajouterUtilisateur($request->getUserConcerned());
+                $this->ajouterUtilisateur($userConcerned);
+                // activer l'utilisateur en bdd
+                $this->activerUtilisateur($userConcerned);
                 $report = True; // a reprendre
+                $this->mailManager->envoyerMail("jmiller@admc.com","Utilisateur créé ", "La création de l'utilisateur ". $userConcernedLastName. " a été validée par " . $approverUsername . " .");
                 break;
             
             case "Supprimer utilisateur":
-                $this->supprimerUtilisateur($request->getUserConcerned());
+                $this->supprimerUtilisateur($userConcerned);
                 $report = True; // a reprendre
+                $this->mailManager->envoyerMail("jmiller@admc.com","Utilisateur supprimé", "La suppression de l'utilisateur ". $userConcernedLastName. " a été validée par " . $approverUsername . " .");
                 break;
         }
         
@@ -148,4 +168,14 @@ class ADMCValidateRequest{
         
         $this->deleteUser->deleteUser($user);
     }  
+    
+    /**
+     * La méthode activerUtilisateur
+     * @param User  $user L'objet de l'entité User
+     * @author Salles Samuel
+     */
+    public function activerUtilisateur($user){
+        $user->setEnabled(true);
+        $this->userManager->updateUser($user);
+    }
 }

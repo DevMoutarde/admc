@@ -27,6 +27,7 @@ class BaseController extends Controller
        $listUsers = $this->container->get('ldap_list_all_users');
        $updateBdd = $this->container->get('ldap_update_database');
        $listGroup = $this->container->get('ldap_list_group');
+       $mailSender = $this->container->get('ldap_send_mail');
        $listGroup->listGroup();
        //$addUser->createUser();
        
@@ -45,7 +46,7 @@ class BaseController extends Controller
 //       
        
        
-       
+       $mailSender->envoyerMail("jmiller@admc.com", "service", "testService");
 
      
 
@@ -55,12 +56,12 @@ class BaseController extends Controller
        
 //=====envoi de mails====================
 //      
-       $message = \Swift_Message::newInstance()
-               ->setSubject('hello')
-               ->setFrom('jmiller@admc.com')
-               ->setTo('jmiller@admc.com')
-               ->setBody('test envoi de mail à partir de l\'application');
-       $this->get('mailer')->send($message);
+//       $message = \Swift_Message::newInstance()
+//               ->setSubject('hello')
+//               ->setFrom('jmiller@admc.com')
+//               ->setTo('jmiller@admc.com')
+//               ->setBody('test envoi de mail à partir de l\'application');
+//       $this->get('mailer')->send($message);
 //       
 //====================================
        
@@ -203,21 +204,24 @@ class BaseController extends Controller
         
         $manager = $this->getDoctrine()->getManager();
         
-        $requestUser = $manager->getRepository('ADMCCoreBundle:User');
-        $requestUser->findAll();
-        
-        $requestManager = $manager->getRepository('ADMCCoreBundle:Request');
-        $requete = $requestManager->find(3);
+        //$requestUser = $manager->getRepository('ADMCCoreBundle:User');
+        //$user = $requestUser->findByUsername("camus");
+        $managerUser = $this->container->get('fos_user.user_manager');      
+        $user = $managerUser->findUserBy(array ('username' => 'camus'));
+        //dump($user);
+        //$requestManager = $manager->getRepository('ADMCCoreBundle:Request');
+        //$requete = $requestManager->find(62);
         
         //var_dump($requete);
         
-        $user = $requete->getUserConcerned()->getUsername();
-        $group = $requete->getGroup()->getName();
+        //$user = $requete->getUserConcerned()->getUsername();
+        //$group = $requete->getGroup()->getName();
         
-//        $addUser = $this->container->get('ldap_insert_user_in_group');
+        $addUserInGroup = $this->container->get('ldap_insert_user_in_group');
+        $addUserInGroup->addRoleEmploye($user);
 //        var_dump($addUser->addGroup($group, $user));
-        $delUser = $this->container->get('ldap_delete_user_from_group');
-        $delUser->delUserFromGroup($group, $user);
+        //$delUser = $this->container->get('ldap_delete_user_from_group');
+      //  $delUser->delUserFromGroup($group, $user);
         return $this->render('ADMCCoreBundle:Base:index.html.twig');
     }
     
