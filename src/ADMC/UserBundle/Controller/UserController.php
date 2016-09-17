@@ -23,7 +23,9 @@ class UserController extends Controller
         $list=array(
             array('link'=>$this->get('router')->generate('admcuser_request_networkdrive_view'), 'name'=>'Demande de lecteur réseau'),
             array('link'=>$this->get('router')->generate('admcuser_request_software_view'), 'name'=>'Demande de logiciel'),
-            array('link'=>$this->get('router')->generate('admcuser_request_own_list'), 'name'=>'Consultation/Modification de mes informations personnelles')
+            array('link'=>$this->get('router')->generate('admcuser_request_own_list'), 'name'=>'Consultation/Modification de mes informations personnelles'),
+            array('link'=>$this->get('router')->generate('admcuser_request_list'), 'name'=>'Liste des demandes en cours')
+
         );
         return $this->render('ADMCUserBundle:User:menu.html.twig', array('subtitle'=>$subtitle,'menu'=>$list
         )); 
@@ -68,7 +70,7 @@ class UserController extends Controller
  }
     
     public function requestsviewAction(){
-        return $this->render('ADMCUserBundle:User:requestsview.html.twig');
+        return $this->render('ADMCUserBundle:User:requestsview2.html.twig');
     } 
     
     
@@ -190,4 +192,42 @@ class UserController extends Controller
     public function requestNetworkCreatedAction(){
         return $this->render('ADMCUserBundle:User:requestNetworkCreated.html.twig');
     }
+    
+    public function requestsview2Action(){
+        return $this->render('ADMCUserBundle:User:requestsview2.html.twig');
+    }
+    
+    public function consultRequestAction($id){
+        $doctManager= $this->getDoctrine()->getManager();
+        $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
+        $requestRepository=$doctManager->getRepository('ADMCCoreBundle:Request');
+        $request=$requestRepository->find($id);
+        return $this->render('ADMCUserBundle:User:viewContentRequest.html.twig', array(
+        'request'=>$request
+        ));
+    }
+    
+    public function requestListAction(RequestForm $request){
+        $selfuser = $this->getUser();
+        $selfuserId=$selfuser->getId();
+        $doctManager= $this->getDoctrine()->getManager();
+        $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
+        $requestRepository=$doctManager->getRepository('ADMCCoreBundle:Request');
+        $requests=$requestRepository->findBy(
+                array('status'                  =>'En attente',
+                          'requestor'        =>$selfuserId)
+                );
+        return $this->render('ADMCUserBundle:User:requestList.html.twig', array('requetes'=>$requests
+        ));
+    }
+        public function deleteRequestAction($id){
+            
+            $em = $this->getDoctrine()->getEntityManager();
+            $request2 = $this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\User")->findAll();
+            $request1 = $this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\Request")->find($id);
+            $em->remove($request1);
+            $em->flush();
+            return $this->render('ADMCUserBundle:User:requestDeleted.html.twig');
+
+        }
 }

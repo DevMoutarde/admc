@@ -22,3 +22,19 @@ admcuser_software_request_created:
 admcuser_network_request_created:
     path: /requestNetworkDone
     defaults: { _controller: ADMCUserBundle:User:requestNetworkCreated}
+    
+admcuser_request_list:
+    path: /list
+    defaults: { _controller: ADMCUserBundle:User:requestsview}
+    
+admcuser_request_refresh_list2:
+    path:     /listRefresh
+    defaults: { _controller: ADMCUserBundle:User:requestList }
+    
+admcuser_request_consult:
+    path:     /consultRequest/?{id}
+    defaults: { _controller: ADMCUserBundle:User:consultRequest }
+    
+admcuser_delete_request:
+    path: /deleteRequest/{id}
+    defaults: { _controller:ADMCUserBundle:User:deleteRequest }
