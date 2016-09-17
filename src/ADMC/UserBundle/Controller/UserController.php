@@ -82,9 +82,10 @@ class UserController extends Controller
     /////////////////////////////LOGICIEL--LOGICIEL--LOGICIEL--LOGICIEL--LOGICIEL--/////////////////////////////////////////////////////
     public function requestSoftwareAction(RequestForm $request){
         $selfuser = $this->getUser();
-        $selfName = $selfuser->getUserName();
+        $selfFirstName = $selfuser->getFirstName();
+        $selfLastName = $selfuser->getLastName();
         $selfMail=$selfuser->getEmail();
-        dump($selfMail);
+
         
         
             
@@ -134,8 +135,8 @@ class UserController extends Controller
             $em->flush();
             
             $roleName=$requestRoleRequest->getRoleName();
-            $sujet="Demande de".$roleName;
-            $message="La demande de".$roleName."pour l'utilisateur".$selfName."a bien été prise en compte";
+            $sujet="Demande de ".$roleName;
+            $message="La demande de ".$roleName." pour l'utilisateur ".$selfFirstName." ".$selfLastName." a bien été prise en compte";
             $requestManager = $this->container->get('ldap_send_mail');
             $sendMail = $requestManager->envoyerMail($selfMail,$sujet,$message);
             
@@ -151,6 +152,10 @@ class UserController extends Controller
     ////////////////////////NETWORK--NETWORK--NETWORK--NETWORK--NETWORK--NETWORK--//////////////////////////////////
     public function requestNetworkAction(RequestForm $request){
         $selfuser = $this->getUser();
+        $selfFirstName = $selfuser->getFirstName();
+        $selfLastName = $selfuser->getLastName();
+        $selfMail=$selfuser->getEmail();
+        
         $groupList=$this->get('ldap_list_group');
         $partieATronquer = '/^GRP_DRV_(.+)$/';
         $groupListNetwork= array();
@@ -194,6 +199,14 @@ class UserController extends Controller
             $request1->setUserConcerned($selfuser);
             $em->persist($request1);
             $em->flush();
+            
+            $roleName=$requestRoleRequest->getRoleName();
+            $sujet="Demande de ".$roleName;
+            $message="La demande de ".$roleName." pour l'utilisateur ".$selfFirstName." ".$selfLastName." a bien été prise en compte";
+            $requestManager = $this->container->get('ldap_send_mail');
+            $sendMail = $requestManager->envoyerMail($selfMail,$sujet,$message);
+            
+            
             return $this->redirect($this->generateUrl('admcuser_network_request_created', array('id' => $selfuser->getId())));
         }
         else{
