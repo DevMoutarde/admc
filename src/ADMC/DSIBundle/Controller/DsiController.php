@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request as RequestForm;
 use ADMC\CoreBundle\Entity\Request;
 use FOS\UserBundle\Doctrine\UserManager;
 use Symfony\Component\Security\Core\SecurityContext;
+use ADMC\CoreBundle\LdapServices\ADMCMailSender;
 
 class DsiController extends Controller
 {
@@ -142,6 +143,9 @@ class DsiController extends Controller
         // Validation des modifications
         $doctManager->persist($request);
         $doctManager->flush($request);
+        // crée un mail de confirmation
+        $mailManager = $this->container->get('admc_core_mail_sender');
+        $mailManager->sendMail("test", "sam@admc.com", "test d'envoi de mail");
         // retourne à la liste en fin de traitement
         $requests=$requestRepository->findAll();  
         
@@ -157,7 +161,4 @@ class DsiController extends Controller
 
         ));
     }
-    
-    
-    
 }

@@ -12,7 +12,7 @@
     <div class="well">
         
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            <p>Valideur: {{ app.user.username }}</p> 
+            <p>Valideur: {{ request.approver.username }}</p> 
         {% endif %}
         <br>
         
