@@ -148,10 +148,9 @@ class RhController extends Controller
         
 
         public function requestDeleteUserAction(Request $request, $id){
+            
             $selfuser = $this->getUser();
             $user=$this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\User")->find($id);
-            dump($user);
-
             $em = $this->getDoctrine()->getManager();
             $requestdsi=$this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\RoleRequest")->find(4);
             $request1 = new RequestSend;
@@ -162,9 +161,6 @@ class RhController extends Controller
             $request1->setStatus("En attente");
             $em->persist($request1);
             $em->flush();
-            dump($id);
-
-
             return $this->render('ADMCRHBundle:Rh:userDeleted.html.twig');
             
         }
@@ -181,12 +177,10 @@ class RhController extends Controller
         public function deleteRequestAction($id){
             
             $em = $this->getDoctrine()->getEntityManager();
-            
             $request2 = $this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\User")->findAll();
             $request1 = $this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\Request")->find($id);
             $em->remove($request1);
             $em->flush();
-
             return $this->render('ADMCRHBundle:Rh:requestDeleted.html.twig');
 
         }
