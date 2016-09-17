@@ -33,7 +33,7 @@ class ADMCSendMail{
         
         $mailEnvoi  = \Swift_Message::newInstance()
                 ->setSubject($sujet)
-                ->setFrom("jmiller@admc.com")
+                ->setFrom("Administrateur@admc.com")
                 ->setTo($destinataire)
                 ->setBody($message);
         $this->mailer->send($mailEnvoi);

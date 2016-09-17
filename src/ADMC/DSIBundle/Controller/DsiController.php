@@ -125,6 +125,7 @@ class DsiController extends Controller
     
     public function refuseRequestAction($id){
         
+        $sendMail = $this->container->get('ldap_send_mail');
         // récupération de la requete
         $doctManager= $this->getDoctrine()->getManager();
         $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
@@ -143,6 +144,15 @@ class DsiController extends Controller
         $doctManager->flush($request);
         // retourne à la liste en fin de traitement
         $requests=$requestRepository->findAll();  
+        
+        
+        
+        //mail du demandeur 
+        dump($request->getRequestor()->getEmail());
+        //nom de la demande
+        
+        //envoi du mail
+        
         return $this->render('ADMCDSIBundle:Dsi:requestsview.html.twig', array('requetes'=>$requests
 
         ));
