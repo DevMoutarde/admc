@@ -42,7 +42,6 @@ class ADMCModifyUser{
         $data["streetaddress"] = array(0=> $user->getAddress());
         $data["postalcode"] = array(0=> $user->getPostalCode());
         $data["l"] = array(0=> $user->getPostalCode());
-        var_dump($data);
          return ldap_modify($this->connector->getConnector(), $dn, $data); 
           
          
