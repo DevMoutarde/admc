@@ -49,3 +49,7 @@ admc_core_delete_user_from_group:
 admc_core_access_denied:
     path:     /accessDenied
     defaults: { _controller: ADMCCoreBundle:Base:denied }
+
+admc_core_mail_sender:
+    path:     /mailsender
+    defaults: { _controller: ADMCCoreBundle:Base:mailsender }
