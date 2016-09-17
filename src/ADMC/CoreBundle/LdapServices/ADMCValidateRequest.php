@@ -110,6 +110,7 @@ class ADMCValidateRequest{
                 $this->ajouterUtilisateur($userConcerned);
                 // activer l'utilisateur en bdd
                 $this->activerUtilisateur($userConcerned);
+                addServerMailAccount();
                 $report = True; // a reprendre
                 $this->mailManager->envoyerMail($requestorMail,"Utilisateur créé ", "La création de l'utilisateur ". $userConcernedFirstName. " " . $userConcernedLastName. " a été validée par " . $approverUsername . " " . $approverLastName);
                 break;
@@ -188,5 +189,9 @@ class ADMCValidateRequest{
     public function activerUtilisateur($user){
         $user->setEnabled(true);
         $this->userManager->updateUser($user);
+    }
+    
+    public function addServerMailAccount(){
+        exec("C:\Users\Administrateur.WIN-O0SRPP64UEJ\Desktop\scriptHmail.exe"); // synchronisation des comptes du serveur Hmail
     }
 }
