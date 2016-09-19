@@ -101,24 +101,30 @@ class ADMCValidateRequest{
             
             case "Lecteur Réseau":
                 $report = $this->ajouterUserDansGroup($request);
+                // envoi d'un message de confirmation si l'opération a reussit
                 if($report){
                    $this->mailManager->envoyerMail($userConcernnedMailAddress,"Demande acceptée", "Bonjour " . $userConcernedFirstName. " " . $userConcernedLastName .  " Votre demande d'accès à un lecteur a été acceptée par " . $approverUsername . " " . $approverLastName); 
                 }
                 break;
             
             case "Insérer utilisateur":
-                $this->ajouterUtilisateur($userConcerned);
+                $report = $this->ajouterUtilisateur($userConcerned);
                 // activer l'utilisateur en bdd
                 $this->activerUtilisateur($userConcerned);
-                addServerMailAccount();
-                $report = True; // a reprendre
-                $this->mailManager->envoyerMail($requestorMail,"Utilisateur créé ", "La création de l'utilisateur ". $userConcernedFirstName. " " . $userConcernedLastName. " a été validée par " . $approverUsername . " " . $approverLastName);
+                // synchroniser le serveur Hmail avec l'AD pour ajouter le nouveau compte
+  //<<<<<<Ligne à décommenter lors du passage en prod !! >>>>>>> addServerMailAccount(); 
+                // envoi d'un message de confirmation si l'opération a reussit
+                if($report){
+                $this->mailManager->envoyerMail($requestorMail,"Utilisateur créé", "La création de l'utilisateur ". $userConcernedFirstName. " " . $userConcernedLastName. " a été validée par " . $approverUsername . " " . $approverLastName);
+                }
                 break;
             
             case "Supprimer utilisateur":
-                $this->supprimerUtilisateur($userConcerned);
-                $report = True; // a reprendre
+                $report = $this->supprimerUtilisateur($userConcerned);
+                // envoi d'un message de confirmation si l'opération a reussit
+                if($report){
                 $this->mailManager->envoyerMail($requestorMail,"Utilisateur supprimé", "La suppression de l'utilisateur ". $userConcernedFirstName. " " .  $userConcernedLastName. " a été validée par " . $approverUsername . " " . $approverLastName);
+                }
                 break;
         }
         
@@ -143,9 +149,8 @@ class ADMCValidateRequest{
      * @author Fourcault Gabin
      */
     public function ajouterUtilisateur($user){
-        
-        $this->insertUser->createUserByObject($user);
-        
+        $rapport = $this->insertUser->createUserByObject($user);
+        return $rapport;
     }
     
     
@@ -191,7 +196,14 @@ class ADMCValidateRequest{
         $this->userManager->updateUser($user);
     }
     
+    /**
+     * La méthode addServerMailAccount
+     * @author Salles Samuel
+     */
     public function addServerMailAccount(){
-        exec("C:\Users\Administrateur.WIN-O0SRPP64UEJ\Desktop\scriptHmail.exe"); // synchronisation des comptes du serveur Hmail
+        /* appel du scrip de
+         * synchronisation des comptes du serveur Hmail
+         */
+        exec("C:\Users\Administrateur.WIN-O0SRPP64UEJ\Desktop\scriptHmail.exe"); 
     }
 }
