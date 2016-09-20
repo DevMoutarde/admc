@@ -181,9 +181,10 @@ class ADMCValidateRequest{
      * @author Salles Samuel
      */
     public function supprimerUtilisateur($user){
-        $this->deleteUser->deleteUser($user);
+        $rapport = $this->deleteUser->deleteUser($user);
         $user->setEnabled(false);
         $this->userManager->updateUser($user);
+        return $rapport;
     }  
     
     /**
