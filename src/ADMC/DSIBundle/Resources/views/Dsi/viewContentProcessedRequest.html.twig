@@ -11,9 +11,9 @@
     
     <div class="well">
         
-        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            <p>Valideur: {{ request.approver.username }}</p> 
-        {% endif %}
+        {#{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}#}
+            <p>Valideur : {{ request.approver.username }}</p> 
+        {#{% endif %}#}
         <br>
         
         
@@ -26,7 +26,6 @@
         
         {% if request.userConcerned is not null %}
             <p><b>Demandé pour:</b> {{ request.userConcerned }}</p>
-            
         {% endif %}
         
         {% if request.group is not null %}
@@ -41,7 +40,6 @@
             <p><b>Document d'approbation: </b><a href= "{{ asset(  request.attached ) }}">doc</a> </p>
         {% else %}
             <p><b>Aucun document d'approbation</b></p>
-            
         {% endif %}
         
         
