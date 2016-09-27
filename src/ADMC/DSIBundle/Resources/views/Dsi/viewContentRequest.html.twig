@@ -8,31 +8,25 @@
     
     
     <div class="well">
+              
         
-        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            <p>Valideur : {{ request.approver.username }}</p> 
-        {% endif %}
-        <br>
+        <p><b>Type de demande :</b> {{request.roleRequest.roleName}}  </p>
         
+        <p><b>Date :</b> {{ request.date| date("m/d/y H:i:s") }}</p>
         
-        
-        <p><b>Type de demande:</b> {{request.roleRequest.roleName}}  </p>
-        
-        <p><b>Date:</b> {{ request.date| date("m/d/y H:i:s") }}</p>
-        
-        <p><b>Demandé par:</b> {{ request.requestor.username }}</p>
+        <p><b>Demandé par :</b> {{ request.requestor.firstname }} {{request.requestor.lastname}}</p>
         
         {% if request.userConcerned is not null and (request.roleRequest.roleName != 'Logiciel' and request.roleRequest.roleName != 'Lecteur\ Réseau')%}
-            <p><b>Demandé pour:</b> {{ request.userConcerned }}</p>
+            <p><b>Demandé pour :</b> {{ request.userConcerned.firstname }} {{request.userConcerned.lastname}}</p>
             
         {% endif %}
         
         {% if request.group is not null %}
-            <p><b>Element demandé: </b>{{  request.group.name }}</p>
+            <p><b>Element demandé : </b>{{  request.group.name }}</p>
         {% endif %}
         
         {% if request.comments is not null %}
-            <p><b>Commentaire: </b>{{  request.comments }}</p>
+            <p><b>Commentaire : </b>{{  request.comments }}</p>
         {% endif %}
         
         {% if request.attached is not null %}
