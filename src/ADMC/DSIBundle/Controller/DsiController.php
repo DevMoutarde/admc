@@ -131,22 +131,25 @@ class DsiController extends Controller
         $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
         $requestRepository=$doctManager->getRepository('ADMCCoreBundle:Request');
         $request=$requestRepository->find($id);
+        $requestRole = $request->getRoleRequest()->getRoleName();
         
         // Passage du status "Refusée"
         $request->setStatus("Refusée");
         
-        // Remplissage de l'approver
-        $currentUser = $this->getUser(); // ok
-        $request->setApprover($currentUser); // à corriger
+        // Récuperation de l'approver
+        $currentUser = $this->getUser(); 
+        $request->setApprover($currentUser); 
+        
+        // Récuperation du requestor
+        $requestor = $request->getRequestor();
+        $requestorMail = $requestor->getEmail();
         
         // Validation des modifications
         $doctManager->persist($request);
         $doctManager->flush($request);
         // crée un mail de confirmation
         $requestManager = $this->container->get('ldap_send_mail');
-        $sendMail = $requestManager->envoyerMail("sam@admc.com","demande refusée","La demande à été refusée");
-        //$mailManager = $this->container->get('admc_core_mail_sender');
-      //  $this->$mailManager->envoyerMail("sam@admc.com", "demande refusée", "La demande à été refusée");
+        $sendMail = $requestManager->envoyerMail($requestorMail,"demande refusée","Bonjour, votre de demande de " . $requestRole . " à été refusée");
         // retourne à la liste en fin de traitement
         $requests=$requestRepository->findAll();  
         
