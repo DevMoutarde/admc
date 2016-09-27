@@ -5,13 +5,13 @@
     
     <h2>Consultation requête</h2>
     <hr>
-    <h5>Cette requête a déjà été traitée</h5>
+    <h5>Cette requête a été {{request.status}}</h5>
     <hr>
     
     
     <div class="well">
         
-            <p>Valideur : {{ request.approver.firstname }} {{ request.approver.lastname }}</p> 
+            <p><b>Valideur :</b> {{ request.approver.firstname }} {{ request.approver.lastname }}</p> 
         <br>
         
         

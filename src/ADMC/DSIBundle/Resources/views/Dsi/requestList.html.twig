@@ -6,6 +6,7 @@
     <table class="table table-hover">
         <thead>
             <tr>
+                <th>Numéro</th>
                 <th>Role</th>
                 <th>Demandeur</th>
                 <th>Status</th>
@@ -16,8 +17,9 @@
         <tbody>
             {% for request in requetes %}
               <tr class='clickable-row' data-href={{ request.id }}>
+                <td>{{ request.id}} </td>
                 <td>{{ request.roleRequest.roleName }}</td>
-                <td>{{ request.requestor.lastName }}</td>
+                <td>{{ request.requestor.firstname}} {{ request.requestor.lastName}}</td>
                 <td>{{ request.status }}</td>
                 <td>{{ request.date| date("m/d/Y") }}</td>
                 <td>

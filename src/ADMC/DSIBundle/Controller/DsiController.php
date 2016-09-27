@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request as RequestForm;
 use ADMC\CoreBundle\Entity\Request;
 use FOS\UserBundle\Doctrine\UserManager;
 use Symfony\Component\Security\Core\SecurityContext;
-use ADMC\CoreBundle\LdapServices\ADMCMailSender;
+use ADMC\CoreBundle\LdapServices\ADMCSendMail;
 
 class DsiController extends Controller
 {
@@ -126,7 +126,6 @@ class DsiController extends Controller
     
     public function refuseRequestAction($id){
         
-        $sendMail = $this->container->get('ldap_send_mail');
         // récupération de la requete
         $doctManager= $this->getDoctrine()->getManager();
         $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
@@ -144,8 +143,10 @@ class DsiController extends Controller
         $doctManager->persist($request);
         $doctManager->flush($request);
         // crée un mail de confirmation
-        $mailManager = $this->container->get('admc_core_mail_sender');
-        $mailManager->sendMail("test", "sam@admc.com", "test d'envoi de mail");
+        $requestManager = $this->container->get('ldap_send_mail');
+        $sendMail = $requestManager->envoyerMail("sam@admc.com","demande refusée","La demande à été refusée");
+        //$mailManager = $this->container->get('admc_core_mail_sender');
+      //  $this->$mailManager->envoyerMail("sam@admc.com", "demande refusée", "La demande à été refusée");
         // retourne à la liste en fin de traitement
         $requests=$requestRepository->findAll();  
         
