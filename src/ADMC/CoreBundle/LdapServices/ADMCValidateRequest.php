@@ -150,6 +150,7 @@ class ADMCValidateRequest{
      */
     public function ajouterUtilisateur($user){
         $rapport = $this->insertUser->createUserByObject($user);
+        $this->insertUserInGroup->addRoleEmploye($user);
         return $rapport;
     }
     
