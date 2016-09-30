@@ -11,12 +11,24 @@ use ADMC\CoreBundle\Entity\Group;
 use FOS\UserBundle\Doctrine\UserManager;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
-
+/** 
+ * Controleur du Bundle User
+ * @author Guillaume Nardizzi
+ */
 class UserController extends Controller
 {
+    
+    /** 
+     * @author Guillaume Nardizzi
+    */    
     public function indexAction(){
         return $this->render('ADMCUserBundle:User:index.html.twig');
     }
+    
+    /** 
+    * Menu déroulant contenant les onglet disponibles pour les Utilisateurs
+    * @author Guillaume Nardizzi
+    */    
     public function menuAction(){
 
         $subtitle="Menu Utilisateur";
@@ -31,6 +43,11 @@ class UserController extends Controller
         )); 
     }
     
+    /** 
+    * Affiche la liste des coordonées personnelles de l'utilisateur
+    * @param Request $request 
+    * @author Guillaume Nardizzi
+    */    
     public function requestsOwnListAction(RequestForm $request){
         $selfuser = $this->getUser();
         $formBuilder = $this->get('form.factory')->createBuilder('form', $selfuser);
@@ -73,22 +90,26 @@ class UserController extends Controller
           'form' => $form->createView(),
         ));
  }
-    
+
+    /** 
+   * Affiche la liste des requetes et raffraichit la page avec un appel Ajax à la base de données
+   * Controleur du Bundle User
+   * @author Guillaume Nardizzi
+   */ 
     public function requestsviewAction(){
         return $this->render('ADMCUserBundle:User:requestsview2.html.twig');
     } 
     
-    
-    /////////////////////////////LOGICIEL--LOGICIEL--LOGICIEL--LOGICIEL--LOGICIEL--/////////////////////////////////////////////////////
+    /** 
+    * Envoie une requete de demande de Logiciel à la DSI
+    * @param Request $request  
+    * @author Guillaume Nardizzi
+    */    
     public function requestSoftwareAction(RequestForm $request){
         $selfuser = $this->getUser();
         $selfFirstName = $selfuser->getFirstName();
         $selfLastName = $selfuser->getLastName();
         $selfMail=$selfuser->getEmail();
-
-        
-        
-            
         $groupList=$this->get('ldap_list_group');
         $partieATronquer = '/^GRP_APP_(.+)$/';
         $groupListSoftware= array();
@@ -148,14 +169,16 @@ class UserController extends Controller
         ));
     }
     
-    
-    ////////////////////////NETWORK--NETWORK--NETWORK--NETWORK--NETWORK--NETWORK--//////////////////////////////////
+    /** 
+    * Envoie une requete de demande de Lecteur réseau à la DSI
+    * @param Request $request  
+    * @author Guillaume Nardizzi
+    */    
     public function requestNetworkAction(RequestForm $request){
         $selfuser = $this->getUser();
         $selfFirstName = $selfuser->getFirstName();
         $selfLastName = $selfuser->getLastName();
         $selfMail=$selfuser->getEmail();
-        
         $groupList=$this->get('ldap_list_group');
         $partieATronquer = '/^GRP_DRV_(.+)$/';
         $groupListNetwork= array();
@@ -216,18 +239,35 @@ class UserController extends Controller
         }
     }
     
+    /** 
+    * Affiche un message de confirmation de demande de logiciel
+    * @author Guillaume Nardizzi
+    */    
     public function requestSoftwareCreatedAction(){
         return $this->render('ADMCUserBundle:User:requestSoftwareCreated.html.twig');
     }
-    
+
+    /** 
+    * Affiche un message de confirmation de demande de lecteur réseau
+    * @author Guillaume Nardizzi
+    */    
     public function requestNetworkCreatedAction(){
         return $this->render('ADMCUserBundle:User:requestNetworkCreated.html.twig');
     }
-    
+ 
+    /** 
+    * Affiche la liste des requetes et raffraichit la page avec un appel Ajax à la base de données
+    * @author Guillaume Nardizzi
+    */    
     public function requestsview2Action(){
         return $this->render('ADMCUserBundle:User:requestsview2.html.twig');
     }
-    
+
+    /** 
+    * consulte une requete en base et l'affiche  
+    * @param ID $id
+    * @author Guillaume Nardizzi
+    */    
     public function consultRequestAction($id){
         $doctManager= $this->getDoctrine()->getManager();
         $requestorRepository=$doctManager->getRepository('ADMCCoreBundle:User')->findAll();
@@ -237,7 +277,12 @@ class UserController extends Controller
         'request'=>$request
         ));
     }
-    
+
+    /** 
+    * Liste les requêtes en cours de l'utilisateur RH en cours
+    * @param Request $request  
+    * @author Guillaume Nardizzi
+    */    
     public function requestListAction(RequestForm $request){
         $selfuser = $this->getUser();
         $selfuserId=$selfuser->getId();
@@ -251,14 +296,20 @@ class UserController extends Controller
         return $this->render('ADMCUserBundle:User:requestList.html.twig', array('requetes'=>$requests
         ));
     }
-        public function deleteRequestAction($id){
-            
-            $em = $this->getDoctrine()->getEntityManager();
-            $request2 = $this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\User")->findAll();
-            $request1 = $this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\Request")->find($id);
-            $em->remove($request1);
-            $em->flush();
-            return $this->render('ADMCUserBundle:User:requestDeleted.html.twig');
+    
+    /** 
+    * Annule une requête précédemment envoyée
+    * @param ID $id  
+    * @author Guillaume Nardizzi
+    */    
+    public function deleteRequestAction($id){
 
-        }
+        $em = $this->getDoctrine()->getEntityManager();
+        $request2 = $this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\User")->findAll();
+        $request1 = $this->getDoctrine()->getRepository("\ADMC\CoreBundle\Entity\Request")->find($id);
+        $em->remove($request1);
+        $em->flush();
+        return $this->render('ADMCUserBundle:User:requestDeleted.html.twig');
+
+    }
 }
