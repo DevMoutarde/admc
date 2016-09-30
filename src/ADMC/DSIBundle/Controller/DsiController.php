@@ -29,29 +29,6 @@ class DsiController extends Controller
     * @author Samuel Salles
     */            
     public function menuAction(){
-        /*test user*/
-       /* $id_user = 1;
-        $repository = $this->getDoctrine()
-                ->getManager()
-                ->getRepository('ADMCCoreBundle:user');
-        $user = $repository->find($id_user);
-        if(null === $user){
-            throw new NotFoundHttpException("l'utilisateur d'id ".$id_user." n'existe pas");
-        }
-
-       echo $user;*/
-        /*test groups*/
-       /* $id_group = 2;
-        $group_repository = $this->getDoctrine()
-                ->getManager()
-                ->getRepository('ADMCCoreBundle:group');
-        $group = $group_repository->find($id_group);
-        if(null === $group){
-            throw new NotFoundHttpException("Le groupe d'id ".$id_group." n'existe pas");
-
-        }*/
-    //    echo $group;
-        /*test liste*/
         $subtitle="Menu DSI";
         $list=array(
             array('link'=>$this->get('router')->generate('admcdsi_request_list'), 'name'=>'Liste des demandes en cours'),
